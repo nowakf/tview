@@ -1,11 +1,10 @@
 package tview
 
 import (
-	"fmt"
-	"os"
 	"sync"
 
-	"github.com/gdamore/tcell"
+	"github.com/nowakf/pixel/pixelgl"
+	"github.com/nowakf/ubcell"
 )
 
 // Application represents the top node of an application.
@@ -17,7 +16,7 @@ type Application struct {
 	sync.RWMutex
 
 	// The application's screen.
-	screen tcell.Screen
+	screen ubcell.Screen
 
 	// The primitive which currently has the keyboard focus.
 	focus Primitive
@@ -31,15 +30,15 @@ type Application struct {
 	// An optional capture function which receives a key event and returns the
 	// event to be forwarded to the default input handler (nil if nothing should
 	// be forwarded).
-	inputCapture func(event *tcell.EventKey) *tcell.EventKey
+	inputCapture func(event *pixelgl.KeyEv) *pixelgl.KeyEv
 
 	// An optional callback function which is invoked just before the root
 	// primitive is drawn.
-	beforeDraw func(screen tcell.Screen) bool
+	beforeDraw func(screen ubcell.Screen) bool
 
 	// An optional callback function which is invoked after the root primitive
 	// was drawn.
-	afterDraw func(screen tcell.Screen)
+	afterDraw func(screen ubcell.Screen)
 
 	// If this value is true, the application has entered suspended mode.
 	suspended bool
@@ -59,25 +58,25 @@ func NewApplication() *Application {
 // Note that this also affects the default event handling of the application
 // itself: Such a handler can intercept the Ctrl-C event which closes the
 // applicatoon.
-func (a *Application) SetInputCapture(capture func(event *tcell.EventKey) *tcell.EventKey) *Application {
+func (a *Application) SetInputCapture(capture func(event *pixelgl.KeyEv) *pixelgl.KeyEv) *Application {
 	a.inputCapture = capture
 	return a
 }
 
 // GetInputCapture returns the function installed with SetInputCapture() or nil
 // if no such function has been installed.
-func (a *Application) GetInputCapture() func(event *tcell.EventKey) *tcell.EventKey {
+func (a *Application) GetInputCapture() func(event *pixelgl.KeyEv) *pixelgl.KeyEv {
 	return a.inputCapture
 }
 
 // Run starts the application and thus the event loop. This function returns
 // when Stop() was called.
-func (a *Application) Run() error {
+func (a *Application) Run(w *pixelgl.Window, drawChan chan func() *Application, fontPath string) error {
 	var err error
 	a.Lock()
 
 	// Make a screen.
-	a.screen, err = tcell.NewScreen()
+	a.screen, err = ubcell.NewScreen(w, fontPath)
 	if err != nil {
 		a.Unlock()
 		return err
@@ -99,7 +98,8 @@ func (a *Application) Run() error {
 
 	// Draw the screen for the first time.
 	a.Unlock()
-	a.Draw()
+
+	drawChan <- a.Draw
 
 	// Start event loop.
 	for {
@@ -113,7 +113,7 @@ func (a *Application) Run() error {
 			break
 		}
 
-		// Wait for next event.
+		// Wait for next event - blocking...
 		event := a.screen.PollEvent()
 		if event == nil {
 			a.Lock()
@@ -130,7 +130,12 @@ func (a *Application) Run() error {
 		}
 
 		switch event := event.(type) {
-		case *tcell.EventKey:
+		case *pixelgl.KeyEv:
+
+			if event.Act == pixelgl.PRESS {
+				break
+			}
+
 			a.RLock()
 			p := a.focus
 			a.RUnlock()
@@ -139,30 +144,44 @@ func (a *Application) Run() error {
 			if a.inputCapture != nil {
 				event = a.inputCapture(event)
 				if event == nil {
-					break // Don't forward event.
+					break
 				}
 			}
 
 			// Ctrl-C closes the application.
-			if event.Key() == tcell.KeyCtrlC {
+			if *event == pixelgl.KeyCtrlC {
 				a.Stop()
 			}
 
 			// Pass other key events to the currently focused primitive.
 			if p != nil {
-				if handler := p.InputHandler(); handler != nil {
+				if handler := p.KeyHandler(); handler != nil {
 					handler(event, func(p Primitive) {
 						a.SetFocus(p)
 					})
-					a.Draw()
+					drawChan <- a.Draw
 				}
 			}
-		case *tcell.EventResize:
-			a.Lock()
-			screen := a.screen
-			a.Unlock()
-			screen.Clear()
-			a.Draw()
+			//	case *pixelgl.EventResize:
+			//		a.Lock()
+			//		screen := a.screen
+			//		a.Unlock()
+			//		screen.Clear()
+			//		a.Draw()
+			//	case pixelgl.ChaEv:
+			//		a.RLock()
+			//		p := a.focus
+			//		a.RUnlock()
+			//		if p != nil {
+			//			if handler := p.ChaHandler(); handler != nil {
+			//				handler(event, func(p Primitive) {
+			//					a.SetFocus(p)
+			//				})
+
+			//				drawChan <- a.Draw
+			//			}
+			//		}
+
 		}
 	}
 
@@ -187,49 +206,50 @@ func (a *Application) Stop() {
 // A return value of true indicates that the application was suspended and "f"
 // was called. If false is returned, the application was already suspended,
 // terminal UI mode was not exited, and "f" was not called.
-func (a *Application) Suspend(f func()) bool {
-	a.Lock()
-
-	if a.suspended || a.screen == nil {
-		// Application is already suspended.
-		a.Unlock()
-		return false
-	}
-
-	// Enter suspended mode.
-	a.suspended = true
-	a.Unlock()
-	a.Stop()
-
-	// Deal with panics during suspended mode. Exit the program.
-	defer func() {
-		if p := recover(); p != nil {
-			fmt.Println(p)
-			os.Exit(1)
-		}
-	}()
-
-	// Wait for "f" to return.
-	f()
-
-	// Make a new screen and redraw.
-	a.Lock()
-	var err error
-	a.screen, err = tcell.NewScreen()
-	if err != nil {
-		a.Unlock()
-		panic(err)
-	}
-	if err = a.screen.Init(); err != nil {
-		a.Unlock()
-		panic(err)
-	}
-	a.Unlock()
-	a.Draw()
-
-	// Continue application loop.
-	return true
-}
+//doesn't work currently...
+//func (a *Application) Suspend(f func()) bool {
+//	a.Lock()
+//
+//	if a.suspended || a.screen == nil {
+//		// Application is already suspended.
+//		a.Unlock()
+//		return false
+//	}
+//
+//	// Enter suspended mode.
+//	a.suspended = true
+//	a.Unlock()
+//	a.Stop()
+//
+//	// Deal with panics during suspended mode. Exit the program.
+//	defer func() {
+//		if p := recover(); p != nil {
+//			fmt.Println(p)
+//			os.Exit(1)
+//		}
+//	}()
+//
+//	// Wait for "f" to return.
+//	f()
+//
+//	// Make a new screen and redraw.
+//	a.Lock()
+//	var err error
+//	a.screen, err = ubcell.NewScreen()
+//	if err != nil {
+//		a.Unlock()
+//		panic(err)
+//	}
+//	if err = a.screen.Init(); err != nil {
+//		a.Unlock()
+//		panic(err)
+//	}
+//	a.Unlock()
+//	a.Draw()
+//
+//	// Continue application loop.
+//	return true
+//}
 
 // Draw refreshes the screen. It calls the Draw() function of the application's
 // root primitive and then syncs the screen buffer.
@@ -284,14 +304,14 @@ func (a *Application) Draw() *Application {
 // you may call screen.Clear().
 //
 // Provide nil to uninstall the callback function.
-func (a *Application) SetBeforeDrawFunc(handler func(screen tcell.Screen) bool) *Application {
+func (a *Application) SetBeforeDrawFunc(handler func(screen ubcell.Screen) bool) *Application {
 	a.beforeDraw = handler
 	return a
 }
 
 // GetBeforeDrawFunc returns the callback function installed with
 // SetBeforeDrawFunc() or nil if none has been installed.
-func (a *Application) GetBeforeDrawFunc() func(screen tcell.Screen) bool {
+func (a *Application) GetBeforeDrawFunc() func(screen ubcell.Screen) bool {
 	return a.beforeDraw
 }
 
@@ -299,14 +319,14 @@ func (a *Application) GetBeforeDrawFunc() func(screen tcell.Screen) bool {
 // primitive was drawn during screen updates.
 //
 // Provide nil to uninstall the callback function.
-func (a *Application) SetAfterDrawFunc(handler func(screen tcell.Screen)) *Application {
+func (a *Application) SetAfterDrawFunc(handler func(screen ubcell.Screen)) *Application {
 	a.afterDraw = handler
 	return a
 }
 
 // GetAfterDrawFunc returns the callback function installed with
 // SetAfterDrawFunc() or nil if none has been installed.
-func (a *Application) GetAfterDrawFunc() func(screen tcell.Screen) {
+func (a *Application) GetAfterDrawFunc() func(screen ubcell.Screen) {
 	return a.afterDraw
 }
 

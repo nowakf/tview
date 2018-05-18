@@ -1,7 +1,9 @@
 package tview
 
 import (
-	"github.com/gdamore/tcell"
+	"image/color"
+
+	"github.com/nowakf/ubcell"
 )
 
 // Modal is a centered message window used to inform the user or prompt them
@@ -22,7 +24,7 @@ type Modal struct {
 	text string
 
 	// The text color.
-	textColor tcell.Color
+	textColor color.RGBA
 
 	// The optional callback for when the user clicked one of the buttons. It
 	// receives the index of the clicked button and the button's label.
@@ -49,7 +51,7 @@ func NewModal() *Modal {
 }
 
 // SetTextColor sets the color of the message text.
-func (m *Modal) SetTextColor(color tcell.Color) *Modal {
+func (m *Modal) SetTextColor(color color.RGBA) *Modal {
 	m.textColor = color
 	return m
 }
@@ -97,7 +99,7 @@ func (m *Modal) HasFocus() bool {
 }
 
 // Draw draws this primitive onto the screen.
-func (m *Modal) Draw(screen tcell.Screen) {
+func (m *Modal) Draw(screen ubcell.Screen) {
 	// Calculate the width of this modal.
 	buttonsWidth := 0
 	for _, button := range m.form.buttons {

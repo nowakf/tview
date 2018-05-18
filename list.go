@@ -2,8 +2,10 @@ package tview
 
 import (
 	"fmt"
+	"image/color"
 
-	"github.com/gdamore/tcell"
+	"github.com/nowakf/pixel/pixelgl"
+	"github.com/nowakf/ubcell"
 )
 
 // listItem represents one item in a List.
@@ -30,19 +32,19 @@ type List struct {
 	showSecondaryText bool
 
 	// The item main text color.
-	mainTextColor tcell.Color
+	mainTextColor color.RGBA
 
 	// The item secondary text color.
-	secondaryTextColor tcell.Color
+	secondaryTextColor color.RGBA
 
 	// The item shortcut text color.
-	shortcutColor tcell.Color
+	shortcutColor color.RGBA
 
 	// The text color for selected items.
-	selectedTextColor tcell.Color
+	selectedTextColor color.RGBA
 
 	// The background color for selected items.
-	selectedBackgroundColor tcell.Color
+	selectedBackgroundColor color.RGBA
 
 	// An optional function which is called when the user has navigated to a list
 	// item.
@@ -86,31 +88,31 @@ func (l *List) GetCurrentItem() int {
 }
 
 // SetMainTextColor sets the color of the items' main text.
-func (l *List) SetMainTextColor(color tcell.Color) *List {
+func (l *List) SetMainTextColor(color color.RGBA) *List {
 	l.mainTextColor = color
 	return l
 }
 
 // SetSecondaryTextColor sets the color of the items' secondary text.
-func (l *List) SetSecondaryTextColor(color tcell.Color) *List {
+func (l *List) SetSecondaryTextColor(color color.RGBA) *List {
 	l.secondaryTextColor = color
 	return l
 }
 
 // SetShortcutColor sets the color of the items' shortcut.
-func (l *List) SetShortcutColor(color tcell.Color) *List {
+func (l *List) SetShortcutColor(color color.RGBA) *List {
 	l.shortcutColor = color
 	return l
 }
 
 // SetSelectedTextColor sets the text color of selected items.
-func (l *List) SetSelectedTextColor(color tcell.Color) *List {
+func (l *List) SetSelectedTextColor(color color.RGBA) *List {
 	l.selectedTextColor = color
 	return l
 }
 
 // SetSelectedBackgroundColor sets the background color of selected items.
-func (l *List) SetSelectedBackgroundColor(color tcell.Color) *List {
+func (l *List) SetSelectedBackgroundColor(color color.RGBA) *List {
 	l.selectedBackgroundColor = color
 	return l
 }
@@ -181,7 +183,7 @@ func (l *List) Clear() *List {
 }
 
 // Draw draws this primitive onto the screen.
-func (l *List) Draw(screen tcell.Screen) {
+func (l *List) Draw(screen ubcell.Screen) {
 	l.Box.Draw(screen)
 
 	// Determine the dimensions.
@@ -233,13 +235,13 @@ func (l *List) Draw(screen tcell.Screen) {
 		if index == l.currentItem {
 			textWidth := StringWidth(item.MainText)
 			for bx := 0; bx < textWidth && bx < width; bx++ {
-				m, c, style, _ := screen.GetContent(x+bx, y)
-				fg, _, _ := style.Decompose()
+				m, style := screen.GetContent(x+bx, y)
+				fg := style.Foreground
 				if fg == l.mainTextColor {
 					fg = l.selectedTextColor
 				}
-				style = style.Background(l.selectedBackgroundColor).Foreground(fg)
-				screen.SetContent(x+bx, y, m, c, style)
+				style = ubcell.Style{l.selectedBackgroundColor, fg}
+				screen.SetContent(x+bx, y, m, style)
 			}
 		}
 
@@ -257,25 +259,25 @@ func (l *List) Draw(screen tcell.Screen) {
 	}
 }
 
-// InputHandler returns the handler for this primitive.
-func (l *List) InputHandler() func(event *tcell.EventKey, setFocus func(p Primitive)) {
-	return l.WrapInputHandler(func(event *tcell.EventKey, setFocus func(p Primitive)) {
+// KeyHandler returns the handler for this primitive.
+func (l *List) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
+	return l.WrapKeyHandler(func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
 		previousItem := l.currentItem
 
-		switch key := event.Key(); key {
-		case tcell.KeyTab, tcell.KeyDown, tcell.KeyRight:
+		switch event.Key {
+		case pixelgl.KeyTab, pixelgl.KeyDown, pixelgl.KeyRight:
 			l.currentItem++
-		case tcell.KeyBacktab, tcell.KeyUp, tcell.KeyLeft:
+		case pixelgl.KeyUp, pixelgl.KeyLeft:
 			l.currentItem--
-		case tcell.KeyHome:
+		case pixelgl.KeyHome:
 			l.currentItem = 0
-		case tcell.KeyEnd:
+		case pixelgl.KeyEnd:
 			l.currentItem = len(l.items) - 1
-		case tcell.KeyPgDn:
+		case pixelgl.KeyPageDown:
 			l.currentItem += 5
-		case tcell.KeyPgUp:
+		case pixelgl.KeyPageUp:
 			l.currentItem -= 5
-		case tcell.KeyEnter:
+		case pixelgl.KeyEnter:
 			item := l.items[l.currentItem]
 			if item.Selected != nil {
 				item.Selected()
@@ -283,12 +285,12 @@ func (l *List) InputHandler() func(event *tcell.EventKey, setFocus func(p Primit
 			if l.selected != nil {
 				l.selected(l.currentItem, item.MainText, item.SecondaryText, item.Shortcut)
 			}
-		case tcell.KeyEscape:
+		case pixelgl.KeyEscape:
 			if l.done != nil {
 				l.done()
 			}
-		case tcell.KeyRune:
-			ch := event.Rune()
+		case pixelgl.KeyRune:
+			ch := event.Ch
 			if ch != ' ' {
 				// It's not a space bar. Is it a shortcut?
 				var found bool

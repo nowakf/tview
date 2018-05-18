@@ -1,7 +1,7 @@
 package tview
 
 import (
-	"github.com/gdamore/tcell"
+	"github.com/nowakf/ubcell"
 )
 
 // page represents one page of a Pages object.
@@ -233,7 +233,7 @@ func (p *Pages) Focus(delegate func(p Primitive)) {
 }
 
 // Draw draws this primitive onto the screen.
-func (p *Pages) Draw(screen tcell.Screen) {
+func (p *Pages) Draw(screen ubcell.Screen) {
 	for _, page := range p.pages {
 		if !page.Visible {
 			continue

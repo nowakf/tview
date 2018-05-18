@@ -1,9 +1,11 @@
 package tview
 
 import (
+	"image/color"
 	"strings"
 
-	"github.com/gdamore/tcell"
+	"github.com/nowakf/pixel/pixelgl"
+	"github.com/nowakf/ubcell"
 )
 
 // DefaultFormFieldWidth is the default field screen width of form elements
@@ -20,7 +22,7 @@ type FormItem interface {
 	GetLabel() string
 
 	// SetFormAttributes sets a number of item attributes at once.
-	SetFormAttributes(label string, labelColor, bgColor, fieldTextColor, fieldBgColor tcell.Color) FormItem
+	SetFormAttributes(label string, labelColor, bgColor, fieldTextColor, fieldBgColor color.RGBA) FormItem
 
 	// GetFieldWidth returns the width of the form item's field (the area which
 	// is manipulated by the user) in number of screen cells. A value of 0
@@ -32,7 +34,7 @@ type FormItem interface {
 	// entering data into the item. The handler may receive events for the
 	// Enter key (we're done), the Escape key (cancel input), the Tab key (move to
 	// next field), and the Backtab key (move to previous field).
-	SetFinishedFunc(handler func(key tcell.Key)) FormItem
+	SetFinishedFunc(handler func(key *pixelgl.KeyEv)) FormItem
 }
 
 // Form allows you to combine multiple one-line form elements into a vertical
@@ -65,19 +67,19 @@ type Form struct {
 	focusedElement int
 
 	// The label color.
-	labelColor tcell.Color
+	labelColor color.RGBA
 
 	// The background color of the input area.
-	fieldBackgroundColor tcell.Color
+	fieldBackgroundColor color.RGBA
 
 	// The text color of the input area.
-	fieldTextColor tcell.Color
+	fieldTextColor color.RGBA
 
 	// The background color of the buttons.
-	buttonBackgroundColor tcell.Color
+	buttonBackgroundColor color.RGBA
 
 	// The color of the button text.
-	buttonTextColor tcell.Color
+	buttonTextColor color.RGBA
 
 	// An optional function which is called when the user hits Escape.
 	cancel func()
@@ -120,19 +122,19 @@ func (f *Form) SetHorizontal(horizontal bool) *Form {
 }
 
 // SetLabelColor sets the color of the labels.
-func (f *Form) SetLabelColor(color tcell.Color) *Form {
+func (f *Form) SetLabelColor(color color.RGBA) *Form {
 	f.labelColor = color
 	return f
 }
 
 // SetFieldBackgroundColor sets the background color of the input areas.
-func (f *Form) SetFieldBackgroundColor(color tcell.Color) *Form {
+func (f *Form) SetFieldBackgroundColor(color color.RGBA) *Form {
 	f.fieldBackgroundColor = color
 	return f
 }
 
 // SetFieldTextColor sets the text color of the input areas.
-func (f *Form) SetFieldTextColor(color tcell.Color) *Form {
+func (f *Form) SetFieldTextColor(color color.RGBA) *Form {
 	f.fieldTextColor = color
 	return f
 }
@@ -145,13 +147,13 @@ func (f *Form) SetButtonsAlign(align int) *Form {
 }
 
 // SetButtonBackgroundColor sets the background color of the buttons.
-func (f *Form) SetButtonBackgroundColor(color tcell.Color) *Form {
+func (f *Form) SetButtonBackgroundColor(color color.RGBA) *Form {
 	f.buttonBackgroundColor = color
 	return f
 }
 
 // SetButtonTextColor sets the color of the button texts.
-func (f *Form) SetButtonTextColor(color tcell.Color) *Form {
+func (f *Form) SetButtonTextColor(color color.RGBA) *Form {
 	f.buttonTextColor = color
 	return f
 }
@@ -254,7 +256,7 @@ func (f *Form) SetCancelFunc(callback func()) *Form {
 }
 
 // Draw draws this primitive onto the screen.
-func (f *Form) Draw(screen tcell.Screen) {
+func (f *Form) Draw(screen ubcell.Screen) {
 	f.Box.Draw(screen)
 
 	// Determine the dimensions.
@@ -449,18 +451,18 @@ func (f *Form) Focus(delegate func(p Primitive)) {
 	if f.focusedElement < 0 || f.focusedElement >= len(f.items)+len(f.buttons) {
 		f.focusedElement = 0
 	}
-	handler := func(key tcell.Key) {
-		switch key {
-		case tcell.KeyTab, tcell.KeyEnter:
+	handler := func(key *pixelgl.KeyEv) {
+		switch key.Key {
+		case pixelgl.KeyTab, pixelgl.KeyEnter:
 			f.focusedElement++
 			f.Focus(delegate)
-		case tcell.KeyBacktab:
-			f.focusedElement--
-			if f.focusedElement < 0 {
-				f.focusedElement = len(f.items) + len(f.buttons) - 1
-			}
-			f.Focus(delegate)
-		case tcell.KeyEscape:
+		//case pixelgl.KeyBacktab: TODO
+		//	f.focusedElement--
+		//	if f.focusedElement < 0 {
+		//		f.focusedElement = len(f.items) + len(f.buttons) - 1
+		//	}
+		//	f.Focus(delegate)
+		case pixelgl.KeyEscape:
 			if f.cancel != nil {
 				f.cancel()
 			} else {

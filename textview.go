@@ -3,12 +3,14 @@ package tview
 import (
 	"bytes"
 	"fmt"
+	"image/color"
 	"regexp"
 	"sync"
 	"unicode/utf8"
 
-	"github.com/gdamore/tcell"
 	runewidth "github.com/mattn/go-runewidth"
+	"github.com/nowakf/pixel/pixelgl"
+	"github.com/nowakf/ubcell"
 )
 
 // TabSize is the number of spaces with which a tab character will be replaced.
@@ -17,12 +19,12 @@ var TabSize = 4
 // textViewIndex contains information about each line displayed in the text
 // view.
 type textViewIndex struct {
-	Line    int         // The index into the "buffer" variable.
-	Pos     int         // The index into the "buffer" string (byte position).
-	NextPos int         // The (byte) index of the next character in this buffer line.
-	Width   int         // The screen width of this line.
-	Color   tcell.Color // The starting color.
-	Region  string      // The starting region ID.
+	Line    int        // The index into the "buffer" variable.
+	Pos     int        // The index into the "buffer" string (byte position).
+	NextPos int        // The (byte) index of the next character in this buffer line.
+	Width   int        // The screen width of this line.
+	Color   color.RGBA // The starting color.
+	Region  string     // The starting region ID.
 }
 
 // TextView is a box which displays text. It implements the io.Writer interface
@@ -135,7 +137,7 @@ type TextView struct {
 	wordWrap bool
 
 	// The (starting) color of the text.
-	textColor tcell.Color
+	textColor color.RGBA
 
 	// If set to true, the text color can be changed dynamically by piping color
 	// strings in square brackets to the text view.
@@ -154,7 +156,7 @@ type TextView struct {
 
 	// An optional function which is called when the user presses one of the
 	// following keys: Escape, Enter, Tab, Backtab.
-	done func(tcell.Key)
+	done func(*pixelgl.KeyEv)
 }
 
 // NewTextView returns a new text view.
@@ -218,7 +220,7 @@ func (t *TextView) SetTextAlign(align int) *TextView {
 // SetTextColor sets the initial color of the text (which can be changed
 // dynamically by sending color strings in square brackets to the text view if
 // dynamic colors are enabled).
-func (t *TextView) SetTextColor(color tcell.Color) *TextView {
+func (t *TextView) SetTextColor(color color.RGBA) *TextView {
 	t.textColor = color
 	return t
 }
@@ -262,7 +264,7 @@ func (t *TextView) SetChangedFunc(handler func()) *TextView {
 // SetDoneFunc sets a handler which is called when the user presses on the
 // following keys: Escape, Enter, Tab, Backtab. The key is passed to the
 // handler.
-func (t *TextView) SetDoneFunc(handler func(key tcell.Key)) *TextView {
+func (t *TextView) SetDoneFunc(handler func(key *pixelgl.KeyEv)) *TextView {
 	t.done = handler
 	return t
 }
@@ -574,7 +576,7 @@ func (t *TextView) reindexBuffer(width int) {
 				if colorPos < len(colorTagIndices) && colorTagIndices[colorPos][0] <= originalPos+lineLength {
 					// Process color tags.
 					originalPos += colorTagIndices[colorPos][1] - colorTagIndices[colorPos][0]
-					color = tcell.GetColor(colorTags[colorPos][1])
+					color = ubcell.GetColor(colorTags[colorPos][1])
 					colorPos++
 				} else if regionPos < len(regionIndices) && regionIndices[regionPos][0] <= originalPos+lineLength {
 					// Process region tags.
@@ -635,7 +637,7 @@ func (t *TextView) reindexBuffer(width int) {
 }
 
 // Draw draws this primitive onto the screen.
-func (t *TextView) Draw(screen tcell.Screen) {
+func (t *TextView) Draw(screen ubcell.Screen) {
 	t.Lock()
 	defer t.Unlock()
 	t.Box.Draw(screen)
@@ -770,7 +772,7 @@ func (t *TextView) Draw(screen tcell.Screen) {
 			// Get the color.
 			if currentTag < len(colorTags) && pos >= colorTagIndices[currentTag][0] && pos < colorTagIndices[currentTag][1] {
 				if pos == colorTagIndices[currentTag][1]-1 {
-					color = tcell.GetColor(colorTags[currentTag][1])
+					color = ubcell.GetColor(colorTags[currentTag][1])
 					currentTag++
 				}
 				continue
@@ -812,16 +814,16 @@ func (t *TextView) Draw(screen tcell.Screen) {
 			}
 
 			// Do we highlight this character?
-			style := tcell.StyleDefault.Background(t.backgroundColor).Foreground(color)
+			style := ubcell.Style{t.backgroundColor, color}
 			if len(regionID) > 0 {
 				if _, ok := t.highlights[regionID]; ok {
-					style = tcell.StyleDefault.Background(color).Foreground(t.backgroundColor)
+					style = ubcell.Style{color, t.backgroundColor}
 				}
 			}
 
 			// Draw the character.
 			for offset := 0; offset < chWidth; offset++ {
-				screen.SetContent(x+posX+offset, y+line-t.lineOffset, ch, nil, style)
+				screen.SetContent(x+posX+offset, y+line-t.lineOffset, ch, style)
 			}
 
 			// Advance.
@@ -837,14 +839,14 @@ func (t *TextView) Draw(screen tcell.Screen) {
 	}
 }
 
-// InputHandler returns the handler for this primitive.
-func (t *TextView) InputHandler() func(event *tcell.EventKey, setFocus func(p Primitive)) {
-	return t.WrapInputHandler(func(event *tcell.EventKey, setFocus func(p Primitive)) {
-		key := event.Key()
+// KeyHandler returns the handler for this primitive.
+func (t *TextView) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
+	return t.WrapKeyHandler(func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
+		key := event.Key
 
-		if key == tcell.KeyEscape || key == tcell.KeyEnter || key == tcell.KeyTab || key == tcell.KeyBacktab {
+		if key == pixelgl.KeyEscape || key == pixelgl.KeyEnter || key == pixelgl.KeyTab {
 			if t.done != nil {
-				t.done(key)
+				t.done(event)
 			}
 			return
 		}
@@ -853,9 +855,14 @@ func (t *TextView) InputHandler() func(event *tcell.EventKey, setFocus func(p Pr
 			return
 		}
 
+		//switch event().(type){
+		// case *pixelgl.KeyEv:
+		// case tcell.CharEv:
+		// switch Cha.Ch:
+		// etc
 		switch key {
-		case tcell.KeyRune:
-			switch event.Rune() {
+		case pixelgl.KeyRune:
+			switch event.Ch {
 			case 'g': // Home.
 				t.trackEnd = false
 				t.lineOffset = 0
@@ -873,25 +880,25 @@ func (t *TextView) InputHandler() func(event *tcell.EventKey, setFocus func(p Pr
 			case 'l': // Right.
 				t.columnOffset++
 			}
-		case tcell.KeyHome:
+		case pixelgl.KeyHome:
 			t.trackEnd = false
 			t.lineOffset = 0
 			t.columnOffset = 0
-		case tcell.KeyEnd:
+		case pixelgl.KeyEnd:
 			t.trackEnd = true
 			t.columnOffset = 0
-		case tcell.KeyUp:
+		case pixelgl.KeyUp:
 			t.trackEnd = false
 			t.lineOffset--
-		case tcell.KeyDown:
+		case pixelgl.KeyDown:
 			t.lineOffset++
-		case tcell.KeyLeft:
+		case pixelgl.KeyLeft:
 			t.columnOffset--
-		case tcell.KeyRight:
+		case pixelgl.KeyRight:
 			t.columnOffset++
-		case tcell.KeyPgDn, tcell.KeyCtrlF:
+		case pixelgl.KeyPageDown:
 			t.lineOffset += t.pageSize
-		case tcell.KeyPgUp, tcell.KeyCtrlB:
+		case pixelgl.KeyPageUp:
 			t.trackEnd = false
 			t.lineOffset -= t.pageSize
 		}

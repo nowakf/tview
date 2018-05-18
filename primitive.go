@@ -1,13 +1,16 @@
 package tview
 
-import "github.com/gdamore/tcell"
+import (
+	"github.com/nowakf/pixel/pixelgl"
+	"github.com/nowakf/ubcell"
+)
 
 // Primitive is the top-most interface for all graphical primitives.
 type Primitive interface {
 	// Draw draws this primitive onto the screen. Implementers can call the
 	// screen's ShowCursor() function but should only do so when they have focus.
 	// (They will need to keep track of this themselves.)
-	Draw(screen tcell.Screen)
+	Draw(screen ubcell.Screen)
 
 	// GetRect returns the current position of the primitive, x, y, width, and
 	// height.
@@ -16,7 +19,7 @@ type Primitive interface {
 	// SetRect sets a new position of the primitive.
 	SetRect(x, y, width, height int)
 
-	// InputHandler returns a handler which receives key events when it has focus.
+	// KeyHandler returns a handler which receives key events when it has focus.
 	// It is called by the Application class.
 	//
 	// A value of nil may also be returned, in which case this primitive cannot
@@ -31,8 +34,8 @@ type Primitive interface {
 	//
 	// The Box class provides functionality to intercept keyboard input. If you
 	// subclass from Box, it is recommended that you wrap your handler using
-	// Box.WrapInputHandler() so you inherit that functionality.
-	InputHandler() func(event *tcell.EventKey, setFocus func(p Primitive))
+	// Box.WrapKeyHandler() so you inherit that functionality.
+	KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive))
 
 	// Focus is called by the application when the primitive receives focus.
 	// Implementers may call delegate() to pass the focus on to another primitive.

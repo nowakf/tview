@@ -1,10 +1,12 @@
 package tview
 
 import (
+	"image/color"
 	"sort"
 
-	"github.com/gdamore/tcell"
 	colorful "github.com/lucasb-eyer/go-colorful"
+	"github.com/nowakf/pixel/pixelgl"
+	"github.com/nowakf/ubcell"
 )
 
 // TableCell represents one cell inside a Table. You can instantiate this type
@@ -28,10 +30,10 @@ type TableCell struct {
 	Expansion int
 
 	// The color of the cell text.
-	Color tcell.Color
+	Color color.RGBA
 
 	// The background color of the cell.
-	BackgroundColor tcell.Color
+	BackgroundColor color.RGBA
 
 	// If set to true, this cell cannot be selected.
 	NotSelectable bool
@@ -48,7 +50,7 @@ func NewTableCell(text string) *TableCell {
 		Text:            text,
 		Align:           AlignLeft,
 		Color:           Styles.PrimaryTextColor,
-		BackgroundColor: tcell.ColorDefault,
+		BackgroundColor: ubcell.StyleDefault.Background,
 	}
 }
 
@@ -95,14 +97,14 @@ func (c *TableCell) SetExpansion(expansion int) *TableCell {
 }
 
 // SetTextColor sets the cell's text color.
-func (c *TableCell) SetTextColor(color tcell.Color) *TableCell {
+func (c *TableCell) SetTextColor(color color.RGBA) *TableCell {
 	c.Color = color
 	return c
 }
 
 // SetBackgroundColor sets the cell's background color. Set to
-// tcell.ColorDefault to use the table's background color.
-func (c *TableCell) SetBackgroundColor(color tcell.Color) *TableCell {
+// color.RGBADefault to use the table's background color.
+func (c *TableCell) SetBackgroundColor(color color.RGBA) *TableCell {
 	c.BackgroundColor = color
 	return c
 }
@@ -181,7 +183,7 @@ type Table struct {
 	borders bool
 
 	// The color of the borders or the separator.
-	bordersColor tcell.Color
+	bordersColor color.RGBA
 
 	// If there are no borders, the column separator.
 	separator rune
@@ -224,7 +226,7 @@ type Table struct {
 
 	// An optional function which gets called when the user presses Escape, Tab,
 	// or Backtab. Also when the user presses Enter if nothing is selectable.
-	done func(key tcell.Key)
+	done func(key *pixelgl.KeyEv)
 }
 
 // NewTable returns a new table.
@@ -252,7 +254,7 @@ func (t *Table) SetBorders(show bool) *Table {
 }
 
 // SetBordersColor sets the color of the cell borders.
-func (t *Table) SetBordersColor(color tcell.Color) *Table {
+func (t *Table) SetBordersColor(color color.RGBA) *Table {
 	t.bordersColor = color
 	return t
 }
@@ -348,7 +350,7 @@ func (t *Table) SetSelectionChangedFunc(handler func(row, column int)) *Table {
 // Escape, Tab, or Backtab key. If nothing is selected, it is also called when
 // user presses the Enter key (because pressing Enter on a selection triggers
 // the "selected" handler set via SetSelectedFunc()).
-func (t *Table) SetDoneFunc(handler func(key tcell.Key)) *Table {
+func (t *Table) SetDoneFunc(handler func(key *pixelgl.KeyEv)) *Table {
 	t.done = handler
 	return t
 }
@@ -431,7 +433,7 @@ func (t *Table) ScrollToEnd() *Table {
 }
 
 // Draw draws this primitive onto the screen.
-func (t *Table) Draw(screen tcell.Screen) {
+func (t *Table) Draw(screen ubcell.Screen) {
 	t.Box.Draw(screen)
 
 	// What's our available screen space?
@@ -632,9 +634,9 @@ ColumnLoop:
 	}
 
 	// Helper function which draws border runes.
-	borderStyle := tcell.StyleDefault.Background(t.backgroundColor).Foreground(t.bordersColor)
+	borderStyle := ubcell.Style{t.backgroundColor, t.bordersColor}
 	drawBorder := func(colX, rowY int, ch rune) {
-		screen.SetContent(x+colX, y+rowY, ch, nil, borderStyle)
+		screen.SetContent(x+colX, y+rowY, ch, borderStyle)
 	}
 
 	// Draw the cells (and borders).
@@ -686,8 +688,8 @@ ColumnLoop:
 			cell.x, cell.y, cell.width = x+columnX+1, y+rowY, finalWidth
 			_, printed := Print(screen, cell.Text, x+columnX+1, y+rowY, finalWidth, cell.Align, cell.Color)
 			if StringWidth(cell.Text)-printed > 0 && printed > 0 {
-				_, _, style, _ := screen.GetContent(x+columnX+1+finalWidth-1, y+rowY)
-				fg, _, _ := style.Decompose()
+				_, style := screen.GetContent(x+columnX+1+finalWidth-1, y+rowY)
+				fg := style.Foreground
 				Print(screen, string(GraphicsEllipsis), x+columnX+1+finalWidth-1, y+rowY, 1, AlignLeft, fg)
 			}
 		}
@@ -726,38 +728,38 @@ ColumnLoop:
 	}
 
 	// Helper function which colors the background of a box.
-	colorBackground := func(fromX, fromY, w, h int, backgroundColor, textColor tcell.Color, selected bool) {
+	colorBackground := func(fromX, fromY, w, h int, backgroundColor, textColor color.RGBA, selected bool) {
 		for by := 0; by < h && fromY+by < y+height; by++ {
 			for bx := 0; bx < w && fromX+bx < x+width; bx++ {
-				m, c, style, _ := screen.GetContent(fromX+bx, fromY+by)
+				m, style := screen.GetContent(fromX+bx, fromY+by)
 				if selected {
-					fg, _, _ := style.Decompose()
+					fg := style.Foreground
 					if fg == textColor || fg == t.bordersColor {
 						fg = backgroundColor
 					}
-					if fg == tcell.ColorDefault {
+					if fg == ubcell.StyleDefault.Foreground {
 						fg = t.backgroundColor
 					}
-					style = style.Background(textColor).Foreground(fg)
+					style = ubcell.Style{textColor, fg}
 				} else {
-					if backgroundColor == tcell.ColorDefault {
+					if backgroundColor == ubcell.StyleDefault.Background {
 						continue
 					}
-					style = style.Background(backgroundColor)
+					style.Background = backgroundColor
 				}
-				screen.SetContent(fromX+bx, fromY+by, m, c, style)
+				screen.SetContent(fromX+bx, fromY+by, m, style)
 			}
 		}
 	}
 
 	// Color the cell backgrounds. To avoid undesirable artefacts, we combine
 	// the drawing of a cell by background color, selected cells last.
-	cellsByBackgroundColor := make(map[tcell.Color][]*struct {
+	cellsByBackgroundColor := make(map[color.RGBA][]*struct {
 		x, y, w, h int
-		text       tcell.Color
+		text       color.RGBA
 		selected   bool
 	})
-	var backgroundColors []tcell.Color
+	var backgroundColors []color.RGBA
 	for rowY, row := range rows {
 		columnX := 0
 		rowSelected := t.rowsSelectable && !t.columnsSelectable && row == t.selectedRow
@@ -778,7 +780,7 @@ ColumnLoop:
 			entries, ok := cellsByBackgroundColor[cell.BackgroundColor]
 			cellsByBackgroundColor[cell.BackgroundColor] = append(entries, &struct {
 				x, y, w, h int
-				text       tcell.Color
+				text       color.RGBA
 				selected   bool
 			}{
 				x:        bx,
@@ -796,10 +798,10 @@ ColumnLoop:
 	}
 	sort.Slice(backgroundColors, func(i int, j int) bool {
 		// Draw brightest colors last (i.e. on top).
-		r, g, b := backgroundColors[i].RGB()
+		r, g, b, _ := backgroundColors[i].RGBA()
 		c := colorful.Color{R: float64(r) / 255, G: float64(g) / 255, B: float64(b) / 255}
 		_, _, li := c.Hcl()
-		r, g, b = backgroundColors[j].RGB()
+		r, g, b, _ = backgroundColors[j].RGBA()
 		c = colorful.Color{R: float64(r) / 255, G: float64(g) / 255, B: float64(b) / 255}
 		_, _, lj := c.Hcl()
 		return li < lj
@@ -816,17 +818,16 @@ ColumnLoop:
 	}
 }
 
-// InputHandler returns the handler for this primitive.
-func (t *Table) InputHandler() func(event *tcell.EventKey, setFocus func(p Primitive)) {
-	return t.WrapInputHandler(func(event *tcell.EventKey, setFocus func(p Primitive)) {
-		key := event.Key()
+// KeyHandler returns the handler for this primitive.
+func (t *Table) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
+	return t.WrapKeyHandler(func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
+		key := event.Key
 
-		if (!t.rowsSelectable && !t.columnsSelectable && key == tcell.KeyEnter) ||
-			key == tcell.KeyEscape ||
-			key == tcell.KeyTab ||
-			key == tcell.KeyBacktab {
+		if (!t.rowsSelectable && !t.columnsSelectable && key == pixelgl.KeyEnter) ||
+			key == pixelgl.KeyEscape ||
+			key == pixelgl.KeyTab {
 			if t.done != nil {
-				t.done(key)
+				t.done(event)
 			}
 			return
 		}
@@ -978,8 +979,8 @@ func (t *Table) InputHandler() func(event *tcell.EventKey, setFocus func(p Primi
 		)
 
 		switch key {
-		case tcell.KeyRune:
-			switch event.Rune() {
+		case pixelgl.KeyRune:
+			switch event.Ch {
 			case 'g':
 				home()
 			case 'G':
@@ -993,23 +994,23 @@ func (t *Table) InputHandler() func(event *tcell.EventKey, setFocus func(p Primi
 			case 'l':
 				right()
 			}
-		case tcell.KeyHome:
+		case pixelgl.KeyHome:
 			home()
-		case tcell.KeyEnd:
+		case pixelgl.KeyEnd:
 			end()
-		case tcell.KeyUp:
+		case pixelgl.KeyUp:
 			up()
-		case tcell.KeyDown:
+		case pixelgl.KeyDown:
 			down()
-		case tcell.KeyLeft:
+		case pixelgl.KeyLeft:
 			left()
-		case tcell.KeyRight:
+		case pixelgl.KeyRight:
 			right()
-		case tcell.KeyPgDn, tcell.KeyCtrlF:
+		case pixelgl.KeyPageDown:
 			pageDown()
-		case tcell.KeyPgUp, tcell.KeyCtrlB:
+		case pixelgl.KeyPageUp:
 			pageUp()
-		case tcell.KeyEnter:
+		case pixelgl.KeyEnter:
 			if (t.rowsSelectable || t.columnsSelectable) && t.selected != nil {
 				t.selected(t.selectedRow, t.selectedColumn)
 			}

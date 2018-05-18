@@ -1,7 +1,10 @@
 package tview
 
 import (
-	"github.com/gdamore/tcell"
+	"image/color"
+
+	"github.com/nowakf/pixel/pixelgl"
+	"github.com/nowakf/ubcell"
 )
 
 // Checkbox implements a simple box for boolean values which can be checked and
@@ -18,13 +21,13 @@ type Checkbox struct {
 	label string
 
 	// The label color.
-	labelColor tcell.Color
+	labelColor color.RGBA
 
 	// The background color of the input area.
-	fieldBackgroundColor tcell.Color
+	fieldBackgroundColor color.RGBA
 
 	// The text color of the input area.
-	fieldTextColor tcell.Color
+	fieldTextColor color.RGBA
 
 	// An optional function which is called when the user changes the checked
 	// state of this checkbox.
@@ -33,7 +36,7 @@ type Checkbox struct {
 	// An optional function which is called when the user indicated that they
 	// are done entering text. The key which was pressed is provided (tab,
 	// shift-tab, or escape).
-	done func(tcell.Key)
+	done func(*pixelgl.KeyEv)
 }
 
 // NewCheckbox returns a new input field.
@@ -69,25 +72,25 @@ func (c *Checkbox) GetLabel() string {
 }
 
 // SetLabelColor sets the color of the label.
-func (c *Checkbox) SetLabelColor(color tcell.Color) *Checkbox {
+func (c *Checkbox) SetLabelColor(color color.RGBA) *Checkbox {
 	c.labelColor = color
 	return c
 }
 
 // SetFieldBackgroundColor sets the background color of the input area.
-func (c *Checkbox) SetFieldBackgroundColor(color tcell.Color) *Checkbox {
+func (c *Checkbox) SetFieldBackgroundColor(color color.RGBA) *Checkbox {
 	c.fieldBackgroundColor = color
 	return c
 }
 
 // SetFieldTextColor sets the text color of the input area.
-func (c *Checkbox) SetFieldTextColor(color tcell.Color) *Checkbox {
+func (c *Checkbox) SetFieldTextColor(color color.RGBA) *Checkbox {
 	c.fieldTextColor = color
 	return c
 }
 
 // SetFormAttributes sets attributes shared by all form items.
-func (c *Checkbox) SetFormAttributes(label string, labelColor, bgColor, fieldTextColor, fieldBgColor tcell.Color) FormItem {
+func (c *Checkbox) SetFormAttributes(label string, labelColor, bgColor, fieldTextColor, fieldBgColor color.RGBA) FormItem {
 	c.label = label
 	c.labelColor = labelColor
 	c.backgroundColor = bgColor
@@ -116,18 +119,18 @@ func (c *Checkbox) SetChangedFunc(handler func(checked bool)) *Checkbox {
 //   - KeyEscape: Abort text input.
 //   - KeyTab: Move to the next field.
 //   - KeyBacktab: Move to the previous field.
-func (c *Checkbox) SetDoneFunc(handler func(key tcell.Key)) *Checkbox {
+func (c *Checkbox) SetDoneFunc(handler func(key *pixelgl.KeyEv)) *Checkbox {
 	c.done = handler
 	return c
 }
 
 // SetFinishedFunc calls SetDoneFunc().
-func (c *Checkbox) SetFinishedFunc(handler func(key tcell.Key)) FormItem {
+func (c *Checkbox) SetFinishedFunc(handler func(key *pixelgl.KeyEv)) FormItem {
 	return c.SetDoneFunc(handler)
 }
 
 // Draw draws this primitive onto the screen.
-func (c *Checkbox) Draw(screen tcell.Screen) {
+func (c *Checkbox) Draw(screen ubcell.Screen) {
 	c.Box.Draw(screen)
 
 	// Prepare
@@ -142,33 +145,33 @@ func (c *Checkbox) Draw(screen tcell.Screen) {
 	x += drawnWidth
 
 	// Draw checkbox.
-	fieldStyle := tcell.StyleDefault.Background(c.fieldBackgroundColor).Foreground(c.fieldTextColor)
+	fieldStyle := ubcell.Style{c.fieldBackgroundColor, c.fieldTextColor}
 	if c.focus.HasFocus() {
-		fieldStyle = fieldStyle.Background(c.fieldTextColor).Foreground(c.fieldBackgroundColor)
+		fieldStyle = ubcell.Style{c.fieldTextColor, c.fieldBackgroundColor}
 	}
 	checkedRune := 'X'
 	if !c.checked {
 		checkedRune = ' '
 	}
-	screen.SetContent(x, y, checkedRune, nil, fieldStyle)
+	screen.SetContent(x, y, checkedRune, fieldStyle)
 }
 
-// InputHandler returns the handler for this primitive.
-func (c *Checkbox) InputHandler() func(event *tcell.EventKey, setFocus func(p Primitive)) {
-	return c.WrapInputHandler(func(event *tcell.EventKey, setFocus func(p Primitive)) {
+// KeyHandler returns the handler for this primitive.
+func (c *Checkbox) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
+	return c.WrapKeyHandler(func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
 		// Process key event.
-		switch key := event.Key(); key {
-		case tcell.KeyRune, tcell.KeyEnter: // Check.
-			if key == tcell.KeyRune && event.Rune() != ' ' {
+		switch key := event.Key; key {
+		case pixelgl.KeyRune, pixelgl.KeyEnter: // Check.
+			if key == pixelgl.KeyRune && event.Ch != ' ' {
 				break
 			}
 			c.checked = !c.checked
 			if c.changed != nil {
 				c.changed(c.checked)
 			}
-		case tcell.KeyTab, tcell.KeyBacktab, tcell.KeyEscape: // We're done.
+		case pixelgl.KeyTab, pixelgl.KeyEscape: // We're done.
 			if c.done != nil {
-				c.done(key)
+				c.done(event)
 			}
 		}
 	})

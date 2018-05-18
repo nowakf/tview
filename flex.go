@@ -1,7 +1,7 @@
 package tview
 
 import (
-	"github.com/gdamore/tcell"
+	"github.com/nowakf/ubcell"
 )
 
 // Configuration values.
@@ -95,7 +95,7 @@ func (f *Flex) RemoveItem(p Primitive) *Flex {
 }
 
 // Draw draws this primitive onto the screen.
-func (f *Flex) Draw(screen tcell.Screen) {
+func (f *Flex) Draw(screen ubcell.Screen) {
 	f.Box.Draw(screen)
 
 	// Calculate size and position of the items.

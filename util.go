@@ -1,14 +1,15 @@
 package tview
 
 import (
+	"image/color"
 	"math"
 	"regexp"
 	"strconv"
 	"strings"
 	"unicode"
 
-	"github.com/gdamore/tcell"
 	runewidth "github.com/mattn/go-runewidth"
+	"github.com/nowakf/ubcell"
 )
 
 // Text alignment within a box.
@@ -159,7 +160,7 @@ func init() {
 //
 // Returns the number of actual runes printed (not including color tags) and the
 // actual width used for the printed runes.
-func Print(screen tcell.Screen, text string, x, y, maxWidth, align int, color tcell.Color) (int, int) {
+func Print(screen ubcell.Screen, text string, x, y, maxWidth, align int, col color.RGBA) (int, int) {
 	if maxWidth < 0 {
 		return 0, 0
 	}
@@ -176,14 +177,14 @@ func Print(screen tcell.Screen, text string, x, y, maxWidth, align int, color tc
 	// This helper function takes positions for a substring of "runes" and a start
 	// color and returns the substring with the original tags and the new start
 	// color.
-	substring := func(from, to int, color tcell.Color) (string, tcell.Color) {
+	substring := func(from, to int, col color.RGBA) (string, color.RGBA) {
 		var colorPos, escapePos, runePos, startPos int
 		for pos := range text {
 			// Handle color tags.
 			if colorPos < len(colorIndices) && pos >= colorIndices[colorPos][0] && pos < colorIndices[colorPos][1] {
 				if pos == colorIndices[colorPos][1]-1 {
 					if runePos <= from {
-						color = tcell.GetColor(colors[colorPos][1])
+						col = ubcell.GetColor(colors[colorPos][1])
 					}
 					colorPos++
 				}
@@ -203,13 +204,13 @@ func Print(screen tcell.Screen, text string, x, y, maxWidth, align int, color tc
 			if runePos == from {
 				startPos = pos
 			} else if runePos >= to {
-				return text[startPos:pos], color
+				return text[startPos:pos], col
 			}
 
 			runePos++
 		}
 
-		return text[startPos:], color
+		return text[startPos:], col
 	}
 
 	// We want to reduce everything to AlignLeft.
@@ -224,17 +225,17 @@ func Print(screen tcell.Screen, text string, x, y, maxWidth, align int, color tc
 			width += w
 			start = index
 		}
-		text, color = substring(start, len(runes), color)
-		return Print(screen, text, x+maxWidth-width, y, width, AlignLeft, color)
+		text, col = substring(start, len(runes), col)
+		return Print(screen, text, x+maxWidth-width, y, width, AlignLeft, col)
 	} else if align == AlignCenter {
 		width := runewidth.StringWidth(strippedText)
 		if width == maxWidth {
 			// Use the exact space.
-			return Print(screen, text, x, y, maxWidth, AlignLeft, color)
+			return Print(screen, text, x, y, maxWidth, AlignLeft, col)
 		} else if width < maxWidth {
 			// We have more space than we need.
 			half := (maxWidth - width) / 2
-			return Print(screen, text, x+half, y, maxWidth-half, AlignLeft, color)
+			return Print(screen, text, x+half, y, maxWidth-half, AlignLeft, col)
 		} else {
 			// Chop off runes until we have a perfect fit.
 			var choppedLeft, choppedRight, leftIndex, rightIndex int
@@ -250,8 +251,8 @@ func Print(screen tcell.Screen, text string, x, y, maxWidth, align int, color tc
 					rightIndex--
 				}
 			}
-			text, color = substring(leftIndex, rightIndex, color)
-			return Print(screen, text, x, y, maxWidth, AlignLeft, color)
+			text, col = substring(leftIndex, rightIndex, col)
+			return Print(screen, text, x, y, maxWidth, AlignLeft, col)
 		}
 	}
 
@@ -263,7 +264,7 @@ func Print(screen tcell.Screen, text string, x, y, maxWidth, align int, color tc
 		// Handle color tags.
 		if colorPos < len(colorIndices) && pos >= colorIndices[colorPos][0] && pos < colorIndices[colorPos][1] {
 			if pos == colorIndices[colorPos][1]-1 {
-				color = tcell.GetColor(colors[colorPos][1])
+				col = ubcell.GetColor(colors[colorPos][1])
 				colorPos++
 			}
 			continue
@@ -286,11 +287,11 @@ func Print(screen tcell.Screen, text string, x, y, maxWidth, align int, color tc
 		finalX := x + drawnWidth
 
 		// Print the rune.
-		_, _, style, _ := screen.GetContent(finalX, y)
-		style = style.Foreground(color)
+		_, style := screen.GetContent(finalX, y)
+		style.Foreground = col
 		for offset := 0; offset < chWidth; offset++ {
 			// To avoid undesired effects, we place the same character in all cells.
-			screen.SetContent(finalX+offset, y, ch, nil, style)
+			screen.SetContent(finalX+offset, y, ch, style)
 		}
 
 		drawn++
@@ -301,7 +302,7 @@ func Print(screen tcell.Screen, text string, x, y, maxWidth, align int, color tc
 }
 
 // PrintSimple prints white text to the screen at the given position.
-func PrintSimple(screen tcell.Screen, text string, x, y int) {
+func PrintSimple(screen ubcell.Screen, text string, x, y int) {
 	Print(screen, text, x, y, math.MaxInt32, AlignLeft, Styles.PrimaryTextColor)
 }
 
@@ -433,9 +434,9 @@ func WordWrap(text string, width int) (lines []string) {
 // position with the given color, joining it with any existing border graphics
 // rune. Background colors are preserved. At this point, only regular single
 // line borders are supported.
-func PrintJoinedBorder(screen tcell.Screen, x, y int, ch rune, color tcell.Color) {
-	previous, _, style, _ := screen.GetContent(x, y)
-	style = style.Foreground(color)
+func PrintJoinedBorder(screen ubcell.Screen, x, y int, ch rune, col color.RGBA) {
+	previous, style := screen.GetContent(x, y)
+	style.Foreground = col
 
 	// What's the resulting rune?
 	var result rune
@@ -452,5 +453,5 @@ func PrintJoinedBorder(screen tcell.Screen, x, y int, ch rune, color tcell.Color
 	}
 
 	// We only print something if we have something.
-	screen.SetContent(x, y, result, nil, style)
+	screen.SetContent(x, y, result, style)
 }

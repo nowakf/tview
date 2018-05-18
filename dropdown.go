@@ -1,10 +1,12 @@
 package tview
 
 import (
+	"image/color"
 	"strings"
 
-	"github.com/gdamore/tcell"
 	runewidth "github.com/mattn/go-runewidth"
+	"github.com/nowakf/pixel/pixelgl"
+	"github.com/nowakf/ubcell"
 )
 
 // dropDownOption is one option that can be selected in a drop-down primitive.
@@ -40,16 +42,16 @@ type DropDown struct {
 	label string
 
 	// The label color.
-	labelColor tcell.Color
+	labelColor color.RGBA
 
 	// The background color of the input area.
-	fieldBackgroundColor tcell.Color
+	fieldBackgroundColor color.RGBA
 
 	// The text color of the input area.
-	fieldTextColor tcell.Color
+	fieldTextColor color.RGBA
 
 	// The color for prefixes.
-	prefixTextColor tcell.Color
+	prefixTextColor color.RGBA
 
 	// The screen width of the input area. A value of 0 means extend as much as
 	// possible.
@@ -58,7 +60,7 @@ type DropDown struct {
 	// An optional function which is called when the user indicated that they
 	// are done selecting options. The key which was pressed is provided (tab,
 	// shift-tab, or escape).
-	done func(tcell.Key)
+	done func(*pixelgl.KeyEv)
 }
 
 // NewDropDown returns a new drop-down.
@@ -114,19 +116,19 @@ func (d *DropDown) GetLabel() string {
 }
 
 // SetLabelColor sets the color of the label.
-func (d *DropDown) SetLabelColor(color tcell.Color) *DropDown {
+func (d *DropDown) SetLabelColor(color color.RGBA) *DropDown {
 	d.labelColor = color
 	return d
 }
 
 // SetFieldBackgroundColor sets the background color of the options area.
-func (d *DropDown) SetFieldBackgroundColor(color tcell.Color) *DropDown {
+func (d *DropDown) SetFieldBackgroundColor(color color.RGBA) *DropDown {
 	d.fieldBackgroundColor = color
 	return d
 }
 
 // SetFieldTextColor sets the text color of the options area.
-func (d *DropDown) SetFieldTextColor(color tcell.Color) *DropDown {
+func (d *DropDown) SetFieldTextColor(color color.RGBA) *DropDown {
 	d.fieldTextColor = color
 	return d
 }
@@ -134,13 +136,13 @@ func (d *DropDown) SetFieldTextColor(color tcell.Color) *DropDown {
 // SetPrefixTextColor sets the color of the prefix string. The prefix string is
 // shown when the user starts typing text, which directly selects the first
 // option that starts with the typed string.
-func (d *DropDown) SetPrefixTextColor(color tcell.Color) *DropDown {
+func (d *DropDown) SetPrefixTextColor(color color.RGBA) *DropDown {
 	d.prefixTextColor = color
 	return d
 }
 
 // SetFormAttributes sets attributes shared by all form items.
-func (d *DropDown) SetFormAttributes(label string, labelColor, bgColor, fieldTextColor, fieldBgColor tcell.Color) FormItem {
+func (d *DropDown) SetFormAttributes(label string, labelColor, bgColor, fieldTextColor, fieldBgColor color.RGBA) FormItem {
 	d.label = label
 	d.labelColor = labelColor
 	d.backgroundColor = bgColor
@@ -205,18 +207,18 @@ func (d *DropDown) SetOptions(texts []string, selected func(text string, index i
 //   - KeyEscape: Abort selection.
 //   - KeyTab: Move to the next field.
 //   - KeyBacktab: Move to the previous field.
-func (d *DropDown) SetDoneFunc(handler func(key tcell.Key)) *DropDown {
+func (d *DropDown) SetDoneFunc(handler func(key *pixelgl.KeyEv)) *DropDown {
 	d.done = handler
 	return d
 }
 
 // SetFinishedFunc calls SetDoneFunc().
-func (d *DropDown) SetFinishedFunc(handler func(key tcell.Key)) FormItem {
+func (d *DropDown) SetFinishedFunc(handler func(key *pixelgl.KeyEv)) FormItem {
 	return d.SetDoneFunc(handler)
 }
 
 // Draw draws this primitive onto the screen.
-func (d *DropDown) Draw(screen tcell.Screen) {
+func (d *DropDown) Draw(screen ubcell.Screen) {
 	d.Box.Draw(screen)
 
 	// Prepare.
@@ -247,12 +249,13 @@ func (d *DropDown) Draw(screen tcell.Screen) {
 	if rightLimit-x < fieldWidth {
 		fieldWidth = rightLimit - x
 	}
-	fieldStyle := tcell.StyleDefault.Background(d.fieldBackgroundColor)
+	fieldStyle := ubcell.StyleDefault
+	fieldStyle.Background = d.fieldBackgroundColor
 	if d.GetFocusable().HasFocus() && !d.open {
-		fieldStyle = fieldStyle.Background(d.fieldTextColor)
+		fieldStyle.Background = d.fieldTextColor
 	}
 	for index := 0; index < fieldWidth; index++ {
-		screen.SetContent(x+index, y, ' ', nil, fieldStyle)
+		screen.SetContent(x+index, y, ' ', fieldStyle)
 	}
 
 	// Draw selected text.
@@ -297,9 +300,9 @@ func (d *DropDown) Draw(screen tcell.Screen) {
 	}
 }
 
-// InputHandler returns the handler for this primitive.
-func (d *DropDown) InputHandler() func(event *tcell.EventKey, setFocus func(p Primitive)) {
-	return d.WrapInputHandler(func(event *tcell.EventKey, setFocus func(p Primitive)) {
+// KeyHandler returns the handler for this primitive.
+func (d *DropDown) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
+	return d.WrapKeyHandler(func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
 		// A helper function which selects an item in the drop-down list based on
 		// the current prefix.
 		evalPrefix := func() {
@@ -317,12 +320,12 @@ func (d *DropDown) InputHandler() func(event *tcell.EventKey, setFocus func(p Pr
 		}
 
 		// Process key event.
-		switch key := event.Key(); key {
-		case tcell.KeyEnter, tcell.KeyRune, tcell.KeyDown:
+		switch key := event.Key; key {
+		case pixelgl.KeyEnter, pixelgl.KeyRune, pixelgl.KeyDown:
 			d.prefix = ""
 
 			// If the first key was a letter already, it becomes part of the prefix.
-			if r := event.Rune(); key == tcell.KeyRune && r != ' ' {
+			if r := event.Ch; key == pixelgl.KeyRune && r != ' ' {
 				d.prefix += string(r)
 				evalPrefix()
 			}
@@ -339,11 +342,11 @@ func (d *DropDown) InputHandler() func(event *tcell.EventKey, setFocus func(p Pr
 				if d.options[d.currentOption].Selected != nil {
 					d.options[d.currentOption].Selected()
 				}
-			}).SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
-				if event.Key() == tcell.KeyRune {
-					d.prefix += string(event.Rune())
+			}).SetInputCapture(func(event *pixelgl.KeyEv) *pixelgl.KeyEv {
+				if event.Key == pixelgl.KeyRune {
+					d.prefix += string(event.Ch)
 					evalPrefix()
-				} else if event.Key() == tcell.KeyBackspace || event.Key() == tcell.KeyBackspace2 {
+				} else if event.Key == pixelgl.KeyBackspace {
 					if len(d.prefix) > 0 {
 						r := []rune(d.prefix)
 						d.prefix = string(r[:len(r)-1])
@@ -355,9 +358,9 @@ func (d *DropDown) InputHandler() func(event *tcell.EventKey, setFocus func(p Pr
 				return event
 			})
 			setFocus(d.list)
-		case tcell.KeyEscape, tcell.KeyTab, tcell.KeyBacktab:
+		case pixelgl.KeyEscape, pixelgl.KeyTab:
 			if d.done != nil {
-				d.done(key)
+				d.done(event)
 			}
 		}
 	})

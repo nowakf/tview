@@ -1,7 +1,10 @@
 package tview
 
 import (
-	"github.com/gdamore/tcell"
+	"image/color"
+
+	"github.com/nowakf/pixel/pixelgl"
+	"github.com/nowakf/ubcell"
 )
 
 // Button is labeled box that triggers an action when selected.
@@ -14,20 +17,20 @@ type Button struct {
 	label string
 
 	// The label color.
-	labelColor tcell.Color
+	labelColor color.RGBA
 
 	// The label color when the button is in focus.
-	labelColorActivated tcell.Color
+	labelColorActivated color.RGBA
 
 	// The background color when the button is in focus.
-	backgroundColorActivated tcell.Color
+	backgroundColorActivated color.RGBA
 
 	// An optional function which is called when the button was selected.
 	selected func()
 
 	// An optional function which is called when the user leaves the button. A
 	// key is provided indicating which key was pressed to leave (tab or backtab).
-	blur func(tcell.Key)
+	blur func(*pixelgl.KeyEv)
 }
 
 // NewButton returns a new input field.
@@ -55,21 +58,21 @@ func (b *Button) GetLabel() string {
 }
 
 // SetLabelColor sets the color of the button text.
-func (b *Button) SetLabelColor(color tcell.Color) *Button {
+func (b *Button) SetLabelColor(color color.RGBA) *Button {
 	b.labelColor = color
 	return b
 }
 
 // SetLabelColorActivated sets the color of the button text when the button is
 // in focus.
-func (b *Button) SetLabelColorActivated(color tcell.Color) *Button {
+func (b *Button) SetLabelColorActivated(color color.RGBA) *Button {
 	b.labelColorActivated = color
 	return b
 }
 
 // SetBackgroundColorActivated sets the background color of the button text when
 // the button is in focus.
-func (b *Button) SetBackgroundColorActivated(color tcell.Color) *Button {
+func (b *Button) SetBackgroundColorActivated(color color.RGBA) *Button {
 	b.backgroundColorActivated = color
 	return b
 }
@@ -87,13 +90,13 @@ func (b *Button) SetSelectedFunc(handler func()) *Button {
 //   - KeyEscape: Leaving the button with no specific direction.
 //   - KeyTab: Move to the next field.
 //   - KeyBacktab: Move to the previous field.
-func (b *Button) SetBlurFunc(handler func(key tcell.Key)) *Button {
+func (b *Button) SetBlurFunc(handler func(key *pixelgl.KeyEv)) *Button {
 	b.blur = handler
 	return b
 }
 
 // Draw draws this primitive onto the screen.
-func (b *Button) Draw(screen tcell.Screen) {
+func (b *Button) Draw(screen ubcell.Screen) {
 	// Draw the box.
 	borderColor := b.borderColor
 	backgroundColor := b.backgroundColor
@@ -119,18 +122,18 @@ func (b *Button) Draw(screen tcell.Screen) {
 	}
 }
 
-// InputHandler returns the handler for this primitive.
-func (b *Button) InputHandler() func(event *tcell.EventKey, setFocus func(p Primitive)) {
-	return b.WrapInputHandler(func(event *tcell.EventKey, setFocus func(p Primitive)) {
+// KeyHandler returns the handler for this primitive.
+func (b *Button) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
+	return b.WrapKeyHandler(func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
 		// Process key event.
-		switch key := event.Key(); key {
-		case tcell.KeyEnter: // Selected.
+		switch event.Key {
+		case pixelgl.KeyEnter: // Selected.
 			if b.selected != nil {
 				b.selected()
 			}
-		case tcell.KeyBacktab, tcell.KeyTab, tcell.KeyEscape: // Leave. No action.
+		case pixelgl.KeyTab, pixelgl.KeyEscape: // Leave. No action.
 			if b.blur != nil {
-				b.blur(key)
+				b.blur(event)
 			}
 		}
 	})

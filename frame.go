@@ -1,15 +1,17 @@
 package tview
 
 import (
-	"github.com/gdamore/tcell"
+	"image/color"
+
+	"github.com/nowakf/ubcell"
 )
 
 // frameText holds information about a line of text shown in the frame.
 type frameText struct {
-	Text   string      // The text to be displayed.
-	Header bool        // true = place in header, false = place in footer.
-	Align  int         // One of the Align constants.
-	Color  tcell.Color // The text color.
+	Text   string     // The text to be displayed.
+	Header bool       // true = place in header, false = place in footer.
+	Align  int        // One of the Align constants.
+	Color  color.RGBA // The text color.
 }
 
 // Frame is a wrapper which adds a border around another primitive. The top area
@@ -56,7 +58,7 @@ func NewFrame(primitive Primitive) *Frame {
 // the Align constants. Rows in the header are printed top to bottom, rows in
 // the footer are printed bottom to top. Note that long text can overlap as
 // different alignments will be placed on the same row.
-func (f *Frame) AddText(text string, header bool, align int, color tcell.Color) *Frame {
+func (f *Frame) AddText(text string, header bool, align int, color color.RGBA) *Frame {
 	f.text = append(f.text, &frameText{
 		Text:   text,
 		Header: header,
@@ -81,7 +83,7 @@ func (f *Frame) SetBorders(top, bottom, header, footer, left, right int) *Frame 
 }
 
 // Draw draws this primitive onto the screen.
-func (f *Frame) Draw(screen tcell.Screen) {
+func (f *Frame) Draw(screen ubcell.Screen) {
 	f.Box.Draw(screen)
 
 	// Calculate start positions.

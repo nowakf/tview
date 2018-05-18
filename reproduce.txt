@@ -1,0 +1,51 @@
+
+(color.go)
+ubcell.GetColor
+ubcell.NewHexColor
+ubcell.NewRGBColor
+color.RGBA
+	color.RGBABlack
+	color.RGBABlue
+	color.RGBADarkCyan
+	color.RGBADefault
+	color.RGBAGreen
+	color.RGBARed
+	color.RGBAWhite
+	color.RGBAYellow
+
+ubcell.EventResize
+
+(key.go)
+ubcell.Key
+pixelgl.Key
+	pixelgl.KeyBackspace
+	pixelgl.KeyBacktab
+	pixelgl.KeyCtrlB
+	pixelgl.KeyCtrlC
+	pixelgl.KeyCtrlF
+	pixelgl.KeyCtrlN
+	pixelgl.KeyCtrlP
+	pixelgl.KeyCtrlU
+	pixelgl.KeyCtrlW
+	pixelgl.KeyDown
+	pixelgl.KeyEnd
+	pixelgl.KeyEnter
+	pixelgl.KeyEscape
+	pixelgl.KeyHome
+	pixelgl.KeyLeft
+	pixelgl.KeyPageDown
+	pixelgl.KeyPageUp
+	pixelgl.KeyRight
+	pixelgl.KeyString
+	pixelgl.KeyTab
+	pixelgl.KeyUp
+
+(screen.go)
+ubcell.Screen
+ubcell.NewScreen
+
+(style.go)
+ubcell.StyleDefault
+
+//interesting models:
+(cell.go)...

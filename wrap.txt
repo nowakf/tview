@@ -1,0 +1,108 @@
+ubcell.NewRGBColor()
+color.RGBA
+color.RGBA,
+color.RGBA)
+color.RGBABlack,
+color.RGBABlue,
+color.RGBABlue
+color.RGBABlue
+color.RGBABlue
+color.RGBADarkCyan
+color.RGBADarkCyan
+color.RGBADefault
+color.RGBADefault
+color.RGBAGreen
+color.RGBAGreen
+color.RGBAGreen
+color.RGBARed)
+color.RGBARed).
+color.RGBA][]*struct
+color.RGBAWhite
+color.RGBAWhite,
+color.RGBAWhite).
+color.RGBAYellow
+color.RGBAYellow,
+color.RGBAYellow)
+color.RGBAYellow).
+ *ubcell.Key
+ *ubcell.Key)
+ubcell.Key
+ubcell.Key,
+ubcell.Key:
+ubcell.Key)
+ubcell.EventResize:
+ubcell.GetColor
+ubcell.GetColor(),
+ubcell.GetColor(colors[colorPos][1])
+pixelgl.Key
+pixelgl.Key)
+pixelgl.Key))
+pixelgl.KeyBackspace
+pixelgl.KeyBackspace,
+ pixelgl.KeyBackspace2:
+pixelgl.KeyBackspace2
+ pixelgl.KeyBacktab,
+ pixelgl.KeyBacktab:
+pixelgl.KeyBacktab
+pixelgl.KeyBacktab,
+pixelgl.KeyBacktab:
+ pixelgl.KeyCtrlB:
+pixelgl.KeyCtrlB:
+pixelgl.KeyCtrlC
+ pixelgl.KeyCtrlF:
+pixelgl.KeyCtrlF
+pixelgl.KeyCtrlN
+pixelgl.KeyCtrlP
+pixelgl.KeyCtrlU:
+pixelgl.KeyCtrlW:
+ pixelgl.KeyDown,
+ pixelgl.KeyDown:
+pixelgl.KeyDown
+pixelgl.KeyDown:
+pixelgl.KeyEnd
+pixelgl.KeyEnd:
+ pixelgl.KeyEnter:
+pixelgl.KeyEnter
+pixelgl.KeyEnter,
+pixelgl.KeyEnter:
+pixelgl.KeyEnter)
+ pixelgl.KeyEscape:
+pixelgl.KeyEscape
+pixelgl.KeyEscape,
+pixelgl.KeyEscape:
+pixelgl.KeyHome
+pixelgl.KeyHome:
+ pixelgl.KeyLeft:
+pixelgl.KeyLeft
+pixelgl.KeyLeft:
+pixelgl.KeyPageDown,
+pixelgl.KeyPageDown:
+pixelgl.KeyPageUp,
+pixelgl.KeyPageUp:
+ pixelgl.KeyRight:
+pixelgl.KeyRight
+pixelgl.KeyRight:
+ pixelgl.KeyString,
+pixelgl.KeyString
+pixelgl.KeyString,
+pixelgl.KeyString:
+ pixelgl.KeyTab,
+pixelgl.KeyTab
+pixelgl.KeyTab,
+pixelgl.KeyTab:
+ pixelgl.KeyUp,
+pixelgl.KeyUp
+pixelgl.KeyUp:
+ ubcell.NewHexColor(),
+ubcell.NewScreen()
+ubcell.Screen
+ubcell.Screen,
+ubcell.Screen)
+ubcell.Screen))
+ubcell.StyleDefault
+ubcell.StyleDefault.Background(c.fieldBackgroundColor).Foreground(c.fieldTextColor)
+ubcell.StyleDefault.Background(color).Foreground(t.backgroundColor)
+ubcell.StyleDefault.Background(d.fieldBackgroundColor)
+ubcell.StyleDefault.Background(i.fieldBackgroundColor)
+ubcell.StyleDefault.Background(t.backgroundColor).Foreground(color)
+ubcell.StyleDefault.Background(t.backgroundColor).Foreground(t.bordersColor)

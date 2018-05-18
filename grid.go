@@ -1,9 +1,11 @@
 package tview
 
 import (
+	"image/color"
 	"math"
 
-	"github.com/gdamore/tcell"
+	"github.com/nowakf/pixel/pixelgl"
+	"github.com/nowakf/ubcell"
 )
 
 // gridItem represents one primitive and its possible position on a grid.
@@ -55,7 +57,7 @@ type Grid struct {
 	borders bool
 
 	// The color of the borders around grid items.
-	bordersColor tcell.Color
+	bordersColor color.RGBA
 }
 
 // NewGrid returns a new grid-based layout container with no initial primitives.
@@ -157,7 +159,7 @@ func (g *Grid) SetBorders(borders bool) *Grid {
 }
 
 // SetBordersColor sets the color of the item borders.
-func (g *Grid) SetBordersColor(color tcell.Color) *Grid {
+func (g *Grid) SetBordersColor(color color.RGBA) *Grid {
 	g.bordersColor = color
 	return g
 }
@@ -261,12 +263,12 @@ func (g *Grid) HasFocus() bool {
 	return false
 }
 
-// InputHandler returns the handler for this primitive.
-func (g *Grid) InputHandler() func(event *tcell.EventKey, setFocus func(p Primitive)) {
-	return g.WrapInputHandler(func(event *tcell.EventKey, setFocus func(p Primitive)) {
-		switch event.Key() {
-		case tcell.KeyRune:
-			switch event.Rune() {
+// KeyHandler returns the handler for this primitive.
+func (g *Grid) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
+	return g.WrapKeyHandler(func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
+		switch event.Key {
+		case pixelgl.KeyRune:
+			switch event.Ch {
 			case 'g':
 				g.rowOffset, g.columnOffset = 0, 0
 			case 'G':
@@ -280,24 +282,24 @@ func (g *Grid) InputHandler() func(event *tcell.EventKey, setFocus func(p Primit
 			case 'l':
 				g.columnOffset++
 			}
-		case tcell.KeyHome:
+		case pixelgl.KeyHome:
 			g.rowOffset, g.columnOffset = 0, 0
-		case tcell.KeyEnd:
+		case pixelgl.KeyEnd:
 			g.rowOffset = math.MaxInt32
-		case tcell.KeyUp:
+		case pixelgl.KeyUp:
 			g.rowOffset--
-		case tcell.KeyDown:
+		case pixelgl.KeyDown:
 			g.rowOffset++
-		case tcell.KeyLeft:
+		case pixelgl.KeyLeft:
 			g.columnOffset--
-		case tcell.KeyRight:
+		case pixelgl.KeyRight:
 			g.columnOffset++
 		}
 	})
 }
 
 // Draw draws this primitive onto the screen.
-func (g *Grid) Draw(screen tcell.Screen) {
+func (g *Grid) Draw(screen ubcell.Screen) {
 	g.Box.Draw(screen)
 	x, y, width, height := g.GetInnerRect()
 

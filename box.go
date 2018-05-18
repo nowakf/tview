@@ -1,7 +1,10 @@
 package tview
 
 import (
-	"github.com/gdamore/tcell"
+	"image/color"
+
+	"github.com/nowakf/pixel/pixelgl"
+	"github.com/nowakf/ubcell"
 )
 
 // Box implements Primitive with a background and optional elements such as a
@@ -23,20 +26,20 @@ type Box struct {
 	paddingTop, paddingBottom, paddingLeft, paddingRight int
 
 	// The box's background color.
-	backgroundColor tcell.Color
+	backgroundColor color.RGBA
 
 	// Whether or not a border is drawn, reducing the box's space for content by
 	// two in width and height.
 	border bool
 
 	// The color of the border.
-	borderColor tcell.Color
+	borderColor color.RGBA
 
 	// The title. Only visible if there is a border, too.
 	title string
 
 	// The color of the title.
-	titleColor tcell.Color
+	titleColor color.RGBA
 
 	// The alignment of the title.
 	titleAlign int
@@ -55,10 +58,10 @@ type Box struct {
 	// An optional capture function which receives a key event and returns the
 	// event to be forwarded to the primitive's default input handler (nil if
 	// nothing should be forwarded).
-	inputCapture func(event *tcell.EventKey) *tcell.EventKey
+	inputCapture func(event *pixelgl.KeyEv) *pixelgl.KeyEv
 
 	// An optional function which is called before the box is drawn.
-	draw func(screen tcell.Screen, x, y, width, height int) (int, int, int, int)
+	draw func(screen ubcell.Screen, x, y, width, height int) (int, int, int, int)
 }
 
 // NewBox returns a Box without a border.
@@ -124,24 +127,24 @@ func (b *Box) SetRect(x, y, width, height int) {
 // must return the box's inner dimensions (x, y, width, height) which will be
 // returned by GetInnerRect(), used by descendent primitives to draw their own
 // content.
-func (b *Box) SetDrawFunc(handler func(screen tcell.Screen, x, y, width, height int) (int, int, int, int)) *Box {
+func (b *Box) SetDrawFunc(handler func(screen ubcell.Screen, x, y, width, height int) (int, int, int, int)) *Box {
 	b.draw = handler
 	return b
 }
 
 // GetDrawFunc returns the callback function which was installed with
 // SetDrawFunc() or nil if no such function has been installed.
-func (b *Box) GetDrawFunc() func(screen tcell.Screen, x, y, width, height int) (int, int, int, int) {
+func (b *Box) GetDrawFunc() func(screen ubcell.Screen, x, y, width, height int) (int, int, int, int) {
 	return b.draw
 }
 
-// WrapInputHandler wraps an input handler (see InputHandler()) with the
+// WrapKeyHandler wraps an input handler (see KeyHandler()) with the
 // functionality to capture input (see SetInputCapture()) before passing it
 // on to the provided (default) input handler.
 //
 // This is only meant to be used by subclassing primitives.
-func (b *Box) WrapInputHandler(inputHandler func(*tcell.EventKey, func(p Primitive))) func(*tcell.EventKey, func(p Primitive)) {
-	return func(event *tcell.EventKey, setFocus func(p Primitive)) {
+func (b *Box) WrapKeyHandler(inputHandler func(*pixelgl.KeyEv, func(p Primitive))) func(*pixelgl.KeyEv, func(p Primitive)) {
+	return func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
 		if b.inputCapture != nil {
 			event = b.inputCapture(event)
 		}
@@ -151,9 +154,9 @@ func (b *Box) WrapInputHandler(inputHandler func(*tcell.EventKey, func(p Primiti
 	}
 }
 
-// InputHandler returns nil.
-func (b *Box) InputHandler() func(event *tcell.EventKey, setFocus func(p Primitive)) {
-	return b.WrapInputHandler(nil)
+// KeyHandler returns nil.
+func (b *Box) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
+	return b.WrapKeyHandler(nil)
 }
 
 // SetInputCapture installs a function which captures key events before they are
@@ -163,19 +166,19 @@ func (b *Box) InputHandler() func(event *tcell.EventKey, setFocus func(p Primiti
 // be called.
 //
 // Providing a nil handler will remove a previously existing handler.
-func (b *Box) SetInputCapture(capture func(event *tcell.EventKey) *tcell.EventKey) *Box {
+func (b *Box) SetInputCapture(capture func(event *pixelgl.KeyEv) *pixelgl.KeyEv) *Box {
 	b.inputCapture = capture
 	return b
 }
 
 // GetInputCapture returns the function installed with SetInputCapture() or nil
 // if no such function has been installed.
-func (b *Box) GetInputCapture() func(event *tcell.EventKey) *tcell.EventKey {
+func (b *Box) GetKeyInputCapture() func(event *pixelgl.KeyEv) *pixelgl.KeyEv {
 	return b.inputCapture
 }
 
 // SetBackgroundColor sets the box's background color.
-func (b *Box) SetBackgroundColor(color tcell.Color) *Box {
+func (b *Box) SetBackgroundColor(color color.RGBA) *Box {
 	b.backgroundColor = color
 	return b
 }
@@ -188,7 +191,7 @@ func (b *Box) SetBorder(show bool) *Box {
 }
 
 // SetBorderColor sets the box's border color.
-func (b *Box) SetBorderColor(color tcell.Color) *Box {
+func (b *Box) SetBorderColor(color color.RGBA) *Box {
 	b.borderColor = color
 	return b
 }
@@ -200,7 +203,7 @@ func (b *Box) SetTitle(title string) *Box {
 }
 
 // SetTitleColor sets the box's title color.
-func (b *Box) SetTitleColor(color tcell.Color) *Box {
+func (b *Box) SetTitleColor(color color.RGBA) *Box {
 	b.titleColor = color
 	return b
 }
@@ -213,25 +216,24 @@ func (b *Box) SetTitleAlign(align int) *Box {
 }
 
 // Draw draws this primitive onto the screen.
-func (b *Box) Draw(screen tcell.Screen) {
+func (b *Box) Draw(screen ubcell.Screen) {
 	// Don't draw anything if there is no space.
 	if b.width <= 0 || b.height <= 0 {
 		return
 	}
 
-	def := tcell.StyleDefault
+	def := ubcell.StyleDefault
 
-	// Fill background.
-	background := def.Background(b.backgroundColor)
+	//Fill background.
 	for y := b.y; y < b.y+b.height; y++ {
 		for x := b.x; x < b.x+b.width; x++ {
-			screen.SetContent(x, y, ' ', nil, background)
+			screen.SetContent(x, y, ' ', def)
 		}
 	}
 
 	// Draw border.
 	if b.border && b.width >= 2 && b.height >= 2 {
-		border := background.Foreground(b.borderColor)
+		border := ubcell.Style{b.backgroundColor, b.borderColor}
 		var vertical, horizontal, topLeft, topRight, bottomLeft, bottomRight rune
 		if b.focus.HasFocus() {
 			vertical = GraphicsDbVertBar
@@ -249,25 +251,24 @@ func (b *Box) Draw(screen tcell.Screen) {
 			bottomRight = GraphicsBottomRightCorner
 		}
 		for x := b.x + 1; x < b.x+b.width-1; x++ {
-			screen.SetContent(x, b.y, vertical, nil, border)
-			screen.SetContent(x, b.y+b.height-1, vertical, nil, border)
+			screen.SetContent(x, b.y, vertical, border)
+			screen.SetContent(x, b.y+b.height-1, vertical, border)
 		}
 		for y := b.y + 1; y < b.y+b.height-1; y++ {
-			screen.SetContent(b.x, y, horizontal, nil, border)
-			screen.SetContent(b.x+b.width-1, y, horizontal, nil, border)
+			screen.SetContent(b.x, y, horizontal, border)
+			screen.SetContent(b.x+b.width-1, y, horizontal, border)
 		}
-		screen.SetContent(b.x, b.y, topLeft, nil, border)
-		screen.SetContent(b.x+b.width-1, b.y, topRight, nil, border)
-		screen.SetContent(b.x, b.y+b.height-1, bottomLeft, nil, border)
-		screen.SetContent(b.x+b.width-1, b.y+b.height-1, bottomRight, nil, border)
+		screen.SetContent(b.x, b.y, topLeft, border)
+		screen.SetContent(b.x+b.width-1, b.y, topRight, border)
+		screen.SetContent(b.x, b.y+b.height-1, bottomLeft, border)
+		screen.SetContent(b.x+b.width-1, b.y+b.height-1, bottomRight, border)
 
 		// Draw title.
 		if b.title != "" && b.width >= 4 {
 			_, printed := Print(screen, b.title, b.x+1, b.y, b.width-2, b.titleAlign, b.titleColor)
 			if StringWidth(b.title)-printed > 0 && printed > 0 {
-				_, _, style, _ := screen.GetContent(b.x+b.width-2, b.y)
-				fg, _, _ := style.Decompose()
-				Print(screen, string(GraphicsEllipsis), b.x+b.width-2, b.y, 1, AlignLeft, fg)
+				_, style := screen.GetContent(b.x+b.width-2, b.y)
+				Print(screen, string(GraphicsEllipsis), b.x+b.width-2, b.y, 1, AlignLeft, style.Foreground)
 			}
 		}
 	}

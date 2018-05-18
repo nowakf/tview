@@ -1,0 +1,683 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/7918d19f/
+AddAndSwitchToPage	pages.go	/^func (p *Pages) AddAndSwitchToPage(name string, item Primitive, resize bool) *Pages {$/;"	f	unknown:tview.Pages
+AddButton	form.go	/^func (f *Form) AddButton(label string, selected func()) *Form {$/;"	f	unknown:tview.Form
+AddButtons	modal.go	/^func (m *Modal) AddButtons(labels []string) *Modal {$/;"	f	unknown:tview.Modal
+AddCheckbox	form.go	/^func (f *Form) AddCheckbox(label string, checked bool, changed func(checked bool)) *Form {$/;"	f	unknown:tview.Form
+AddDropDown	form.go	/^func (f *Form) AddDropDown(label string, options []string, initialOption int, selected func(opti/;"	f	unknown:tview.Form
+AddFormItem	form.go	/^func (f *Form) AddFormItem(item FormItem) *Form {$/;"	f	unknown:tview.Form
+AddInputField	form.go	/^func (f *Form) AddInputField(label, value string, fieldWidth int, accept func(textToCheck string/;"	f	unknown:tview.Form
+AddItem	flex.go	/^func (f *Flex) AddItem(item Primitive, fixedSize, proportion int, focus bool) *Flex {$/;"	f	unknown:tview.Flex
+AddItem	grid.go	/^func (g *Grid) AddItem(p Primitive, row, column, height, width, minGridHeight, minGridWidth int,/;"	f	unknown:tview.Grid
+AddItem	list.go	/^func (l *List) AddItem(mainText, secondaryText string, shortcut rune, selected func()) *List {$/;"	f	unknown:tview.List
+AddOption	dropdown.go	/^func (d *DropDown) AddOption(text string, selected func()) *DropDown {$/;"	f	unknown:tview.DropDown
+AddPage	pages.go	/^func (p *Pages) AddPage(name string, item Primitive, resize, visible bool) *Pages {$/;"	f	unknown:tview.Pages
+AddPasswordField	form.go	/^func (f *Form) AddPasswordField(label, value string, fieldWidth int, mask rune, changed func(tex/;"	f	unknown:tview.Form
+AddText	frame.go	/^func (f *Frame) AddText(text string, header bool, align int, color color.RGBA) *Frame {$/;"	f	unknown:tview.Frame
+Align	frame.go	/^	Align  int        \/\/ One of the Align constants.$/;"	m	struct:tview.frameText
+Align	table.go	/^	Align int$/;"	m	struct:tview.TableCell
+AlignCenter	util.go	/^	AlignCenter$/;"	c	package:tview
+AlignLeft	util.go	/^	AlignLeft = iota$/;"	c	package:tview
+AlignRight	util.go	/^	AlignRight$/;"	c	package:tview
+App	_app.go	/^func App(w *pixelgl.Window) *app {$/;"	f	package:tview
+Application	application.go	/^type Application struct {$/;"	s	package:tview
+BackgroundColor	table.go	/^	BackgroundColor color.RGBA$/;"	m	struct:tview.TableCell
+Blur	box.go	/^func (b *Box) Blur() {$/;"	f	unknown:tview.Box
+Blur	grid.go	/^func (g *Grid) Blur() {$/;"	f	unknown:tview.Grid
+Box	box.go	/^type Box struct {$/;"	s	package:tview
+Box	button.go	/^	*Box$/;"	M	struct:tview.Button	typeref:typename:*Box
+Box	checkbox.go	/^	*Box$/;"	M	struct:tview.Checkbox	typeref:typename:*Box
+Box	demos/primitive/main.go	/^	*tview.Box$/;"	M	struct:main.RadioButtons	typeref:typename:*tview.Box
+Box	dropdown.go	/^	*Box$/;"	M	struct:tview.DropDown	typeref:typename:*Box
+Box	flex.go	/^	*Box$/;"	M	struct:tview.Flex	typeref:typename:*Box
+Box	form.go	/^	*Box$/;"	M	struct:tview.Form	typeref:typename:*Box
+Box	frame.go	/^	*Box$/;"	M	struct:tview.Frame	typeref:typename:*Box
+Box	grid.go	/^	*Box$/;"	M	struct:tview.Grid	typeref:typename:*Box
+Box	inputfield.go	/^	*Box$/;"	M	struct:tview.InputField	typeref:typename:*Box
+Box	list.go	/^	*Box$/;"	M	struct:tview.List	typeref:typename:*Box
+Box	modal.go	/^	*Box$/;"	M	struct:tview.Modal	typeref:typename:*Box
+Box	pages.go	/^	*Box$/;"	M	struct:tview.Pages	typeref:typename:*Box
+Box	table.go	/^	*Box$/;"	M	struct:tview.Table	typeref:typename:*Box
+Box	textview.go	/^	*Box$/;"	M	struct:tview.TextView	typeref:typename:*Box
+Button	button.go	/^type Button struct {$/;"	s	package:tview
+Center	demos/presentation/center.go	/^func Center(width, height int, p tview.Primitive) tview.Primitive {$/;"	f	package:main
+Checkbox	checkbox.go	/^type Checkbox struct {$/;"	s	package:tview
+Clear	form.go	/^func (f *Form) Clear(includeButtons bool) *Form {$/;"	f	unknown:tview.Form
+Clear	frame.go	/^func (f *Frame) Clear() *Frame {$/;"	f	unknown:tview.Frame
+Clear	grid.go	/^func (g *Grid) Clear() *Grid {$/;"	f	unknown:tview.Grid
+Clear	list.go	/^func (l *List) Clear() *List {$/;"	f	unknown:tview.List
+Clear	table.go	/^func (t *Table) Clear() *Table {$/;"	f	unknown:tview.Table
+Clear	textview.go	/^func (t *TextView) Clear() *TextView {$/;"	f	unknown:tview.TextView
+Code	demos/presentation/code.go	/^func Code(p tview.Primitive, width, height int, code string) tview.Primitive {$/;"	f	package:main
+Color	frame.go	/^	Color  color.RGBA \/\/ The text color.$/;"	m	struct:tview.frameText
+Color	table.go	/^	Color color.RGBA$/;"	m	struct:tview.TableCell
+Color	textview.go	/^	Color   color.RGBA \/\/ The starting color.$/;"	m	struct:tview.textViewIndex
+Colors	demos/presentation/colors.go	/^func Colors(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
+Column	grid.go	/^	Row, Column                 int       \/\/ The top-left grid cell where the item is placed.$/;"	m	struct:tview.gridItem
+Cover	demos/presentation/cover.go	/^func Cover(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
+DefaultFormFieldWidth	form.go	/^var DefaultFormFieldWidth = 10$/;"	v	package:tview
+Draw	_app.go	/^func (a *app) Draw(t pixel.Target, m pixel.Matrix) {$/;"	f	unknown:tview.app
+Draw	application.go	/^func (a *Application) Draw() *Application {$/;"	f	unknown:tview.Application
+Draw	box.go	/^func (b *Box) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Box
+Draw	button.go	/^func (b *Button) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Button
+Draw	checkbox.go	/^func (c *Checkbox) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Checkbox
+Draw	demos/primitive/main.go	/^func (r *RadioButtons) Draw(screen tcell.Screen) {$/;"	f	unknown:main.RadioButtons
+Draw	dropdown.go	/^func (d *DropDown) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.DropDown
+Draw	flex.go	/^func (f *Flex) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Flex
+Draw	form.go	/^func (f *Form) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Form
+Draw	frame.go	/^func (f *Frame) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Frame
+Draw	grid.go	/^func (g *Grid) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Grid
+Draw	inputfield.go	/^func (i *InputField) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.InputField
+Draw	list.go	/^func (l *List) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.List
+Draw	modal.go	/^func (m *Modal) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Modal
+Draw	pages.go	/^func (p *Pages) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Pages
+Draw	table.go	/^func (t *Table) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Table
+Draw	textview.go	/^func (t *TextView) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.TextView
+DropDown	dropdown.go	/^type DropDown struct {$/;"	s	package:tview
+End	demos/presentation/end.go	/^func End(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
+Expansion	table.go	/^	Expansion int$/;"	m	struct:tview.TableCell
+FixedSize	flex.go	/^	FixedSize  int       \/\/ The item's fixed size which may not be changed, 0 if it has no fixed /;"	m	struct:tview.flexItem
+Flex	demos/presentation/flex.go	/^func Flex(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
+Flex	flex.go	/^type Flex struct {$/;"	s	package:tview
+FlexColumn	flex.go	/^	FlexColumn$/;"	c	package:tview
+FlexRow	flex.go	/^	FlexRow = iota$/;"	c	package:tview
+Focus	box.go	/^func (b *Box) Focus(delegate func(p Primitive)) {$/;"	f	unknown:tview.Box
+Focus	dropdown.go	/^func (d *DropDown) Focus(delegate func(p Primitive)) {$/;"	f	unknown:tview.DropDown
+Focus	flex.go	/^	Focus      bool      \/\/ Whether or not this item attracts the layout's focus.$/;"	m	struct:tview.flexItem
+Focus	flex.go	/^func (f *Flex) Focus(delegate func(p Primitive)) {$/;"	f	unknown:tview.Flex
+Focus	form.go	/^func (f *Form) Focus(delegate func(p Primitive)) {$/;"	f	unknown:tview.Form
+Focus	frame.go	/^func (f *Frame) Focus(delegate func(p Primitive)) {$/;"	f	unknown:tview.Frame
+Focus	grid.go	/^	Focus                       bool      \/\/ Whether or not this item attracts the layout's focus/;"	m	struct:tview.gridItem
+Focus	grid.go	/^func (g *Grid) Focus(delegate func(p Primitive)) {$/;"	f	unknown:tview.Grid
+Focus	modal.go	/^func (m *Modal) Focus(delegate func(p Primitive)) {$/;"	f	unknown:tview.Modal
+Focus	pages.go	/^func (p *Pages) Focus(delegate func(p Primitive)) {$/;"	f	unknown:tview.Pages
+Focusable	focusable.go	/^type Focusable interface {$/;"	i	package:tview
+Form	demos/presentation/form.go	/^func Form(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
+Form	form.go	/^type Form struct {$/;"	s	package:tview
+FormItem	form.go	/^type FormItem interface {$/;"	i	package:tview
+Frame	frame.go	/^type Frame struct {$/;"	s	package:tview
+GetAfterDrawFunc	application.go	/^func (a *Application) GetAfterDrawFunc() func(screen ubcell.Screen) {$/;"	f	unknown:tview.Application
+GetBeforeDrawFunc	application.go	/^func (a *Application) GetBeforeDrawFunc() func(screen ubcell.Screen) bool {$/;"	f	unknown:tview.Application
+GetCell	table.go	/^func (t *Table) GetCell(row, column int) *TableCell {$/;"	f	unknown:tview.Table
+GetColumnCount	table.go	/^func (t *Table) GetColumnCount() int {$/;"	f	unknown:tview.Table
+GetCurrentItem	list.go	/^func (l *List) GetCurrentItem() int {$/;"	f	unknown:tview.List
+GetCurrentOption	dropdown.go	/^func (d *DropDown) GetCurrentOption() (int, string) {$/;"	f	unknown:tview.DropDown
+GetDrawFunc	box.go	/^func (b *Box) GetDrawFunc() func(screen ubcell.Screen, x, y, width, height int) (int, int, int, /;"	f	unknown:tview.Box
+GetFieldWidth	checkbox.go	/^func (c *Checkbox) GetFieldWidth() int {$/;"	f	unknown:tview.Checkbox
+GetFieldWidth	dropdown.go	/^func (d *DropDown) GetFieldWidth() int {$/;"	f	unknown:tview.DropDown
+GetFieldWidth	inputfield.go	/^func (i *InputField) GetFieldWidth() int {$/;"	f	unknown:tview.InputField
+GetFocus	application.go	/^func (a *Application) GetFocus() Primitive {$/;"	f	unknown:tview.Application
+GetFocusable	box.go	/^func (b *Box) GetFocusable() Focusable {$/;"	f	unknown:tview.Box
+GetFormItem	form.go	/^func (f *Form) GetFormItem(index int) FormItem {$/;"	f	unknown:tview.Form
+GetHighlights	textview.go	/^func (t *TextView) GetHighlights() (regionIDs []string) {$/;"	f	unknown:tview.TextView
+GetInnerRect	box.go	/^func (b *Box) GetInnerRect() (int, int, int, int) {$/;"	f	unknown:tview.Box
+GetInputCapture	_app.go	/^func (a *app) GetInputCapture() func(event *pixelgl.KeyEv) *pixelgl.KeyEv {$/;"	f	unknown:tview.app
+GetInputCapture	application.go	/^func (a *Application) GetInputCapture() func(event *pixelgl.KeyEv) *pixelgl.KeyEv {$/;"	f	unknown:tview.Application
+GetKeyInputCapture	box.go	/^func (b *Box) GetKeyInputCapture() func(event *pixelgl.KeyEv) *pixelgl.KeyEv {$/;"	f	unknown:tview.Box
+GetLabel	button.go	/^func (b *Button) GetLabel() string {$/;"	f	unknown:tview.Button
+GetLabel	checkbox.go	/^func (c *Checkbox) GetLabel() string {$/;"	f	unknown:tview.Checkbox
+GetLabel	dropdown.go	/^func (d *DropDown) GetLabel() string {$/;"	f	unknown:tview.DropDown
+GetLabel	inputfield.go	/^func (i *InputField) GetLabel() string {$/;"	f	unknown:tview.InputField
+GetLastPosition	table.go	/^func (c *TableCell) GetLastPosition() (x, y, width int) {$/;"	f	unknown:tview.TableCell
+GetOffset	grid.go	/^func (g *Grid) GetOffset() (rows, columns int) {$/;"	f	unknown:tview.Grid
+GetOffset	table.go	/^func (t *Table) GetOffset() (row, column int) {$/;"	f	unknown:tview.Table
+GetRect	box.go	/^func (b *Box) GetRect() (int, int, int, int) {$/;"	f	unknown:tview.Box
+GetRegionText	textview.go	/^func (t *TextView) GetRegionText(regionID string) string {$/;"	f	unknown:tview.TextView
+GetRowCount	table.go	/^func (t *Table) GetRowCount() int {$/;"	f	unknown:tview.Table
+GetSelectable	table.go	/^func (t *Table) GetSelectable() (rows, columns bool) {$/;"	f	unknown:tview.Table
+GetSelection	table.go	/^func (t *Table) GetSelection() (row, column int) {$/;"	f	unknown:tview.Table
+GetText	inputfield.go	/^func (i *InputField) GetText() string {$/;"	f	unknown:tview.InputField
+GraphicsBottomLeftCorner	util.go	/^	GraphicsBottomLeftCorner    = '\\u2514'$/;"	c	package:tview
+GraphicsBottomRightCorner	util.go	/^	GraphicsBottomRightCorner   = '\\u2518'$/;"	c	package:tview
+GraphicsBottomT	util.go	/^	GraphicsBottomT             = '\\u2534'$/;"	c	package:tview
+GraphicsCross	util.go	/^	GraphicsCross               = '\\u253c'$/;"	c	package:tview
+GraphicsDbBottomLeftCorner	util.go	/^	GraphicsDbBottomLeftCorner  = '\\u255a'$/;"	c	package:tview
+GraphicsDbBottomRightCorner	util.go	/^	GraphicsDbBottomRightCorner = '\\u255d'$/;"	c	package:tview
+GraphicsDbHorBar	util.go	/^	GraphicsDbHorBar            = '\\u2551'$/;"	c	package:tview
+GraphicsDbTopLeftCorner	util.go	/^	GraphicsDbTopLeftCorner     = '\\u2554'$/;"	c	package:tview
+GraphicsDbTopRightCorner	util.go	/^	GraphicsDbTopRightCorner    = '\\u2557'$/;"	c	package:tview
+GraphicsDbVertBar	util.go	/^	GraphicsDbVertBar           = '\\u2550'$/;"	c	package:tview
+GraphicsEllipsis	util.go	/^	GraphicsEllipsis            = '\\u2026'$/;"	c	package:tview
+GraphicsHoriBar	util.go	/^	GraphicsHoriBar             = '\\u2500'$/;"	c	package:tview
+GraphicsLeftT	util.go	/^	GraphicsLeftT               = '\\u251c'$/;"	c	package:tview
+GraphicsRightT	util.go	/^	GraphicsRightT              = '\\u2524'$/;"	c	package:tview
+GraphicsTopLeftCorner	util.go	/^	GraphicsTopLeftCorner       = '\\u250c'$/;"	c	package:tview
+GraphicsTopRightCorner	util.go	/^	GraphicsTopRightCorner      = '\\u2510'$/;"	c	package:tview
+GraphicsTopT	util.go	/^	GraphicsTopT                = '\\u252c'$/;"	c	package:tview
+GraphicsVertBar	util.go	/^	GraphicsVertBar             = '\\u2502'$/;"	c	package:tview
+Grid	demos/presentation/grid.go	/^func Grid(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
+Grid	grid.go	/^type Grid struct {$/;"	s	package:tview
+HasFocus	box.go	/^func (b *Box) HasFocus() bool {$/;"	f	unknown:tview.Box
+HasFocus	dropdown.go	/^func (d *DropDown) HasFocus() bool {$/;"	f	unknown:tview.DropDown
+HasFocus	flex.go	/^func (f *Flex) HasFocus() bool {$/;"	f	unknown:tview.Flex
+HasFocus	form.go	/^func (f *Form) HasFocus() bool {$/;"	f	unknown:tview.Form
+HasFocus	frame.go	/^func (f *Frame) HasFocus() bool {$/;"	f	unknown:tview.Frame
+HasFocus	grid.go	/^func (g *Grid) HasFocus() bool {$/;"	f	unknown:tview.Grid
+HasFocus	modal.go	/^func (m *Modal) HasFocus() bool {$/;"	f	unknown:tview.Modal
+HasFocus	pages.go	/^func (p *Pages) HasFocus() bool {$/;"	f	unknown:tview.Pages
+HasPage	pages.go	/^func (p *Pages) HasPage(name string) bool {$/;"	f	unknown:tview.Pages
+Header	frame.go	/^	Header bool       \/\/ true = place in header, false = place in footer.$/;"	m	struct:tview.frameText
+Height	grid.go	/^	Width, Height               int       \/\/ The number of rows and columns the item occupies.$/;"	m	struct:tview.gridItem
+HelloWorld	demos/presentation/helloworld.go	/^func HelloWorld(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
+HidePage	pages.go	/^func (p *Pages) HidePage(name string) *Pages {$/;"	f	unknown:tview.Pages
+Highlight	textview.go	/^func (t *TextView) Highlight(regionIDs ...string) *TextView {$/;"	f	unknown:tview.TextView
+InputField	demos/presentation/inputfield.go	/^func InputField(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
+InputField	inputfield.go	/^type InputField struct {$/;"	s	package:tview
+InputFieldFloat	util.go	/^	InputFieldFloat func(text string, ch rune) bool$/;"	v	package:tview
+InputFieldInteger	util.go	/^	InputFieldInteger func(text string, ch rune) bool$/;"	v	package:tview
+InputFieldMaxLength	util.go	/^	InputFieldMaxLength func(maxLength int) func(text string, ch rune) bool$/;"	v	package:tview
+InputHandler	demos/primitive/main.go	/^func (r *RadioButtons) InputHandler() func(event *tcell.EventKey, setFocus func(p tview.Primitiv/;"	f	unknown:main.RadioButtons
+Introduction	demos/presentation/introduction.go	/^func Introduction(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
+IsChecked	checkbox.go	/^func (c *Checkbox) IsChecked() bool {$/;"	f	unknown:tview.Checkbox
+Item	flex.go	/^	Item       Primitive \/\/ The item to be positioned. May be nil for an empty item.$/;"	m	struct:tview.flexItem
+Item	grid.go	/^	Item                        Primitive \/\/ The item to be positioned. May be nil for an empty i/;"	m	struct:tview.gridItem
+Item	pages.go	/^	Item    Primitive \/\/ The page's primitive.$/;"	m	struct:tview.page
+KeyHandler	box.go	/^func (b *Box) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Box
+KeyHandler	button.go	/^func (b *Button) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Button
+KeyHandler	checkbox.go	/^func (c *Checkbox) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Checkbox
+KeyHandler	dropdown.go	/^func (d *DropDown) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.DropDown
+KeyHandler	grid.go	/^func (g *Grid) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Grid
+KeyHandler	inputfield.go	/^func (i *InputField) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.InputField
+KeyHandler	list.go	/^func (l *List) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.List
+KeyHandler	table.go	/^func (t *Table) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Table
+KeyHandler	textview.go	/^func (t *TextView) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.TextView
+Line	textview.go	/^	Line    int        \/\/ The index into the "buffer" variable.$/;"	m	struct:tview.textViewIndex
+List	list.go	/^type List struct {$/;"	s	package:tview
+Loop	_app.go	/^func (a *app) Loop() {$/;"	f	unknown:tview.app
+MainText	list.go	/^	MainText      string \/\/ The main text of the list item.$/;"	m	struct:tview.listItem
+MaxWidth	table.go	/^	MaxWidth int$/;"	m	struct:tview.TableCell
+MinGridHeight	grid.go	/^	MinGridWidth, MinGridHeight int       \/\/ The minimum grid width\/height for which this item i/;"	m	struct:tview.gridItem
+MinGridWidth	grid.go	/^	MinGridWidth, MinGridHeight int       \/\/ The minimum grid width\/height for which this item i/;"	m	struct:tview.gridItem
+Modal	modal.go	/^type Modal struct {$/;"	s	package:tview
+Mutex	textview.go	/^	sync.Mutex$/;"	M	struct:tview.TextView	typeref:typename:sync.Mutex
+Name	pages.go	/^	Name    string    \/\/ The page's name.$/;"	m	struct:tview.page
+NewApplication	application.go	/^func NewApplication() *Application {$/;"	f	package:tview
+NewBox	box.go	/^func NewBox() *Box {$/;"	f	package:tview
+NewButton	button.go	/^func NewButton(label string) *Button {$/;"	f	package:tview
+NewCheckbox	checkbox.go	/^func NewCheckbox() *Checkbox {$/;"	f	package:tview
+NewDropDown	dropdown.go	/^func NewDropDown() *DropDown {$/;"	f	package:tview
+NewFlex	flex.go	/^func NewFlex() *Flex {$/;"	f	package:tview
+NewForm	form.go	/^func NewForm() *Form {$/;"	f	package:tview
+NewFrame	frame.go	/^func NewFrame(primitive Primitive) *Frame {$/;"	f	package:tview
+NewGrid	grid.go	/^func NewGrid() *Grid {$/;"	f	package:tview
+NewInputField	inputfield.go	/^func NewInputField() *InputField {$/;"	f	package:tview
+NewList	list.go	/^func NewList() *List {$/;"	f	package:tview
+NewModal	modal.go	/^func NewModal() *Modal {$/;"	f	package:tview
+NewPages	pages.go	/^func NewPages() *Pages {$/;"	f	package:tview
+NewRadioButtons	demos/primitive/main.go	/^func NewRadioButtons(options []string) *RadioButtons {$/;"	f	package:main
+NewTable	table.go	/^func NewTable() *Table {$/;"	f	package:tview
+NewTableCell	table.go	/^func NewTableCell(text string) *TableCell {$/;"	f	package:tview
+NewTextView	textview.go	/^func NewTextView() *TextView {$/;"	f	package:tview
+NextPos	textview.go	/^	NextPos int        \/\/ The (byte) index of the next character in this buffer line.$/;"	m	struct:tview.textViewIndex
+NotSelectable	table.go	/^	NotSelectable bool$/;"	m	struct:tview.TableCell
+Pages	pages.go	/^type Pages struct {$/;"	s	package:tview
+Pos	textview.go	/^	Pos     int        \/\/ The index into the "buffer" string (byte position).$/;"	m	struct:tview.textViewIndex
+Primitive	primitive.go	/^type Primitive interface {$/;"	i	package:tview
+Print	util.go	/^func Print(screen ubcell.Screen, text string, x, y, maxWidth, align int, col color.RGBA) (int, i/;"	f	package:tview
+PrintJoinedBorder	util.go	/^func PrintJoinedBorder(screen ubcell.Screen, x, y int, ch rune, col color.RGBA) {$/;"	f	package:tview
+PrintSimple	util.go	/^func PrintSimple(screen ubcell.Screen, text string, x, y int) {$/;"	f	package:tview
+Proportion	flex.go	/^	Proportion int       \/\/ The item's proportion.$/;"	m	struct:tview.flexItem
+RWMutex	application.go	/^	sync.RWMutex$/;"	M	struct:tview.Application	typeref:typename:sync.RWMutex
+RadioButtons	demos/primitive/main.go	/^type RadioButtons struct {$/;"	s	package:main
+Region	textview.go	/^	Region  string     \/\/ The starting region ID.$/;"	m	struct:tview.textViewIndex
+RemoveItem	flex.go	/^func (f *Flex) RemoveItem(p Primitive) *Flex {$/;"	f	unknown:tview.Flex
+RemoveItem	grid.go	/^func (g *Grid) RemoveItem(p Primitive) *Grid {$/;"	f	unknown:tview.Grid
+RemovePage	pages.go	/^func (p *Pages) RemovePage(name string) *Pages {$/;"	f	unknown:tview.Pages
+Resize	pages.go	/^	Resize  bool      \/\/ Whether or not to resize the page when it is drawn.$/;"	m	struct:tview.page
+ResizeToFullScreen	application.go	/^func (a *Application) ResizeToFullScreen(p Primitive) *Application {$/;"	f	unknown:tview.Application
+Row	grid.go	/^	Row, Column                 int       \/\/ The top-left grid cell where the item is placed.$/;"	m	struct:tview.gridItem
+Run	application.go	/^func (a *Application) Run(w *pixelgl.Window, drawChan chan func() *Application, fontPath string)/;"	f	unknown:tview.Application
+ScrollToBeginning	table.go	/^func (t *Table) ScrollToBeginning() *Table {$/;"	f	unknown:tview.Table
+ScrollToBeginning	textview.go	/^func (t *TextView) ScrollToBeginning() *TextView {$/;"	f	unknown:tview.TextView
+ScrollToEnd	table.go	/^func (t *Table) ScrollToEnd() *Table {$/;"	f	unknown:tview.Table
+ScrollToEnd	textview.go	/^func (t *TextView) ScrollToEnd() *TextView {$/;"	f	unknown:tview.TextView
+ScrollToHighlight	textview.go	/^func (t *TextView) ScrollToHighlight() *TextView {$/;"	f	unknown:tview.TextView
+SecondaryText	list.go	/^	SecondaryText string \/\/ A secondary text to be shown underneath the main text.$/;"	m	struct:tview.listItem
+Select	table.go	/^func (t *Table) Select(row, column int) *Table {$/;"	f	unknown:tview.Table
+Selected	dropdown.go	/^	Selected func() \/\/ The (optional) callback for when this option was selected.$/;"	m	struct:tview.dropDownOption
+Selected	list.go	/^	Selected      func() \/\/ The optional function which is called when the item is selected.$/;"	m	struct:tview.listItem
+SendToBack	pages.go	/^func (p *Pages) SendToBack(name string) *Pages {$/;"	f	unknown:tview.Pages
+SendToFront	pages.go	/^func (p *Pages) SendToFront(name string) *Pages {$/;"	f	unknown:tview.Pages
+SetAcceptanceFunc	inputfield.go	/^func (i *InputField) SetAcceptanceFunc(handler func(textToCheck string, lastChar rune) bool) *In/;"	f	unknown:tview.InputField
+SetAfterDrawFunc	application.go	/^func (a *Application) SetAfterDrawFunc(handler func(screen ubcell.Screen)) *Application {$/;"	f	unknown:tview.Application
+SetAlign	table.go	/^func (c *TableCell) SetAlign(align int) *TableCell {$/;"	f	unknown:tview.TableCell
+SetBackgroundColor	box.go	/^func (b *Box) SetBackgroundColor(color color.RGBA) *Box {$/;"	f	unknown:tview.Box
+SetBackgroundColor	table.go	/^func (c *TableCell) SetBackgroundColor(color color.RGBA) *TableCell {$/;"	f	unknown:tview.TableCell
+SetBackgroundColorActivated	button.go	/^func (b *Button) SetBackgroundColorActivated(color color.RGBA) *Button {$/;"	f	unknown:tview.Button
+SetBeforeDrawFunc	application.go	/^func (a *Application) SetBeforeDrawFunc(handler func(screen ubcell.Screen) bool) *Application {$/;"	f	unknown:tview.Application
+SetBlurFunc	button.go	/^func (b *Button) SetBlurFunc(handler func(key *pixelgl.KeyEv)) *Button {$/;"	f	unknown:tview.Button
+SetBorder	box.go	/^func (b *Box) SetBorder(show bool) *Box {$/;"	f	unknown:tview.Box
+SetBorderColor	box.go	/^func (b *Box) SetBorderColor(color color.RGBA) *Box {$/;"	f	unknown:tview.Box
+SetBorderPadding	box.go	/^func (b *Box) SetBorderPadding(top, bottom, left, right int) *Box {$/;"	f	unknown:tview.Box
+SetBorders	frame.go	/^func (f *Frame) SetBorders(top, bottom, header, footer, left, right int) *Frame {$/;"	f	unknown:tview.Frame
+SetBorders	grid.go	/^func (g *Grid) SetBorders(borders bool) *Grid {$/;"	f	unknown:tview.Grid
+SetBorders	table.go	/^func (t *Table) SetBorders(show bool) *Table {$/;"	f	unknown:tview.Table
+SetBordersColor	grid.go	/^func (g *Grid) SetBordersColor(color color.RGBA) *Grid {$/;"	f	unknown:tview.Grid
+SetBordersColor	table.go	/^func (t *Table) SetBordersColor(color color.RGBA) *Table {$/;"	f	unknown:tview.Table
+SetButtonBackgroundColor	form.go	/^func (f *Form) SetButtonBackgroundColor(color color.RGBA) *Form {$/;"	f	unknown:tview.Form
+SetButtonTextColor	form.go	/^func (f *Form) SetButtonTextColor(color color.RGBA) *Form {$/;"	f	unknown:tview.Form
+SetButtonsAlign	form.go	/^func (f *Form) SetButtonsAlign(align int) *Form {$/;"	f	unknown:tview.Form
+SetCancelFunc	form.go	/^func (f *Form) SetCancelFunc(callback func()) *Form {$/;"	f	unknown:tview.Form
+SetCell	table.go	/^func (t *Table) SetCell(row, column int, cell *TableCell) *Table {$/;"	f	unknown:tview.Table
+SetCellSimple	table.go	/^func (t *Table) SetCellSimple(row, column int, text string) *Table {$/;"	f	unknown:tview.Table
+SetChangedFunc	checkbox.go	/^func (c *Checkbox) SetChangedFunc(handler func(checked bool)) *Checkbox {$/;"	f	unknown:tview.Checkbox
+SetChangedFunc	inputfield.go	/^func (i *InputField) SetChangedFunc(handler func(text string)) *InputField {$/;"	f	unknown:tview.InputField
+SetChangedFunc	list.go	/^func (l *List) SetChangedFunc(handler func(int, string, string, rune)) *List {$/;"	f	unknown:tview.List
+SetChangedFunc	pages.go	/^func (p *Pages) SetChangedFunc(handler func()) *Pages {$/;"	f	unknown:tview.Pages
+SetChangedFunc	textview.go	/^func (t *TextView) SetChangedFunc(handler func()) *TextView {$/;"	f	unknown:tview.TextView
+SetChecked	checkbox.go	/^func (c *Checkbox) SetChecked(checked bool) *Checkbox {$/;"	f	unknown:tview.Checkbox
+SetColumns	grid.go	/^func (g *Grid) SetColumns(columns ...int) *Grid {$/;"	f	unknown:tview.Grid
+SetCurrentItem	list.go	/^func (l *List) SetCurrentItem(index int) *List {$/;"	f	unknown:tview.List
+SetCurrentOption	dropdown.go	/^func (d *DropDown) SetCurrentOption(index int) *DropDown {$/;"	f	unknown:tview.DropDown
+SetDirection	flex.go	/^func (f *Flex) SetDirection(direction int) *Flex {$/;"	f	unknown:tview.Flex
+SetDoneFunc	checkbox.go	/^func (c *Checkbox) SetDoneFunc(handler func(key *pixelgl.KeyEv)) *Checkbox {$/;"	f	unknown:tview.Checkbox
+SetDoneFunc	dropdown.go	/^func (d *DropDown) SetDoneFunc(handler func(key *pixelgl.KeyEv)) *DropDown {$/;"	f	unknown:tview.DropDown
+SetDoneFunc	inputfield.go	/^func (i *InputField) SetDoneFunc(handler func(key *pixelgl.KeyEv)) *InputField {$/;"	f	unknown:tview.InputField
+SetDoneFunc	list.go	/^func (l *List) SetDoneFunc(handler func()) *List {$/;"	f	unknown:tview.List
+SetDoneFunc	modal.go	/^func (m *Modal) SetDoneFunc(handler func(buttonIndex int, buttonLabel string)) *Modal {$/;"	f	unknown:tview.Modal
+SetDoneFunc	table.go	/^func (t *Table) SetDoneFunc(handler func(key *pixelgl.KeyEv)) *Table {$/;"	f	unknown:tview.Table
+SetDoneFunc	textview.go	/^func (t *TextView) SetDoneFunc(handler func(key *pixelgl.KeyEv)) *TextView {$/;"	f	unknown:tview.TextView
+SetDrawFunc	box.go	/^func (b *Box) SetDrawFunc(handler func(screen ubcell.Screen, x, y, width, height int) (int, int,/;"	f	unknown:tview.Box
+SetDynamicColors	textview.go	/^func (t *TextView) SetDynamicColors(dynamic bool) *TextView {$/;"	f	unknown:tview.TextView
+SetExpansion	table.go	/^func (c *TableCell) SetExpansion(expansion int) *TableCell {$/;"	f	unknown:tview.TableCell
+SetFieldBackgroundColor	checkbox.go	/^func (c *Checkbox) SetFieldBackgroundColor(color color.RGBA) *Checkbox {$/;"	f	unknown:tview.Checkbox
+SetFieldBackgroundColor	dropdown.go	/^func (d *DropDown) SetFieldBackgroundColor(color color.RGBA) *DropDown {$/;"	f	unknown:tview.DropDown
+SetFieldBackgroundColor	form.go	/^func (f *Form) SetFieldBackgroundColor(color color.RGBA) *Form {$/;"	f	unknown:tview.Form
+SetFieldBackgroundColor	inputfield.go	/^func (i *InputField) SetFieldBackgroundColor(color color.RGBA) *InputField {$/;"	f	unknown:tview.InputField
+SetFieldTextColor	checkbox.go	/^func (c *Checkbox) SetFieldTextColor(color color.RGBA) *Checkbox {$/;"	f	unknown:tview.Checkbox
+SetFieldTextColor	dropdown.go	/^func (d *DropDown) SetFieldTextColor(color color.RGBA) *DropDown {$/;"	f	unknown:tview.DropDown
+SetFieldTextColor	form.go	/^func (f *Form) SetFieldTextColor(color color.RGBA) *Form {$/;"	f	unknown:tview.Form
+SetFieldTextColor	inputfield.go	/^func (i *InputField) SetFieldTextColor(color color.RGBA) *InputField {$/;"	f	unknown:tview.InputField
+SetFieldWidth	dropdown.go	/^func (d *DropDown) SetFieldWidth(width int) *DropDown {$/;"	f	unknown:tview.DropDown
+SetFieldWidth	inputfield.go	/^func (i *InputField) SetFieldWidth(width int) *InputField {$/;"	f	unknown:tview.InputField
+SetFinishedFunc	checkbox.go	/^func (c *Checkbox) SetFinishedFunc(handler func(key *pixelgl.KeyEv)) FormItem {$/;"	f	unknown:tview.Checkbox
+SetFinishedFunc	dropdown.go	/^func (d *DropDown) SetFinishedFunc(handler func(key *pixelgl.KeyEv)) FormItem {$/;"	f	unknown:tview.DropDown
+SetFinishedFunc	inputfield.go	/^func (i *InputField) SetFinishedFunc(handler func(key *pixelgl.KeyEv)) FormItem {$/;"	f	unknown:tview.InputField
+SetFixed	table.go	/^func (t *Table) SetFixed(rows, columns int) *Table {$/;"	f	unknown:tview.Table
+SetFocus	application.go	/^func (a *Application) SetFocus(p Primitive) *Application {$/;"	f	unknown:tview.Application
+SetFormAttributes	checkbox.go	/^func (c *Checkbox) SetFormAttributes(label string, labelColor, bgColor, fieldTextColor, fieldBgC/;"	f	unknown:tview.Checkbox
+SetFormAttributes	dropdown.go	/^func (d *DropDown) SetFormAttributes(label string, labelColor, bgColor, fieldTextColor, fieldBgC/;"	f	unknown:tview.DropDown
+SetFormAttributes	inputfield.go	/^func (i *InputField) SetFormAttributes(label string, labelColor, bgColor, fieldTextColor, fieldB/;"	f	unknown:tview.InputField
+SetFullScreen	flex.go	/^func (f *Flex) SetFullScreen(fullScreen bool) *Flex {$/;"	f	unknown:tview.Flex
+SetGap	grid.go	/^func (g *Grid) SetGap(row, column int) *Grid {$/;"	f	unknown:tview.Grid
+SetHorizontal	form.go	/^func (f *Form) SetHorizontal(horizontal bool) *Form {$/;"	f	unknown:tview.Form
+SetInputCapture	_app.go	/^func (a *app) SetInputCapture(capture func(event *pixelgl.KeyEv) *pixelgl.KeyEv) *app {$/;"	f	unknown:tview.app
+SetInputCapture	application.go	/^func (a *Application) SetInputCapture(capture func(event *pixelgl.KeyEv) *pixelgl.KeyEv) *Applic/;"	f	unknown:tview.Application
+SetInputCapture	box.go	/^func (b *Box) SetInputCapture(capture func(event *pixelgl.KeyEv) *pixelgl.KeyEv) *Box {$/;"	f	unknown:tview.Box
+SetItemPadding	form.go	/^func (f *Form) SetItemPadding(padding int) *Form {$/;"	f	unknown:tview.Form
+SetLabel	button.go	/^func (b *Button) SetLabel(label string) *Button {$/;"	f	unknown:tview.Button
+SetLabel	checkbox.go	/^func (c *Checkbox) SetLabel(label string) *Checkbox {$/;"	f	unknown:tview.Checkbox
+SetLabel	dropdown.go	/^func (d *DropDown) SetLabel(label string) *DropDown {$/;"	f	unknown:tview.DropDown
+SetLabel	inputfield.go	/^func (i *InputField) SetLabel(label string) *InputField {$/;"	f	unknown:tview.InputField
+SetLabelColor	button.go	/^func (b *Button) SetLabelColor(color color.RGBA) *Button {$/;"	f	unknown:tview.Button
+SetLabelColor	checkbox.go	/^func (c *Checkbox) SetLabelColor(color color.RGBA) *Checkbox {$/;"	f	unknown:tview.Checkbox
+SetLabelColor	dropdown.go	/^func (d *DropDown) SetLabelColor(color color.RGBA) *DropDown {$/;"	f	unknown:tview.DropDown
+SetLabelColor	form.go	/^func (f *Form) SetLabelColor(color color.RGBA) *Form {$/;"	f	unknown:tview.Form
+SetLabelColor	inputfield.go	/^func (i *InputField) SetLabelColor(color color.RGBA) *InputField {$/;"	f	unknown:tview.InputField
+SetLabelColorActivated	button.go	/^func (b *Button) SetLabelColorActivated(color color.RGBA) *Button {$/;"	f	unknown:tview.Button
+SetMainTextColor	list.go	/^func (l *List) SetMainTextColor(color color.RGBA) *List {$/;"	f	unknown:tview.List
+SetMaskCharacter	inputfield.go	/^func (i *InputField) SetMaskCharacter(mask rune) *InputField {$/;"	f	unknown:tview.InputField
+SetMaxWidth	table.go	/^func (c *TableCell) SetMaxWidth(maxWidth int) *TableCell {$/;"	f	unknown:tview.TableCell
+SetMinSize	grid.go	/^func (g *Grid) SetMinSize(row, column int) *Grid {$/;"	f	unknown:tview.Grid
+SetOffset	grid.go	/^func (g *Grid) SetOffset(rows, columns int) *Grid {$/;"	f	unknown:tview.Grid
+SetOffset	table.go	/^func (t *Table) SetOffset(row, column int) *Table {$/;"	f	unknown:tview.Table
+SetOptions	dropdown.go	/^func (d *DropDown) SetOptions(texts []string, selected func(text string, index int)) *DropDown {$/;"	f	unknown:tview.DropDown
+SetPlaceholder	inputfield.go	/^func (i *InputField) SetPlaceholder(text string) *InputField {$/;"	f	unknown:tview.InputField
+SetPlaceholderExtColor	inputfield.go	/^func (i *InputField) SetPlaceholderExtColor(color color.RGBA) *InputField {$/;"	f	unknown:tview.InputField
+SetPrefixTextColor	dropdown.go	/^func (d *DropDown) SetPrefixTextColor(color color.RGBA) *DropDown {$/;"	f	unknown:tview.DropDown
+SetRect	box.go	/^func (b *Box) SetRect(x, y, width, height int) {$/;"	f	unknown:tview.Box
+SetRegions	textview.go	/^func (t *TextView) SetRegions(regions bool) *TextView {$/;"	f	unknown:tview.TextView
+SetRoot	_app.go	/^func (a *app) SetRoot(root Primitive, fullscreen bool) *app {$/;"	f	unknown:tview.app
+SetRoot	application.go	/^func (a *Application) SetRoot(root Primitive, fullscreen bool) *Application {$/;"	f	unknown:tview.Application
+SetRows	grid.go	/^func (g *Grid) SetRows(rows ...int) *Grid {$/;"	f	unknown:tview.Grid
+SetScrollable	textview.go	/^func (t *TextView) SetScrollable(scrollable bool) *TextView {$/;"	f	unknown:tview.TextView
+SetSecondaryTextColor	list.go	/^func (l *List) SetSecondaryTextColor(color color.RGBA) *List {$/;"	f	unknown:tview.List
+SetSelectable	table.go	/^func (c *TableCell) SetSelectable(selectable bool) *TableCell {$/;"	f	unknown:tview.TableCell
+SetSelectable	table.go	/^func (t *Table) SetSelectable(rows, columns bool) *Table {$/;"	f	unknown:tview.Table
+SetSelectedBackgroundColor	list.go	/^func (l *List) SetSelectedBackgroundColor(color color.RGBA) *List {$/;"	f	unknown:tview.List
+SetSelectedFunc	button.go	/^func (b *Button) SetSelectedFunc(handler func()) *Button {$/;"	f	unknown:tview.Button
+SetSelectedFunc	list.go	/^func (l *List) SetSelectedFunc(handler func(int, string, string, rune)) *List {$/;"	f	unknown:tview.List
+SetSelectedFunc	table.go	/^func (t *Table) SetSelectedFunc(handler func(row, column int)) *Table {$/;"	f	unknown:tview.Table
+SetSelectedTextColor	list.go	/^func (l *List) SetSelectedTextColor(color color.RGBA) *List {$/;"	f	unknown:tview.List
+SetSelectionChangedFunc	table.go	/^func (t *Table) SetSelectionChangedFunc(handler func(row, column int)) *Table {$/;"	f	unknown:tview.Table
+SetSeparator	table.go	/^func (t *Table) SetSeparator(separator rune) *Table {$/;"	f	unknown:tview.Table
+SetShortcutColor	list.go	/^func (l *List) SetShortcutColor(color color.RGBA) *List {$/;"	f	unknown:tview.List
+SetSize	grid.go	/^func (g *Grid) SetSize(numRows, numColumns, rowSize, columnSize int) *Grid {$/;"	f	unknown:tview.Grid
+SetText	inputfield.go	/^func (i *InputField) SetText(text string) *InputField {$/;"	f	unknown:tview.InputField
+SetText	modal.go	/^func (m *Modal) SetText(text string) *Modal {$/;"	f	unknown:tview.Modal
+SetText	table.go	/^func (c *TableCell) SetText(text string) *TableCell {$/;"	f	unknown:tview.TableCell
+SetText	textview.go	/^func (t *TextView) SetText(text string) *TextView {$/;"	f	unknown:tview.TextView
+SetTextAlign	textview.go	/^func (t *TextView) SetTextAlign(align int) *TextView {$/;"	f	unknown:tview.TextView
+SetTextColor	modal.go	/^func (m *Modal) SetTextColor(color color.RGBA) *Modal {$/;"	f	unknown:tview.Modal
+SetTextColor	table.go	/^func (c *TableCell) SetTextColor(color color.RGBA) *TableCell {$/;"	f	unknown:tview.TableCell
+SetTextColor	textview.go	/^func (t *TextView) SetTextColor(color color.RGBA) *TextView {$/;"	f	unknown:tview.TextView
+SetTitle	box.go	/^func (b *Box) SetTitle(title string) *Box {$/;"	f	unknown:tview.Box
+SetTitleAlign	box.go	/^func (b *Box) SetTitleAlign(align int) *Box {$/;"	f	unknown:tview.Box
+SetTitleColor	box.go	/^func (b *Box) SetTitleColor(color color.RGBA) *Box {$/;"	f	unknown:tview.Box
+SetWordWrap	textview.go	/^func (t *TextView) SetWordWrap(wrapOnWords bool) *TextView {$/;"	f	unknown:tview.TextView
+SetWrap	textview.go	/^func (t *TextView) SetWrap(wrap bool) *TextView {$/;"	f	unknown:tview.TextView
+Shortcut	list.go	/^	Shortcut      rune   \/\/ The key to select the list item directly, 0 if there is no shortcut.$/;"	m	struct:tview.listItem
+ShowPage	pages.go	/^func (p *Pages) ShowPage(name string) *Pages {$/;"	f	unknown:tview.Pages
+ShowSecondaryText	list.go	/^func (l *List) ShowSecondaryText(show bool) *List {$/;"	f	unknown:tview.List
+Slide	demos/presentation/main.go	/^type Slide func(nextSlide func()) (title string, content tview.Primitive)$/;"	t	package:main
+Stop	application.go	/^func (a *Application) Stop() {$/;"	f	unknown:tview.Application
+StringWidth	util.go	/^func StringWidth(text string) int {$/;"	f	package:tview
+Styles	styles.go	/^var Styles = struct {$/;"	v	package:tview
+SwitchToPage	pages.go	/^func (p *Pages) SwitchToPage(name string) *Pages {$/;"	f	unknown:tview.Pages
+TabSize	textview.go	/^var TabSize = 4$/;"	v	package:tview
+Table	demos/presentation/table.go	/^func Table(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
+Table	table.go	/^type Table struct {$/;"	s	package:tview
+TableCell	table.go	/^type TableCell struct {$/;"	s	package:tview
+Text	dropdown.go	/^	Text     string \/\/ The text to be displayed in the drop-down.$/;"	m	struct:tview.dropDownOption
+Text	frame.go	/^	Text   string     \/\/ The text to be displayed.$/;"	m	struct:tview.frameText
+Text	table.go	/^	Text string$/;"	m	struct:tview.TableCell
+TextView	textview.go	/^type TextView struct {$/;"	s	package:tview
+TextView1	demos/presentation/textview.go	/^func TextView1(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
+TextView2	demos/presentation/textview.go	/^func TextView2(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
+Visible	pages.go	/^	Visible bool      \/\/ Whether or not this page is visible.$/;"	m	struct:tview.page
+Width	grid.go	/^	Width, Height               int       \/\/ The number of rows and columns the item occupies.$/;"	m	struct:tview.gridItem
+Width	textview.go	/^	Width   int        \/\/ The screen width of this line.$/;"	m	struct:tview.textViewIndex
+WordWrap	util.go	/^func WordWrap(text string, width int) (lines []string) {$/;"	f	package:tview
+WrapKeyHandler	box.go	/^func (b *Box) WrapKeyHandler(inputHandler func(*pixelgl.KeyEv, func(p Primitive))) func(*pixelgl/;"	f	unknown:tview.Box
+Write	textview.go	/^func (t *TextView) Write(p []byte) (n int, err error) {$/;"	f	unknown:tview.TextView
+accept	inputfield.go	/^	accept func(text string, ch rune) bool$/;"	m	struct:tview.InputField
+afterDraw	_app.go	/^	afterDraw func(screen *ubcell.CellBuffer)$/;"	m	struct:tview.app
+afterDraw	application.go	/^	afterDraw func(screen ubcell.Screen)$/;"	m	struct:tview.Application
+alert	demos/unicode/main.go	/^func alert(pages *tview.Pages, id string, message string) *tview.Pages {$/;"	f	package:main
+align	textview.go	/^	align int$/;"	m	struct:tview.TextView
+app	_app.go	/^type app struct {$/;"	s	package:tview
+app	demos/presentation/main.go	/^var app = tview.NewApplication()$/;"	v	package:main
+backgroundColor	box.go	/^	backgroundColor color.RGBA$/;"	m	struct:tview.Box
+backgroundColorActivated	button.go	/^	backgroundColorActivated color.RGBA$/;"	m	struct:tview.Button
+beforeDraw	_app.go	/^	beforeDraw func(screen *ubcell.CellBuffer) bool$/;"	m	struct:tview.app
+beforeDraw	application.go	/^	beforeDraw func(screen ubcell.Screen) bool$/;"	m	struct:tview.Application
+blur	button.go	/^	blur func(*pixelgl.KeyEv)$/;"	m	struct:tview.Button
+border	box.go	/^	border bool$/;"	m	struct:tview.Box
+borderColor	box.go	/^	borderColor color.RGBA$/;"	m	struct:tview.Box
+borders	grid.go	/^	borders bool$/;"	m	struct:tview.Grid
+borders	table.go	/^	borders bool$/;"	m	struct:tview.Table
+bordersColor	grid.go	/^	bordersColor color.RGBA$/;"	m	struct:tview.Grid
+bordersColor	table.go	/^	bordersColor color.RGBA$/;"	m	struct:tview.Table
+bottom	frame.go	/^	top, bottom, header, footer, left, right int$/;"	m	struct:tview.Frame
+boundaryPattern	util.go	/^	boundaryPattern = regexp.MustCompile("([[:punct:]]\\\\s*|\\\\s+)")$/;"	v	package:tview
+buffer	textview.go	/^	buffer []string$/;"	m	struct:tview.TextView
+buttonBackgroundColor	form.go	/^	buttonBackgroundColor color.RGBA$/;"	m	struct:tview.Form
+buttonTextColor	form.go	/^	buttonTextColor color.RGBA$/;"	m	struct:tview.Form
+buttons	form.go	/^	buttons []*Button$/;"	m	struct:tview.Form
+buttonsAlign	form.go	/^	buttonsAlign int$/;"	m	struct:tview.Form
+cancel	form.go	/^	cancel func()$/;"	m	struct:tview.Form
+cells	_app.go	/^	cells      *ubcell.CellBuffer$/;"	m	struct:tview.app
+cells	table.go	/^	cells [][]*TableCell$/;"	m	struct:tview.Table
+changed	checkbox.go	/^	changed func(checked bool)$/;"	m	struct:tview.Checkbox
+changed	inputfield.go	/^	changed func(text string)$/;"	m	struct:tview.InputField
+changed	list.go	/^	changed func(index int, mainText, secondaryText string, shortcut rune)$/;"	m	struct:tview.List
+changed	pages.go	/^	changed func()$/;"	m	struct:tview.Pages
+changed	textview.go	/^	changed func()$/;"	m	struct:tview.TextView
+checked	checkbox.go	/^	checked bool$/;"	m	struct:tview.Checkbox
+clampToScreen	box.go	/^	clampToScreen bool$/;"	m	struct:tview.Box
+codeWidth	demos/presentation/code.go	/^const codeWidth = 56$/;"	c	package:main
+colorPattern	util.go	/^	colorPattern    = regexp.MustCompile(`\\[([a-zA-Z]+|#[0-9a-zA-Z]{6})\\]`)$/;"	v	package:tview
+colorsText	demos/presentation/colors.go	/^const colorsText = `You can use color tags almost everywhere to partially change the color of a /;"	c	package:main
+columnOffset	grid.go	/^	rowOffset, columnOffset int$/;"	m	struct:tview.Grid
+columnOffset	table.go	/^	rowOffset, columnOffset int$/;"	m	struct:tview.Table
+columnOffset	textview.go	/^	columnOffset int$/;"	m	struct:tview.TextView
+columns	grid.go	/^	rows, columns []int$/;"	m	struct:tview.Grid
+columnsSelectable	table.go	/^	rowsSelectable, columnsSelectable bool$/;"	m	struct:tview.Table
+corporate	demos/textview/main.go	/^const corporate = `Leverage agile frameworks to provide a robust synopsis for high level overvie/;"	c	package:main
+currentItem	list.go	/^	currentItem int$/;"	m	struct:tview.List
+currentOption	demos/primitive/main.go	/^	currentOption int$/;"	m	struct:main.RadioButtons
+currentOption	dropdown.go	/^	currentOption int$/;"	m	struct:tview.DropDown
+direction	flex.go	/^	direction int$/;"	m	struct:tview.Flex
+done	checkbox.go	/^	done func(*pixelgl.KeyEv)$/;"	m	struct:tview.Checkbox
+done	dropdown.go	/^	done func(*pixelgl.KeyEv)$/;"	m	struct:tview.DropDown
+done	inputfield.go	/^	done func(*pixelgl.KeyEv)$/;"	m	struct:tview.InputField
+done	list.go	/^	done func()$/;"	m	struct:tview.List
+done	modal.go	/^	done func(buttonIndex int, buttonLabel string)$/;"	m	struct:tview.Modal
+done	table.go	/^	done func(key *pixelgl.KeyEv)$/;"	m	struct:tview.Table
+done	textview.go	/^	done func(*pixelgl.KeyEv)$/;"	m	struct:tview.TextView
+draw	box.go	/^	draw func(screen ubcell.Screen, x, y, width, height int) (int, int, int, int)$/;"	m	struct:tview.Box
+dropDownOption	dropdown.go	/^type dropDownOption struct {$/;"	s	package:tview
+dynamicColors	textview.go	/^	dynamicColors bool$/;"	m	struct:tview.TextView
+escapePattern	util.go	/^	escapePattern   = regexp.MustCompile(`\\[("[a-zA-Z0-9_,;: \\-\\.]*"|[a-zA-Z]+|#[0-9a-zA-Z]{6})\\/;"	v	package:tview
+fieldBackgroundColor	checkbox.go	/^	fieldBackgroundColor color.RGBA$/;"	m	struct:tview.Checkbox
+fieldBackgroundColor	dropdown.go	/^	fieldBackgroundColor color.RGBA$/;"	m	struct:tview.DropDown
+fieldBackgroundColor	form.go	/^	fieldBackgroundColor color.RGBA$/;"	m	struct:tview.Form
+fieldBackgroundColor	inputfield.go	/^	fieldBackgroundColor color.RGBA$/;"	m	struct:tview.InputField
+fieldTextColor	checkbox.go	/^	fieldTextColor color.RGBA$/;"	m	struct:tview.Checkbox
+fieldTextColor	dropdown.go	/^	fieldTextColor color.RGBA$/;"	m	struct:tview.DropDown
+fieldTextColor	form.go	/^	fieldTextColor color.RGBA$/;"	m	struct:tview.Form
+fieldTextColor	inputfield.go	/^	fieldTextColor color.RGBA$/;"	m	struct:tview.InputField
+fieldWidth	dropdown.go	/^	fieldWidth int$/;"	m	struct:tview.DropDown
+fieldWidth	inputfield.go	/^	fieldWidth int$/;"	m	struct:tview.InputField
+fixedColumns	table.go	/^	fixedRows, fixedColumns int$/;"	m	struct:tview.Table
+fixedRows	table.go	/^	fixedRows, fixedColumns int$/;"	m	struct:tview.Table
+flexItem	flex.go	/^type flexItem struct {$/;"	s	package:tview
+focus	_app.go	/^	focus          Primitive$/;"	m	struct:tview.app
+focus	application.go	/^	focus Primitive$/;"	m	struct:tview.Application
+focus	box.go	/^	focus Focusable$/;"	m	struct:tview.Box
+focusedElement	form.go	/^	focusedElement int$/;"	m	struct:tview.Form
+footer	frame.go	/^	top, bottom, header, footer, left, right int$/;"	m	struct:tview.Frame
+form	demos/presentation/form.go	/^const form = `[green]package[white] main$/;"	c	package:main
+form	modal.go	/^	form *Form$/;"	m	struct:tview.Modal
+frame	modal.go	/^	frame *Frame$/;"	m	struct:tview.Modal
+frameText	frame.go	/^type frameText struct {$/;"	s	package:tview
+fromHighlight	textview.go	/^	fromHighlight, toHighlight int$/;"	m	struct:tview.TextView
+fullScreen	flex.go	/^	fullScreen bool$/;"	m	struct:tview.Flex
+gapColumns	grid.go	/^	gapRows, gapColumns int$/;"	m	struct:tview.Grid
+gapRows	grid.go	/^	gapRows, gapColumns int$/;"	m	struct:tview.Grid
+gridItem	grid.go	/^type gridItem struct {$/;"	s	package:tview
+h	grid.go	/^	x, y, w, h int  \/\/ The last position of the item relative to the top-left corner of the grid./;"	m	struct:tview.gridItem
+hasFocus	box.go	/^	hasFocus bool$/;"	m	struct:tview.Box
+header	frame.go	/^	top, bottom, header, footer, left, right int$/;"	m	struct:tview.Frame
+height	box.go	/^	x, y, width, height int$/;"	m	struct:tview.Box
+helloWorld	demos/presentation/helloworld.go	/^const helloWorld = `[green]package[white] main$/;"	c	package:main
+highlights	textview.go	/^	highlights map[string]struct{}$/;"	m	struct:tview.TextView
+horizontal	form.go	/^	horizontal bool$/;"	m	struct:tview.Form
+index	textview.go	/^	index []*textViewIndex$/;"	m	struct:tview.TextView
+init	util.go	/^func init() {$/;"	f	package:tview
+innerHeight	box.go	/^	innerX, innerY, innerWidth, innerHeight int$/;"	m	struct:tview.Box
+innerWidth	box.go	/^	innerX, innerY, innerWidth, innerHeight int$/;"	m	struct:tview.Box
+innerX	box.go	/^	innerX, innerY, innerWidth, innerHeight int$/;"	m	struct:tview.Box
+innerY	box.go	/^	innerX, innerY, innerWidth, innerHeight int$/;"	m	struct:tview.Box
+inputCapture	_app.go	/^	inputCapture func(event *pixelgl.KeyEv) *pixelgl.KeyEv$/;"	m	struct:tview.app
+inputCapture	application.go	/^	inputCapture func(event *pixelgl.KeyEv) *pixelgl.KeyEv$/;"	m	struct:tview.Application
+inputCapture	box.go	/^	inputCapture func(event *pixelgl.KeyEv) *pixelgl.KeyEv$/;"	m	struct:tview.Box
+inputField	demos/presentation/inputfield.go	/^const inputField = `[green]package[white] main$/;"	c	package:main
+itemPadding	form.go	/^	itemPadding int$/;"	m	struct:tview.Form
+items	flex.go	/^	items []flexItem$/;"	m	struct:tview.Flex
+items	form.go	/^	items []FormItem$/;"	m	struct:tview.Form
+items	grid.go	/^	items []*gridItem$/;"	m	struct:tview.Grid
+items	list.go	/^	items []*listItem$/;"	m	struct:tview.List
+joints	util.go	/^var joints = map[string]rune{$/;"	v	package:tview
+label	button.go	/^	label string$/;"	m	struct:tview.Button
+label	checkbox.go	/^	label string$/;"	m	struct:tview.Checkbox
+label	dropdown.go	/^	label string$/;"	m	struct:tview.DropDown
+label	inputfield.go	/^	label string$/;"	m	struct:tview.InputField
+labelColor	button.go	/^	labelColor color.RGBA$/;"	m	struct:tview.Button
+labelColor	checkbox.go	/^	labelColor color.RGBA$/;"	m	struct:tview.Checkbox
+labelColor	dropdown.go	/^	labelColor color.RGBA$/;"	m	struct:tview.DropDown
+labelColor	form.go	/^	labelColor color.RGBA$/;"	m	struct:tview.Form
+labelColor	inputfield.go	/^	labelColor color.RGBA$/;"	m	struct:tview.InputField
+labelColorActivated	button.go	/^	labelColorActivated color.RGBA$/;"	m	struct:tview.Button
+lastColumn	table.go	/^	lastColumn int$/;"	m	struct:tview.Table
+lastWidth	textview.go	/^	lastWidth int$/;"	m	struct:tview.TextView
+left	frame.go	/^	top, bottom, header, footer, left, right int$/;"	m	struct:tview.Frame
+lineOffset	textview.go	/^	lineOffset int$/;"	m	struct:tview.TextView
+list	dropdown.go	/^	list *List$/;"	m	struct:tview.DropDown
+listItem	list.go	/^type listItem struct {$/;"	s	package:tview
+logo	demos/presentation/cover.go	/^const logo = `$/;"	c	package:main
+longestLine	textview.go	/^	longestLine int$/;"	m	struct:tview.TextView
+main	demos/box/main.go	/^func main() {$/;"	f	package:main
+main	demos/box/main.go	/^package main$/;"	p
+main	demos/button/main.go	/^func main() {$/;"	f	package:main
+main	demos/button/main.go	/^package main$/;"	p
+main	demos/checkbox/main.go	/^func main() {$/;"	f	package:main
+main	demos/checkbox/main.go	/^package main$/;"	p
+main	demos/dropdown/main.go	/^func main() {$/;"	f	package:main
+main	demos/dropdown/main.go	/^package main$/;"	p
+main	demos/flex/main.go	/^func main() {$/;"	f	package:main
+main	demos/flex/main.go	/^package main$/;"	p
+main	demos/form/main.go	/^func main() {$/;"	f	package:main
+main	demos/form/main.go	/^package main$/;"	p
+main	demos/frame/main.go	/^func main() {$/;"	f	package:main
+main	demos/frame/main.go	/^package main$/;"	p
+main	demos/grid/main.go	/^func main() {$/;"	f	package:main
+main	demos/grid/main.go	/^package main$/;"	p
+main	demos/inputfield/main.go	/^func main() {$/;"	f	package:main
+main	demos/inputfield/main.go	/^package main$/;"	p
+main	demos/list/main.go	/^func main() {$/;"	f	package:main
+main	demos/list/main.go	/^package main$/;"	p
+main	demos/modal/main.go	/^func main() {$/;"	f	package:main
+main	demos/modal/main.go	/^package main$/;"	p
+main	demos/pages/main.go	/^func main() {$/;"	f	package:main
+main	demos/pages/main.go	/^package main$/;"	p
+main	demos/presentation/center.go	/^package main$/;"	p
+main	demos/presentation/code.go	/^package main$/;"	p
+main	demos/presentation/colors.go	/^package main$/;"	p
+main	demos/presentation/cover.go	/^package main$/;"	p
+main	demos/presentation/end.go	/^package main$/;"	p
+main	demos/presentation/flex.go	/^package main$/;"	p
+main	demos/presentation/form.go	/^package main$/;"	p
+main	demos/presentation/grid.go	/^package main$/;"	p
+main	demos/presentation/helloworld.go	/^package main$/;"	p
+main	demos/presentation/inputfield.go	/^package main$/;"	p
+main	demos/presentation/introduction.go	/^package main$/;"	p
+main	demos/presentation/main.go	/^func main() {$/;"	f	package:main
+main	demos/presentation/main.go	/^package main$/;"	p
+main	demos/presentation/table.go	/^package main$/;"	p
+main	demos/presentation/textview.go	/^package main$/;"	p
+main	demos/primitive/main.go	/^func main() {$/;"	f	package:main
+main	demos/primitive/main.go	/^package main$/;"	p
+main	demos/table/main.go	/^func main() {$/;"	f	package:main
+main	demos/table/main.go	/^package main$/;"	p
+main	demos/textview/main.go	/^func main() {$/;"	f	package:main
+main	demos/textview/main.go	/^package main$/;"	p
+main	demos/unicode/main.go	/^func main() {$/;"	f	package:main
+main	demos/unicode/main.go	/^package main$/;"	p
+main	experiment/main.go	/^func main() {$/;"	f	package:main
+main	experiment/main.go	/^package main$/;"	p
+mainTextColor	list.go	/^	mainTextColor color.RGBA$/;"	m	struct:tview.List
+maskCharacter	inputfield.go	/^	maskCharacter rune$/;"	m	struct:tview.InputField
+minHeight	grid.go	/^	minWidth, minHeight int$/;"	m	struct:tview.Grid
+minWidth	grid.go	/^	minWidth, minHeight int$/;"	m	struct:tview.Grid
+navigation	demos/presentation/cover.go	/^	navigation = `Ctrl-N: Next slide    Ctrl-P: Previous slide`$/;"	c	package:main
+open	dropdown.go	/^	open bool$/;"	m	struct:tview.DropDown
+options	demos/primitive/main.go	/^	options       []string$/;"	m	struct:main.RadioButtons
+options	dropdown.go	/^	options []*dropDownOption$/;"	m	struct:tview.DropDown
+paddingBottom	box.go	/^	paddingTop, paddingBottom, paddingLeft, paddingRight int$/;"	m	struct:tview.Box
+paddingLeft	box.go	/^	paddingTop, paddingBottom, paddingLeft, paddingRight int$/;"	m	struct:tview.Box
+paddingRight	box.go	/^	paddingTop, paddingBottom, paddingLeft, paddingRight int$/;"	m	struct:tview.Box
+paddingTop	box.go	/^	paddingTop, paddingBottom, paddingLeft, paddingRight int$/;"	m	struct:tview.Box
+page	pages.go	/^type page struct {$/;"	s	package:tview
+pageCount	demos/pages/main.go	/^const pageCount = 5$/;"	c	package:main
+pageSize	textview.go	/^	pageSize int$/;"	m	struct:tview.TextView
+pages	pages.go	/^	pages []*page$/;"	m	struct:tview.Pages
+placeholder	inputfield.go	/^	placeholder string$/;"	m	struct:tview.InputField
+placeholderTextColor	inputfield.go	/^	placeholderTextColor color.RGBA$/;"	m	struct:tview.InputField
+prefix	dropdown.go	/^	prefix string$/;"	m	struct:tview.DropDown
+prefixTextColor	dropdown.go	/^	prefixTextColor color.RGBA$/;"	m	struct:tview.DropDown
+primitive	frame.go	/^	primitive Primitive$/;"	m	struct:tview.Frame
+ready	_app.go	/^	ready chan bool$/;"	m	struct:tview.app
+recentBytes	textview.go	/^	recentBytes []byte$/;"	m	struct:tview.TextView
+regionPattern	util.go	/^	regionPattern   = regexp.MustCompile(`\\["([a-zA-Z0-9_,;: \\-\\.]*)"\\]`)$/;"	v	package:tview
+regions	textview.go	/^	regions bool$/;"	m	struct:tview.TextView
+reindexBuffer	textview.go	/^func (t *TextView) reindexBuffer(width int) {$/;"	f	unknown:tview.TextView
+right	frame.go	/^	top, bottom, header, footer, left, right int$/;"	m	struct:tview.Frame
+root	_app.go	/^	root           Primitive$/;"	m	struct:tview.app
+root	application.go	/^	root Primitive$/;"	m	struct:tview.Application
+rootFullScreen	_app.go	/^	rootFullScreen bool$/;"	m	struct:tview.app
+rootFullscreen	application.go	/^	rootFullscreen bool$/;"	m	struct:tview.Application
+rowOffset	grid.go	/^	rowOffset, columnOffset int$/;"	m	struct:tview.Grid
+rowOffset	table.go	/^	rowOffset, columnOffset int$/;"	m	struct:tview.Table
+rows	grid.go	/^	rows, columns []int$/;"	m	struct:tview.Grid
+rowsSelectable	table.go	/^	rowsSelectable, columnsSelectable bool$/;"	m	struct:tview.Table
+run	experiment/main.go	/^func run() {$/;"	f	package:main
+screen	application.go	/^	screen ubcell.Screen$/;"	m	struct:tview.Application
+scrollToHighlights	textview.go	/^	scrollToHighlights bool$/;"	m	struct:tview.TextView
+scrollable	textview.go	/^	scrollable bool$/;"	m	struct:tview.TextView
+secondaryTextColor	list.go	/^	secondaryTextColor color.RGBA$/;"	m	struct:tview.List
+selected	button.go	/^	selected func()$/;"	m	struct:tview.Button
+selected	list.go	/^	selected func(index int, mainText, secondaryText string, shortcut rune)$/;"	m	struct:tview.List
+selected	table.go	/^	selected func(row, column int)$/;"	m	struct:tview.Table
+selectedBackgroundColor	list.go	/^	selectedBackgroundColor color.RGBA$/;"	m	struct:tview.List
+selectedColumn	table.go	/^	selectedRow, selectedColumn int$/;"	m	struct:tview.Table
+selectedRow	table.go	/^	selectedRow, selectedColumn int$/;"	m	struct:tview.Table
+selectedTextColor	list.go	/^	selectedTextColor color.RGBA$/;"	m	struct:tview.List
+selectionChanged	table.go	/^	selectionChanged func(row, column int)$/;"	m	struct:tview.Table
+separator	table.go	/^	separator rune$/;"	m	struct:tview.Table
+setCursor	inputfield.go	/^func (i *InputField) setCursor(screen ubcell.Screen) {$/;"	f	unknown:tview.InputField
+setFocus	pages.go	/^	setFocus func(p Primitive)$/;"	m	struct:tview.Pages
+shortcutColor	list.go	/^	shortcutColor color.RGBA$/;"	m	struct:tview.List
+showSecondaryText	list.go	/^	showSecondaryText bool$/;"	m	struct:tview.List
+spacePattern	util.go	/^	spacePattern    = regexp.MustCompile(`\\s+`)$/;"	v	package:tview
+subtitle	demos/presentation/cover.go	/^	subtitle   = `tview - Rich Widgets for Terminal UIs`$/;"	c	package:main
+suspended	application.go	/^	suspended bool$/;"	m	struct:tview.Application
+tableBasic	demos/presentation/table.go	/^const tableBasic = `[green]func[white] [yellow]main[white]() {$/;"	c	package:main
+tableBorders	demos/presentation/table.go	/^const tableBorders = `[green]func[white] [yellow]main[white]() {$/;"	c	package:main
+tableData	demos/presentation/table.go	/^const tableData = `OrderDate|Region|Rep|Item|Units|UnitCost|Total$/;"	c	package:main
+tableSelectCell	demos/presentation/table.go	/^const tableSelectCell = `[green]func[white] [yellow]main[white]() {$/;"	c	package:main
+tableSelectColumn	demos/presentation/table.go	/^const tableSelectColumn = `[green]func[white] [yellow]main[white]() {$/;"	c	package:main
+tableSelectRow	demos/presentation/table.go	/^const tableSelectRow = `[green]func[white] [yellow]main[white]() {$/;"	c	package:main
+tableSeparator	demos/presentation/table.go	/^const tableSeparator = `[green]func[white] [yellow]main[white]() {$/;"	c	package:main
+text	_app.go	/^	text *text.Text$/;"	m	struct:tview.app
+text	frame.go	/^	text []*frameText$/;"	m	struct:tview.Frame
+text	inputfield.go	/^	text string$/;"	m	struct:tview.InputField
+text	modal.go	/^	text string$/;"	m	struct:tview.Modal
+textColor	modal.go	/^	textColor color.RGBA$/;"	m	struct:tview.Modal
+textColor	textview.go	/^	textColor color.RGBA$/;"	m	struct:tview.TextView
+textView1	demos/presentation/textview.go	/^const textView1 = `[green]func[white] [yellow]main[white]() {$/;"	c	package:main
+textView2	demos/presentation/textview.go	/^const textView2 = `[green]package[white] main$/;"	c	package:main
+textViewIndex	textview.go	/^type textViewIndex struct {$/;"	s	package:tview
+title	box.go	/^	title string$/;"	m	struct:tview.Box
+titleAlign	box.go	/^	titleAlign int$/;"	m	struct:tview.Box
+titleColor	box.go	/^	titleColor color.RGBA$/;"	m	struct:tview.Box
+toHighlight	textview.go	/^	fromHighlight, toHighlight int$/;"	m	struct:tview.TextView
+top	frame.go	/^	top, bottom, header, footer, left, right int$/;"	m	struct:tview.Frame
+trackEnd	table.go	/^	trackEnd bool$/;"	m	struct:tview.Table
+trackEnd	textview.go	/^	trackEnd bool$/;"	m	struct:tview.TextView
+tview	_app.go	/^package tview$/;"	p
+tview	application.go	/^package tview$/;"	p
+tview	box.go	/^package tview$/;"	p
+tview	button.go	/^package tview$/;"	p
+tview	checkbox.go	/^package tview$/;"	p
+tview	doc.go	/^package tview$/;"	p
+tview	dropdown.go	/^package tview$/;"	p
+tview	flex.go	/^package tview$/;"	p
+tview	focusable.go	/^package tview$/;"	p
+tview	form.go	/^package tview$/;"	p
+tview	frame.go	/^package tview$/;"	p
+tview	grid.go	/^package tview$/;"	p
+tview	inputfield.go	/^package tview$/;"	p
+tview	list.go	/^package tview$/;"	p
+tview	modal.go	/^package tview$/;"	p
+tview	pages.go	/^package tview$/;"	p
+tview	primitive.go	/^package tview$/;"	p
+tview	styles.go	/^package tview$/;"	p
+tview	table.go	/^package tview$/;"	p
+tview	textview.go	/^package tview$/;"	p
+tview	util.go	/^package tview$/;"	p
+tview	writer.go	/^package tview$/;"	p
+visible	grid.go	/^	visible    bool \/\/ Whether or not this item was visible the last time the grid was drawn.$/;"	m	struct:tview.gridItem
+visibleRows	table.go	/^	visibleRows int$/;"	m	struct:tview.Table
+w	grid.go	/^	x, y, w, h int  \/\/ The last position of the item relative to the top-left corner of the grid./;"	m	struct:tview.gridItem
+width	box.go	/^	x, y, width, height int$/;"	m	struct:tview.Box
+width	table.go	/^	x, y, width int$/;"	m	struct:tview.TableCell
+win	_app.go	/^	win  *pixelgl.Window$/;"	m	struct:tview.app
+wordWrap	textview.go	/^	wordWrap bool$/;"	m	struct:tview.TextView
+wrap	textview.go	/^	wrap bool$/;"	m	struct:tview.TextView
+writer	writer.go	/^type writer struct {$/;"	s	package:tview
+x	box.go	/^	x, y, width, height int$/;"	m	struct:tview.Box
+x	grid.go	/^	x, y, w, h int  \/\/ The last position of the item relative to the top-left corner of the grid./;"	m	struct:tview.gridItem
+x	table.go	/^	x, y, width int$/;"	m	struct:tview.TableCell
+xAdjust	_app.go	/^	xAdjust = 1.1$/;"	c	package:tview
+xInc	_app.go	/^	xInc, yInc float64$/;"	m	struct:tview.app
+y	box.go	/^	x, y, width, height int$/;"	m	struct:tview.Box
+y	grid.go	/^	x, y, w, h int  \/\/ The last position of the item relative to the top-left corner of the grid./;"	m	struct:tview.gridItem
+y	table.go	/^	x, y, width int$/;"	m	struct:tview.TableCell
+yAdjust	_app.go	/^	yAdjust = 1.1$/;"	c	package:tview
+yInc	_app.go	/^	xInc, yInc float64$/;"	m	struct:tview.app

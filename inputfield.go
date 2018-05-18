@@ -1,13 +1,14 @@
 package tview
 
 import (
+	"image/color"
 	"math"
-	"regexp"
 	"strings"
 	"unicode/utf8"
 
-	"github.com/gdamore/tcell"
 	runewidth "github.com/mattn/go-runewidth"
+	"github.com/nowakf/pixel/pixelgl"
+	"github.com/nowakf/ubcell"
 )
 
 // InputField is a one-line box (three lines if there is a title) where the
@@ -30,16 +31,16 @@ type InputField struct {
 	placeholder string
 
 	// The label color.
-	labelColor tcell.Color
+	labelColor color.RGBA
 
 	// The background color of the input area.
-	fieldBackgroundColor tcell.Color
+	fieldBackgroundColor color.RGBA
 
 	// The text color of the input area.
-	fieldTextColor tcell.Color
+	fieldTextColor color.RGBA
 
 	// The text color of the placeholder.
-	placeholderTextColor tcell.Color
+	placeholderTextColor color.RGBA
 
 	// The screen width of the input area. A value of 0 means extend as much as
 	// possible.
@@ -58,7 +59,7 @@ type InputField struct {
 	// An optional function which is called when the user indicated that they
 	// are done entering text. The key which was pressed is provided (tab,
 	// shift-tab, enter, or escape).
-	done func(tcell.Key)
+	done func(*pixelgl.KeyEv)
 }
 
 // NewInputField returns a new input field.
@@ -104,31 +105,31 @@ func (i *InputField) SetPlaceholder(text string) *InputField {
 }
 
 // SetLabelColor sets the color of the label.
-func (i *InputField) SetLabelColor(color tcell.Color) *InputField {
+func (i *InputField) SetLabelColor(color color.RGBA) *InputField {
 	i.labelColor = color
 	return i
 }
 
 // SetFieldBackgroundColor sets the background color of the input area.
-func (i *InputField) SetFieldBackgroundColor(color tcell.Color) *InputField {
+func (i *InputField) SetFieldBackgroundColor(color color.RGBA) *InputField {
 	i.fieldBackgroundColor = color
 	return i
 }
 
 // SetFieldTextColor sets the text color of the input area.
-func (i *InputField) SetFieldTextColor(color tcell.Color) *InputField {
+func (i *InputField) SetFieldTextColor(color color.RGBA) *InputField {
 	i.fieldTextColor = color
 	return i
 }
 
 // SetPlaceholderExtColor sets the text color of placeholder text.
-func (i *InputField) SetPlaceholderExtColor(color tcell.Color) *InputField {
+func (i *InputField) SetPlaceholderExtColor(color color.RGBA) *InputField {
 	i.placeholderTextColor = color
 	return i
 }
 
 // SetFormAttributes sets attributes shared by all form items.
-func (i *InputField) SetFormAttributes(label string, labelColor, bgColor, fieldTextColor, fieldBgColor tcell.Color) FormItem {
+func (i *InputField) SetFormAttributes(label string, labelColor, bgColor, fieldTextColor, fieldBgColor color.RGBA) FormItem {
 	i.label = label
 	i.labelColor = labelColor
 	i.backgroundColor = bgColor
@@ -181,18 +182,18 @@ func (i *InputField) SetChangedFunc(handler func(text string)) *InputField {
 //   - KeyEscape: Abort text input.
 //   - KeyTab: Move to the next field.
 //   - KeyBacktab: Move to the previous field.
-func (i *InputField) SetDoneFunc(handler func(key tcell.Key)) *InputField {
+func (i *InputField) SetDoneFunc(handler func(key *pixelgl.KeyEv)) *InputField {
 	i.done = handler
 	return i
 }
 
 // SetFinishedFunc calls SetDoneFunc().
-func (i *InputField) SetFinishedFunc(handler func(key tcell.Key)) FormItem {
+func (i *InputField) SetFinishedFunc(handler func(key *pixelgl.KeyEv)) FormItem {
 	return i.SetDoneFunc(handler)
 }
 
 // Draw draws this primitive onto the screen.
-func (i *InputField) Draw(screen tcell.Screen) {
+func (i *InputField) Draw(screen ubcell.Screen) {
 	i.Box.Draw(screen)
 
 	// Prepare
@@ -214,9 +215,10 @@ func (i *InputField) Draw(screen tcell.Screen) {
 	if rightLimit-x < fieldWidth {
 		fieldWidth = rightLimit - x
 	}
-	fieldStyle := tcell.StyleDefault.Background(i.fieldBackgroundColor)
+	fieldStyle := ubcell.StyleDefault
+	fieldStyle.Background = i.fieldBackgroundColor
 	for index := 0; index < fieldWidth; index++ {
-		screen.SetContent(x+index, y, ' ', nil, fieldStyle)
+		screen.SetContent(x+index, y, ' ', fieldStyle)
 	}
 
 	// Draw placeholder text.
@@ -238,11 +240,11 @@ func (i *InputField) Draw(screen tcell.Screen) {
 			if fieldWidth-w < 0 {
 				break
 			}
-			_, _, style, _ := screen.GetContent(x+fieldWidth-w, y)
-			style = style.Foreground(i.fieldTextColor)
+			_, style := screen.GetContent(x+fieldWidth-w, y)
+			style.Foreground = i.fieldTextColor
 			for w > 0 {
 				fieldWidth--
-				screen.SetContent(x+fieldWidth, y, ch, nil, style)
+				screen.SetContent(x+fieldWidth, y, ch, style)
 				w--
 			}
 		}
@@ -250,10 +252,10 @@ func (i *InputField) Draw(screen tcell.Screen) {
 		pos := 0
 		for _, ch := range text {
 			w := runewidth.RuneWidth(ch)
-			_, _, style, _ := screen.GetContent(x+pos, y)
-			style = style.Foreground(i.fieldTextColor)
+			_, style := screen.GetContent(x+pos, y)
+			style.Foreground = i.fieldTextColor
 			for w > 0 {
-				screen.SetContent(x+pos, y, ch, nil, style)
+				screen.SetContent(x+pos, y, ch, style)
 				pos++
 				w--
 			}
@@ -267,7 +269,7 @@ func (i *InputField) Draw(screen tcell.Screen) {
 }
 
 // setCursor sets the cursor position.
-func (i *InputField) setCursor(screen tcell.Screen) {
+func (i *InputField) setCursor(screen ubcell.Screen) {
 	x := i.x
 	y := i.y
 	rightLimit := x + i.width
@@ -287,9 +289,9 @@ func (i *InputField) setCursor(screen tcell.Screen) {
 	screen.ShowCursor(x, y)
 }
 
-// InputHandler returns the handler for this primitive.
-func (i *InputField) InputHandler() func(event *tcell.EventKey, setFocus func(p Primitive)) {
-	return i.WrapInputHandler(func(event *tcell.EventKey, setFocus func(p Primitive)) {
+// KeyHandler returns the handler for this primitive.
+func (i *InputField) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
+	return i.WrapKeyHandler(func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
 		// Trigger changed events.
 		currentText := i.text
 		defer func() {
@@ -299,29 +301,24 @@ func (i *InputField) InputHandler() func(event *tcell.EventKey, setFocus func(p 
 		}()
 
 		// Process key event.
-		switch key := event.Key(); key {
-		case tcell.KeyRune: // Regular character.
-			newText := i.text + string(event.Rune())
+		switch key := event.Key; key {
+		case pixelgl.KeyRune: // Regular character.
+			newText := i.text + string(event.Ch)
 			if i.accept != nil {
-				if !i.accept(newText, event.Rune()) {
+				if !i.accept(newText, event.Ch) {
 					break
 				}
 			}
 			i.text = newText
-		case tcell.KeyCtrlU: // Delete all.
-			i.text = ""
-		case tcell.KeyCtrlW: // Delete last word.
-			lastWord := regexp.MustCompile(`\s*\S+\s*$`)
-			i.text = lastWord.ReplaceAllString(i.text, "")
-		case tcell.KeyBackspace, tcell.KeyBackspace2: // Delete last character.
+		case pixelgl.KeyBackspace:
 			if len(i.text) == 0 {
 				break
 			}
 			runes := []rune(i.text)
 			i.text = string(runes[:len(runes)-1])
-		case tcell.KeyEnter, tcell.KeyTab, tcell.KeyBacktab, tcell.KeyEscape: // We're done.
+		case pixelgl.KeyEnter, pixelgl.KeyTab, pixelgl.KeyEscape: // We're done.
 			if i.done != nil {
-				i.done(key)
+				i.done(event)
 			}
 		}
 	})

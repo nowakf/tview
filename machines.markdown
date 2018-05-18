@@ -1,0 +1,59 @@
+What is so Interesting About Machines?
+
+
+//a metaphor of a clock, to examine the differences between machine-words and human words
+
+WORD AND THING
+
+In structuralism, the way in which a word relates to the world has three parts. The first, the signifier, is the mark or utterance that we use to convey the second part - the signified: the concept we want to communicate. Together, these couple to form the sign. Third, there is the referent - the world itself, or at least, the portion of it we are gesticulating towards.
+
+Traditionally, philosophy has focused on the relation between words and meanings, and the relation between meanings and things. The first is the traditional concern of analytic philosophy. The second is epistemology. The relationship between signifiers and things, however, is somewhat underexplored - since in natural language, there is never any relationship.[^1]
+
+Machines complicate this picture. A plan appears like a representative drawing - after all, there are various conventions that allow us to translate between image and matter. However, the form of the plan, applied to steel, has properties that are inherent in that form, as a direct consequence of its shape.
+
+Nowhere is this more obvious than in silicon. In an integrated circuit (IC), the entire mechanism is carved out of a single flat crystal, doped with various additives to produce a wide variety of electrical and mechanical properties. 
+
+A series of screens, describing what should be cut, and what should be doped, describes the entire operation of the IC - to a greater extent than whatever ancillary knowledge people have about it. 
+
+This produces a different relationship between image (the image that is etched or printed onto the wafer through photolithography) and imaged thing. 
+
+The image does not represent the operation - it is not a diagram. It is closer to the negative for a mould, or the printing plate in a lithographic press.
+
+In the long path from grunts to gesticulations to text and image, this is an offshoot that shares a technological heritage, but has a different conceptual root. It does not grow out of the practice of communication, but rather, out of the practice of work, and repetition.
+
+REPETITION
+
+	Brecht quote: "The bourgeois"
+
+	“The clock is the first automatic machine applied to practical purposes, and the whole theory of production of regular motion was developed on it.”
+		-Marx ()
+
+ 
+
+It's significant that one of the first machines was the printing press -
+
+The relationship between machines and words is an odd one. Marx, perhaps the first philosopher to really take machines seriously, wove questions of tooling, automation, and machine time into his account of Capital. 
+
+This engagement is complicated by the ambiguities of the machine as symbol - in its perennial role as a focus for popular anger, as they formed the locus around which the tornado of capitalist dispossession and displacement revolved. 
+
+Robotization produces the possibility of a state apparatus that could reproduce itself with no people at all - a capitalism that could renew it's social relations after all the people had perished-
+
+PRIME MOVERS
+
+ "the frequency declared pursuant to paragraph (1) shall be 50 hertz"
+	-The Electricity Safety, Quality and Continuity Regulations 2002
+
+OPERATIONS
+
+If the most basic element of human language is to point at something, the most basic unit of computer language is the operation. These operations vary between architectures - with the x86-64 architecture (which is everywhere) having 981 distinct operations the processor can perform. 
+
+At this point, for the sake of simplicity, it's worth thinking about Assembly. Assembly language is a low-level programming language that consists of a set of mnemonics for 'opcodes', operations a computer can perform. 
+
+MACHINE AND MOB
+
+	"And the winepress was trampled outside the city, and blood came out of the winepress, up to the horses’ bridles, for one thousand six hundred furlongs."
+		-Revelation 14:20
+
+MATHEMATICS AND CONSTANT FACTORS
+
+
