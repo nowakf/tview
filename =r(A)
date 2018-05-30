@@ -236,11 +236,11 @@ func (l *List) Draw(screen ubcell.Screen) {
 			textWidth := StringWidth(item.MainText)
 			for bx := 0; bx < textWidth && bx < width; bx++ {
 				m, style := screen.GetContent(x+bx, y)
-				fg, _ := style.Decompose()
+				fg , bg:= style.Decompose()
 				if fg == l.mainTextColor {
-					fg = l.selectedTextColor
+					style.Foreground(l.selectedTextColor)
 				}
-				style = ubcell.StyleDefault.Background(l.selectedBackgroundColor).Foreground(fg)
+				style = ubcell.StyleDefault.Background(l.selectedBackgroundColor).Foreground( fg)
 				screen.SetContent(x+bx, y, m, style)
 			}
 		}

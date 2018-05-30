@@ -814,10 +814,10 @@ func (t *TextView) Draw(screen ubcell.Screen) {
 			}
 
 			// Do we highlight this character?
-			style := ubcell.Style{t.backgroundColor, color}
+			style := ubcell.StyleDefault.Background(t.backgroundColor).Foreground(color)
 			if len(regionID) > 0 {
 				if _, ok := t.highlights[regionID]; ok {
-					style = ubcell.Style{color, t.backgroundColor}
+					style = ubcell.StyleDefault.Background(color).Foreground(t.backgroundColor)
 				}
 			}
 

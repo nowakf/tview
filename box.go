@@ -227,13 +227,13 @@ func (b *Box) Draw(screen ubcell.Screen) {
 	//Fill background.
 	for y := b.y; y < b.y+b.height; y++ {
 		for x := b.x; x < b.x+b.width; x++ {
-			screen.SetContent(x, y, ' ', def)
+			screen.SetContent(x, y, ' ', &def)
 		}
 	}
 
 	// Draw border.
 	if b.border && b.width >= 2 && b.height >= 2 {
-		border := ubcell.Style{b.backgroundColor, b.borderColor}
+		border := ubcell.StyleDefault.Background(b.backgroundColor).Foreground(b.borderColor)
 		var vertical, horizontal, topLeft, topRight, bottomLeft, bottomRight rune
 		if b.focus.HasFocus() {
 			vertical = GraphicsDbVertBar
@@ -268,7 +268,8 @@ func (b *Box) Draw(screen ubcell.Screen) {
 			_, printed := Print(screen, b.title, b.x+1, b.y, b.width-2, b.titleAlign, b.titleColor)
 			if StringWidth(b.title)-printed > 0 && printed > 0 {
 				_, style := screen.GetContent(b.x+b.width-2, b.y)
-				Print(screen, string(GraphicsEllipsis), b.x+b.width-2, b.y, 1, AlignLeft, style.Foreground)
+				fg, _ := style.Decompose()
+				Print(screen, string(GraphicsEllipsis), b.x+b.width-2, b.y, 1, AlignLeft, fg)
 			}
 		}
 	}

@@ -215,8 +215,7 @@ func (i *InputField) Draw(screen ubcell.Screen) {
 	if rightLimit-x < fieldWidth {
 		fieldWidth = rightLimit - x
 	}
-	fieldStyle := ubcell.StyleDefault
-	fieldStyle.Background = i.fieldBackgroundColor
+	fieldStyle := ubcell.StyleDefault.Background(i.fieldBackgroundColor)
 	for index := 0; index < fieldWidth; index++ {
 		screen.SetContent(x+index, y, ' ', fieldStyle)
 	}
@@ -241,7 +240,7 @@ func (i *InputField) Draw(screen ubcell.Screen) {
 				break
 			}
 			_, style := screen.GetContent(x+fieldWidth-w, y)
-			style.Foreground = i.fieldTextColor
+			style.Foreground(i.fieldTextColor)
 			for w > 0 {
 				fieldWidth--
 				screen.SetContent(x+fieldWidth, y, ch, style)
@@ -253,7 +252,7 @@ func (i *InputField) Draw(screen ubcell.Screen) {
 		for _, ch := range text {
 			w := runewidth.RuneWidth(ch)
 			_, style := screen.GetContent(x+pos, y)
-			style.Foreground = i.fieldTextColor
+			style.Foreground(i.fieldTextColor)
 			for w > 0 {
 				screen.SetContent(x+pos, y, ch, style)
 				pos++

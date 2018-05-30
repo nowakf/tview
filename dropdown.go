@@ -249,10 +249,9 @@ func (d *DropDown) Draw(screen ubcell.Screen) {
 	if rightLimit-x < fieldWidth {
 		fieldWidth = rightLimit - x
 	}
-	fieldStyle := ubcell.StyleDefault
-	fieldStyle.Background = d.fieldBackgroundColor
+	fieldStyle := ubcell.StyleDefault.Background(d.fieldBackgroundColor)
 	if d.GetFocusable().HasFocus() && !d.open {
-		fieldStyle.Background = d.fieldTextColor
+		fieldStyle.Background(d.fieldTextColor)
 	}
 	for index := 0; index < fieldWidth; index++ {
 		screen.SetContent(x+index, y, ' ', fieldStyle)

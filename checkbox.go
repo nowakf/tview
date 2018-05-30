@@ -145,9 +145,9 @@ func (c *Checkbox) Draw(screen ubcell.Screen) {
 	x += drawnWidth
 
 	// Draw checkbox.
-	fieldStyle := ubcell.Style{c.fieldBackgroundColor, c.fieldTextColor}
+	fieldStyle := ubcell.StyleDefault.Background(c.fieldBackgroundColor).Foreground(c.fieldTextColor)
 	if c.focus.HasFocus() {
-		fieldStyle = ubcell.Style{c.fieldTextColor, c.fieldBackgroundColor}
+		fieldStyle = ubcell.StyleDefault.Background(c.fieldTextColor).Foreground(c.fieldBackgroundColor)
 	}
 	checkedRune := 'X'
 	if !c.checked {

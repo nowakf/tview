@@ -288,7 +288,7 @@ func Print(screen ubcell.Screen, text string, x, y, maxWidth, align int, col col
 
 		// Print the rune.
 		_, style := screen.GetContent(finalX, y)
-		style.Foreground = col
+		style.Foreground(col)
 		for offset := 0; offset < chWidth; offset++ {
 			// To avoid undesired effects, we place the same character in all cells.
 			screen.SetContent(finalX+offset, y, ch, style)
@@ -436,7 +436,7 @@ func WordWrap(text string, width int) (lines []string) {
 // line borders are supported.
 func PrintJoinedBorder(screen ubcell.Screen, x, y int, ch rune, col color.RGBA) {
 	previous, style := screen.GetContent(x, y)
-	style.Foreground = col
+	style.Foreground(col)
 
 	// What's the resulting rune?
 	var result rune

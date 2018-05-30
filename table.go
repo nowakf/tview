@@ -50,7 +50,7 @@ func NewTableCell(text string) *TableCell {
 		Text:            text,
 		Align:           AlignLeft,
 		Color:           Styles.PrimaryTextColor,
-		BackgroundColor: ubcell.StyleDefault.Background,
+		BackgroundColor: Styles.PrimitiveBackgroundColor,
 	}
 }
 
@@ -634,7 +634,7 @@ ColumnLoop:
 	}
 
 	// Helper function which draws border runes.
-	borderStyle := ubcell.Style{t.backgroundColor, t.bordersColor}
+	borderStyle := ubcell.StyleDefault.Background(t.backgroundColor).Foreground(t.bordersColor)
 	drawBorder := func(colX, rowY int, ch rune) {
 		screen.SetContent(x+colX, y+rowY, ch, borderStyle)
 	}
@@ -689,7 +689,7 @@ ColumnLoop:
 			_, printed := Print(screen, cell.Text, x+columnX+1, y+rowY, finalWidth, cell.Align, cell.Color)
 			if StringWidth(cell.Text)-printed > 0 && printed > 0 {
 				_, style := screen.GetContent(x+columnX+1+finalWidth-1, y+rowY)
-				fg := style.Foreground
+				fg, _ := style.Decompose()
 				Print(screen, string(GraphicsEllipsis), x+columnX+1+finalWidth-1, y+rowY, 1, AlignLeft, fg)
 			}
 		}
@@ -733,19 +733,19 @@ ColumnLoop:
 			for bx := 0; bx < w && fromX+bx < x+width; bx++ {
 				m, style := screen.GetContent(fromX+bx, fromY+by)
 				if selected {
-					fg := style.Foreground
+					fg, _ := style.Decompose()
 					if fg == textColor || fg == t.bordersColor {
 						fg = backgroundColor
 					}
-					if fg == ubcell.StyleDefault.Foreground {
+					if fg == Styles.PrimitiveBackgroundColor {
 						fg = t.backgroundColor
 					}
-					style = ubcell.Style{textColor, fg}
+					style = ubcell.StyleDefault.Background(textColor).Foreground(fg)
 				} else {
-					if backgroundColor == ubcell.StyleDefault.Background {
+					if backgroundColor == Styles.PrimitiveBackgroundColor {
 						continue
 					}
-					style.Background = backgroundColor
+					style.Background(backgroundColor)
 				}
 				screen.SetContent(fromX+bx, fromY+by, m, style)
 			}
