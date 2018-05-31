@@ -224,16 +224,18 @@ func (b *Box) Draw(screen ubcell.Screen) {
 
 	def := ubcell.StyleDefault
 
+	background := def.Background(b.backgroundColor)
+
 	//Fill background.
 	for y := b.y; y < b.y+b.height; y++ {
 		for x := b.x; x < b.x+b.width; x++ {
-			screen.SetContent(x, y, ' ', &def)
+			screen.SetContent(x, y, ' ', background)
 		}
 	}
 
 	// Draw border.
 	if b.border && b.width >= 2 && b.height >= 2 {
-		border := ubcell.StyleDefault.Background(b.backgroundColor).Foreground(b.borderColor)
+		border := background.Foreground(b.borderColor)
 		var vertical, horizontal, topLeft, topRight, bottomLeft, bottomRight rune
 		if b.focus.HasFocus() {
 			vertical = GraphicsDbVertBar
