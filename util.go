@@ -288,7 +288,7 @@ func Print(screen ubcell.Screen, text string, x, y, maxWidth, align int, col col
 
 		// Print the rune.
 		_, style := screen.GetContent(finalX, y)
-		style.Foreground(col)
+		style = style.Foreground(col)
 		for offset := 0; offset < chWidth; offset++ {
 			// To avoid undesired effects, we place the same character in all cells.
 			screen.SetContent(finalX+offset, y, ch, style)

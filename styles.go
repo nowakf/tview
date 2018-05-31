@@ -24,15 +24,15 @@ var Styles = struct {
 	InverseTextColor            color.RGBA // Text on primary-colored backgrounds.
 	ContrastSecondaryTextColor  color.RGBA // Secondary text on ContrastBackgroundColor-colored backgrounds.
 }{
-	PrimitiveBackgroundColor:    colornames.Black,
-	ContrastBackgroundColor:     colornames.Blue,
-	MoreContrastBackgroundColor: colornames.Green,
-	BorderColor:                 colornames.White,
-	TitleColor:                  colornames.White,
-	GraphicsColor:               colornames.White,
-	PrimaryTextColor:            colornames.White,
-	SecondaryTextColor:          colornames.Yellow,
-	TertiaryTextColor:           colornames.Green,
-	InverseTextColor:            colornames.Blue,
-	ContrastSecondaryTextColor:  colornames.Darkcyan,
+	PrimitiveBackgroundColor:    colornames.Dimgray,
+	ContrastBackgroundColor:     colornames.Grey,
+	MoreContrastBackgroundColor: colornames.Darkblue,
+	BorderColor:                 colornames.Lightgrey,
+	TitleColor:                  colornames.Lightgrey,
+	GraphicsColor:               colornames.Lightgrey,
+	PrimaryTextColor:            colornames.Lightgrey,
+	SecondaryTextColor:          colornames.Lightgrey,
+	TertiaryTextColor:           colornames.Lightgoldenrodyellow,
+	InverseTextColor:            colornames.Yellow,
+	ContrastSecondaryTextColor:  colornames.Pink,
 }

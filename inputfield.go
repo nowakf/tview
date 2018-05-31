@@ -287,6 +287,17 @@ func (i *InputField) setCursor(screen ubcell.Screen) {
 	}
 	screen.ShowCursor(x, y)
 }
+func (i *InputField) ChaHandler() func(event *pixelgl.ChaEv, setFocus func(p Primitive)) {
+	return func(event *pixelgl.ChaEv, setFocus func(p Primitive)) {
+		newText := i.text + string(*event)
+		if i.accept != nil {
+			if !i.accept(newText, rune(*event)) {
+				return
+			}
+		}
+		i.text = newText
+	}
+}
 
 // KeyHandler returns the handler for this primitive.
 func (i *InputField) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
@@ -302,13 +313,13 @@ func (i *InputField) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Pri
 		// Process key event.
 		switch key := event.Key; key {
 		case pixelgl.KeyRune: // Regular character.
-			newText := i.text + string(event.Ch)
-			if i.accept != nil {
-				if !i.accept(newText, event.Ch) {
-					break
-				}
-			}
-			i.text = newText
+			//			newText := i.text + string(event.Ch)
+			//			if i.accept != nil {
+			//				if !i.accept(newText, event.Ch) {
+			//					break
+			//				}
+			//			}
+			//			i.text = newText
 		case pixelgl.KeyBackspace:
 			if len(i.text) == 0 {
 				break

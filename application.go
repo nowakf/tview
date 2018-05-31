@@ -71,7 +71,7 @@ func (a *Application) GetInputCapture() func(event *pixelgl.KeyEv) *pixelgl.KeyE
 
 // Run starts the application and thus the event loop. This function returns
 // when Stop() was called.
-func (a *Application) Run(w *pixelgl.Window, drawChan chan func() *Application, fontPath string) error {
+func (a *Application) Run(w *pixelgl.Window, drawChan chan func(), fontPath string) error {
 	var err error
 	a.Lock()
 
@@ -99,7 +99,7 @@ func (a *Application) Run(w *pixelgl.Window, drawChan chan func() *Application, 
 	// Draw the screen for the first time.
 	a.Unlock()
 
-	drawChan <- a.Draw
+	a.Draw(drawChan)
 
 	// Start event loop.
 	for {
@@ -159,7 +159,8 @@ func (a *Application) Run(w *pixelgl.Window, drawChan chan func() *Application, 
 					handler(event, func(p Primitive) {
 						a.SetFocus(p)
 					})
-					drawChan <- a.Draw
+
+					a.Draw(drawChan)
 				}
 			}
 			//	case *pixelgl.EventResize:
@@ -168,19 +169,19 @@ func (a *Application) Run(w *pixelgl.Window, drawChan chan func() *Application, 
 			//		a.Unlock()
 			//		screen.Clear()
 			//		a.Draw()
-			//	case pixelgl.ChaEv:
-			//		a.RLock()
-			//		p := a.focus
-			//		a.RUnlock()
-			//		if p != nil {
-			//			if handler := p.ChaHandler(); handler != nil {
-			//				handler(event, func(p Primitive) {
-			//					a.SetFocus(p)
-			//				})
+		case *pixelgl.ChaEv:
+			a.RLock()
+			p := a.focus
+			a.RUnlock()
+			if p != nil {
+				if handler := p.ChaHandler(); handler != nil {
+					handler(event, func(p Primitive) {
+						a.SetFocus(p)
+					})
 
-			//				drawChan <- a.Draw
-			//			}
-			//		}
+					a.Draw(drawChan)
+				}
+			}
 
 		}
 	}
@@ -253,7 +254,7 @@ func (a *Application) Stop() {
 
 // Draw refreshes the screen. It calls the Draw() function of the application's
 // root primitive and then syncs the screen buffer.
-func (a *Application) Draw() *Application {
+func (a *Application) Draw(drawChan chan func()) *Application {
 	a.RLock()
 	screen := a.screen
 	root := a.root
@@ -274,9 +275,13 @@ func (a *Application) Draw() *Application {
 	}
 
 	// Call before handler if there is one.
+	wait := func() {
+		screen.PostEvent()
+		drawChan <- screen.Show
+	}
 	if before != nil {
 		if before(screen) {
-			screen.Show()
+			wait()
 			return a
 		}
 	}
@@ -290,7 +295,7 @@ func (a *Application) Draw() *Application {
 	}
 
 	// Sync screen.
-	screen.Show()
+	wait()
 
 	return a
 }

@@ -159,6 +159,10 @@ func (b *Box) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)
 	return b.WrapKeyHandler(nil)
 }
 
+func (b *Box) ChaHandler() func(event *pixelgl.ChaEv, setFocus func(p Primitive)) {
+	return nil
+}
+
 // SetInputCapture installs a function which captures key events before they are
 // forwarded to the primitive's default key event handler. This function can
 // then choose to forward that key event (or a different one) to the default

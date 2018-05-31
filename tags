@@ -46,6 +46,8 @@ Box	table.go	/^	*Box$/;"	M	struct:tview.Table	typeref:typename:*Box
 Box	textview.go	/^	*Box$/;"	M	struct:tview.TextView	typeref:typename:*Box
 Button	button.go	/^type Button struct {$/;"	s	package:tview
 Center	demos/presentation/center.go	/^func Center(width, height int, p tview.Primitive) tview.Primitive {$/;"	f	package:main
+ChaHandler	box.go	/^func (b *Box) ChaHandler() func(event *pixelgl.ChaEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Box
+ChaHandler	inputfield.go	/^func (i *InputField) ChaHandler() func(event *pixelgl.ChaEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.InputField
 Checkbox	checkbox.go	/^type Checkbox struct {$/;"	s	package:tview
 Clear	form.go	/^func (f *Form) Clear(includeButtons bool) *Form {$/;"	f	unknown:tview.Form
 Clear	frame.go	/^func (f *Frame) Clear() *Frame {$/;"	f	unknown:tview.Frame
@@ -62,7 +64,7 @@ Column	grid.go	/^	Row, Column                 int       \/\/ The top-left grid c
 Cover	demos/presentation/cover.go	/^func Cover(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
 DefaultFormFieldWidth	form.go	/^var DefaultFormFieldWidth = 10$/;"	v	package:tview
 Draw	_app.go	/^func (a *app) Draw(t pixel.Target, m pixel.Matrix) {$/;"	f	unknown:tview.app
-Draw	application.go	/^func (a *Application) Draw() *Application {$/;"	f	unknown:tview.Application
+Draw	application.go	/^func (a *Application) Draw(drawChan chan func()) *Application {$/;"	f	unknown:tview.Application
 Draw	box.go	/^func (b *Box) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Box
 Draw	button.go	/^func (b *Button) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Button
 Draw	checkbox.go	/^func (c *Checkbox) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Checkbox
@@ -231,7 +233,7 @@ RemovePage	pages.go	/^func (p *Pages) RemovePage(name string) *Pages {$/;"	f	unk
 Resize	pages.go	/^	Resize  bool      \/\/ Whether or not to resize the page when it is drawn.$/;"	m	struct:tview.page
 ResizeToFullScreen	application.go	/^func (a *Application) ResizeToFullScreen(p Primitive) *Application {$/;"	f	unknown:tview.Application
 Row	grid.go	/^	Row, Column                 int       \/\/ The top-left grid cell where the item is placed.$/;"	m	struct:tview.gridItem
-Run	application.go	/^func (a *Application) Run(w *pixelgl.Window, drawChan chan func() *Application, fontPath string)/;"	f	unknown:tview.Application
+Run	application.go	/^func (a *Application) Run(w *pixelgl.Window, drawChan chan func(), fontPath string) error {$/;"	f	unknown:tview.Application
 ScrollToBeginning	table.go	/^func (t *Table) ScrollToBeginning() *Table {$/;"	f	unknown:tview.Table
 ScrollToBeginning	textview.go	/^func (t *TextView) ScrollToBeginning() *TextView {$/;"	f	unknown:tview.TextView
 ScrollToEnd	table.go	/^func (t *Table) ScrollToEnd() *Table {$/;"	f	unknown:tview.Table

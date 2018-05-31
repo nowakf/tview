@@ -37,6 +37,8 @@ type Primitive interface {
 	// Box.WrapKeyHandler() so you inherit that functionality.
 	KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive))
 
+	ChaHandler() func(event *pixelgl.ChaEv, setFocus func(p Primitive))
+
 	// Focus is called by the application when the primitive receives focus.
 	// Implementers may call delegate() to pass the focus on to another primitive.
 	Focus(delegate func(p Primitive))
