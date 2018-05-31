@@ -131,11 +131,9 @@ func (a *Application) Run(w *pixelgl.Window, drawChan chan func(), fontPath stri
 
 		switch event := event.(type) {
 		case *pixelgl.KeyEv:
-
-			if event.Act == pixelgl.PRESS {
+			if event.Act == pixelgl.RELEASE {
 				break
 			}
-
 			a.RLock()
 			p := a.focus
 			a.RUnlock()
