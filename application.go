@@ -15,6 +15,9 @@ import (
 type Application struct {
 	sync.RWMutex
 
+	//The screen configuration
+	cfg *config
+
 	// The application's screen.
 	screen ubcell.Screen
 
@@ -45,8 +48,8 @@ type Application struct {
 }
 
 // NewApplication creates and returns a new application.
-func NewApplication() *Application {
-	return &Application{}
+func NewApplication(cfg *config) (*Application, error) {
+	return &Application{cfg: cfg}, nil
 }
 
 // SetInputCapture sets a function which captures all key events before they are
@@ -71,12 +74,12 @@ func (a *Application) GetInputCapture() func(event *pixelgl.KeyEv) *pixelgl.KeyE
 
 // Run starts the application and thus the event loop. This function returns
 // when Stop() was called.
-func (a *Application) Run(w *pixelgl.Window, drawChan chan func(), fontPath string) error {
+func (a *Application) Run(w *pixelgl.Window, drawChan chan func()) error {
 	var err error
 	a.Lock()
 
 	// Make a screen.
-	a.screen, err = ubcell.NewScreen(w, fontPath)
+	a.screen, err = ubcell.NewScreen(w, a.cfg)
 	if err != nil {
 		a.Unlock()
 		return err
@@ -130,6 +133,9 @@ func (a *Application) Run(w *pixelgl.Window, drawChan chan func(), fontPath stri
 		}
 
 		switch event := event.(type) {
+		case *pixelgl.CursorEvent:
+			//do nothing for now
+
 		case *pixelgl.KeyEv:
 			if event.Act == pixelgl.RELEASE {
 				break
@@ -161,12 +167,13 @@ func (a *Application) Run(w *pixelgl.Window, drawChan chan func(), fontPath stri
 					a.Draw(drawChan)
 				}
 			}
-			//	case *pixelgl.EventResize:
-			//		a.Lock()
-			//		screen := a.screen
-			//		a.Unlock()
-			//		screen.Clear()
-			//		a.Draw()
+		case *pixelgl.ResizeEvent:
+			a.RLock()
+			screen := a.screen
+			a.RUnlock()
+			screen.Clear()
+
+			a.Draw(drawChan)
 		case *pixelgl.ChaEv:
 			a.RLock()
 			p := a.focus
@@ -269,6 +276,7 @@ func (a *Application) Draw(drawChan chan func()) *Application {
 	// Resize if requested.
 	if fullscreen && root != nil {
 		width, height := screen.Size()
+		println(width, height, "width+height")
 		root.SetRect(0, 0, width, height)
 	}
 

@@ -19,6 +19,7 @@ AddOption	dropdown.go	/^func (d *DropDown) AddOption(text string, selected func(
 AddPage	pages.go	/^func (p *Pages) AddPage(name string, item Primitive, resize, visible bool) *Pages {$/;"	f	unknown:tview.Pages
 AddPasswordField	form.go	/^func (f *Form) AddPasswordField(label, value string, fieldWidth int, mask rune, changed func(tex/;"	f	unknown:tview.Form
 AddText	frame.go	/^func (f *Frame) AddText(text string, header bool, align int, color color.RGBA) *Frame {$/;"	f	unknown:tview.Frame
+AdjustXY	Config.go	/^func (c *config) AdjustXY() (float64, float64) {$/;"	f	unknown:tview.config
 Align	frame.go	/^	Align  int        \/\/ One of the Align constants.$/;"	m	struct:tview.frameText
 Align	table.go	/^	Align int$/;"	m	struct:tview.TableCell
 AlignCenter	util.go	/^	AlignCenter$/;"	c	package:tview
@@ -61,6 +62,7 @@ Color	table.go	/^	Color color.RGBA$/;"	m	struct:tview.TableCell
 Color	textview.go	/^	Color   color.RGBA \/\/ The starting color.$/;"	m	struct:tview.textViewIndex
 Colors	demos/presentation/colors.go	/^func Colors(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
 Column	grid.go	/^	Row, Column                 int       \/\/ The top-left grid cell where the item is placed.$/;"	m	struct:tview.gridItem
+Config	Config.go	/^func Config(fsize float64, fpath string, adjustX, adjustY float64) *config {$/;"	f	package:tview
 Cover	demos/presentation/cover.go	/^func Cover(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
 DefaultFormFieldWidth	form.go	/^var DefaultFormFieldWidth = 10$/;"	v	package:tview
 Draw	_app.go	/^func (a *app) Draw(t pixel.Target, m pixel.Matrix) {$/;"	f	unknown:tview.app
@@ -99,6 +101,8 @@ Focus	grid.go	/^func (g *Grid) Focus(delegate func(p Primitive)) {$/;"	f	unknown
 Focus	modal.go	/^func (m *Modal) Focus(delegate func(p Primitive)) {$/;"	f	unknown:tview.Modal
 Focus	pages.go	/^func (p *Pages) Focus(delegate func(p Primitive)) {$/;"	f	unknown:tview.Pages
 Focusable	focusable.go	/^type Focusable interface {$/;"	i	package:tview
+FontPath	Config.go	/^func (c *config) FontPath() string {$/;"	f	unknown:tview.config
+FontSize	Config.go	/^func (c *config) FontSize() float64 {$/;"	f	unknown:tview.config
 Form	demos/presentation/form.go	/^func Form(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
 Form	form.go	/^type Form struct {$/;"	s	package:tview
 FormItem	form.go	/^type FormItem interface {$/;"	i	package:tview
@@ -198,7 +202,7 @@ MinGridWidth	grid.go	/^	MinGridWidth, MinGridHeight int       \/\/ The minimum g
 Modal	modal.go	/^type Modal struct {$/;"	s	package:tview
 Mutex	textview.go	/^	sync.Mutex$/;"	M	struct:tview.TextView	typeref:typename:sync.Mutex
 Name	pages.go	/^	Name    string    \/\/ The page's name.$/;"	m	struct:tview.page
-NewApplication	application.go	/^func NewApplication() *Application {$/;"	f	package:tview
+NewApplication	application.go	/^func NewApplication(cfg *config) (*Application, error) {$/;"	f	package:tview
 NewBox	box.go	/^func NewBox() *Box {$/;"	f	package:tview
 NewButton	button.go	/^func NewButton(label string) *Button {$/;"	f	package:tview
 NewCheckbox	checkbox.go	/^func NewCheckbox() *Checkbox {$/;"	f	package:tview
@@ -233,7 +237,7 @@ RemovePage	pages.go	/^func (p *Pages) RemovePage(name string) *Pages {$/;"	f	unk
 Resize	pages.go	/^	Resize  bool      \/\/ Whether or not to resize the page when it is drawn.$/;"	m	struct:tview.page
 ResizeToFullScreen	application.go	/^func (a *Application) ResizeToFullScreen(p Primitive) *Application {$/;"	f	unknown:tview.Application
 Row	grid.go	/^	Row, Column                 int       \/\/ The top-left grid cell where the item is placed.$/;"	m	struct:tview.gridItem
-Run	application.go	/^func (a *Application) Run(w *pixelgl.Window, drawChan chan func(), fontPath string) error {$/;"	f	unknown:tview.Application
+Run	application.go	/^func (a *Application) Run(w *pixelgl.Window, drawChan chan func()) error {$/;"	f	unknown:tview.Application
 ScrollToBeginning	table.go	/^func (t *Table) ScrollToBeginning() *Table {$/;"	f	unknown:tview.Table
 ScrollToBeginning	textview.go	/^func (t *TextView) ScrollToBeginning() *TextView {$/;"	f	unknown:tview.TextView
 ScrollToEnd	table.go	/^func (t *Table) ScrollToEnd() *Table {$/;"	f	unknown:tview.Table
@@ -388,6 +392,8 @@ WordWrap	util.go	/^func WordWrap(text string, width int) (lines []string) {$/;"	
 WrapKeyHandler	box.go	/^func (b *Box) WrapKeyHandler(inputHandler func(*pixelgl.KeyEv, func(p Primitive))) func(*pixelgl/;"	f	unknown:tview.Box
 Write	textview.go	/^func (t *TextView) Write(p []byte) (n int, err error) {$/;"	f	unknown:tview.TextView
 accept	inputfield.go	/^	accept func(text string, ch rune) bool$/;"	m	struct:tview.InputField
+adjustX	Config.go	/^	adjustX, adjustY float64$/;"	m	struct:tview.config
+adjustY	Config.go	/^	adjustX, adjustY float64$/;"	m	struct:tview.config
 afterDraw	_app.go	/^	afterDraw func(screen *ubcell.CellBuffer)$/;"	m	struct:tview.app
 afterDraw	application.go	/^	afterDraw func(screen ubcell.Screen)$/;"	m	struct:tview.Application
 alert	demos/unicode/main.go	/^func alert(pages *tview.Pages, id string, message string) *tview.Pages {$/;"	f	package:main
@@ -415,6 +421,7 @@ buttonsAlign	form.go	/^	buttonsAlign int$/;"	m	struct:tview.Form
 cancel	form.go	/^	cancel func()$/;"	m	struct:tview.Form
 cells	_app.go	/^	cells      *ubcell.CellBuffer$/;"	m	struct:tview.app
 cells	table.go	/^	cells [][]*TableCell$/;"	m	struct:tview.Table
+cfg	application.go	/^	cfg *config$/;"	m	struct:tview.Application
 changed	checkbox.go	/^	changed func(checked bool)$/;"	m	struct:tview.Checkbox
 changed	inputfield.go	/^	changed func(text string)$/;"	m	struct:tview.InputField
 changed	list.go	/^	changed func(index int, mainText, secondaryText string, shortcut rune)$/;"	m	struct:tview.List
@@ -430,6 +437,7 @@ columnOffset	table.go	/^	rowOffset, columnOffset int$/;"	m	struct:tview.Table
 columnOffset	textview.go	/^	columnOffset int$/;"	m	struct:tview.TextView
 columns	grid.go	/^	rows, columns []int$/;"	m	struct:tview.Grid
 columnsSelectable	table.go	/^	rowsSelectable, columnsSelectable bool$/;"	m	struct:tview.Table
+config	Config.go	/^type config struct {$/;"	s	package:tview
 corporate	demos/textview/main.go	/^const corporate = `Leverage agile frameworks to provide a robust synopsis for high level overvie/;"	c	package:main
 currentItem	list.go	/^	currentItem int$/;"	m	struct:tview.List
 currentOption	demos/primitive/main.go	/^	currentOption int$/;"	m	struct:main.RadioButtons
@@ -463,6 +471,8 @@ focus	_app.go	/^	focus          Primitive$/;"	m	struct:tview.app
 focus	application.go	/^	focus Primitive$/;"	m	struct:tview.Application
 focus	box.go	/^	focus Focusable$/;"	m	struct:tview.Box
 focusedElement	form.go	/^	focusedElement int$/;"	m	struct:tview.Form
+fontPath	Config.go	/^	fontPath         string$/;"	m	struct:tview.config
+fontSize	Config.go	/^	fontSize         float64$/;"	m	struct:tview.config
 footer	frame.go	/^	top, bottom, header, footer, left, right int$/;"	m	struct:tview.Frame
 form	demos/presentation/form.go	/^const form = `[green]package[white] main$/;"	c	package:main
 form	modal.go	/^	form *Form$/;"	m	struct:tview.Modal
@@ -642,6 +652,7 @@ toHighlight	textview.go	/^	fromHighlight, toHighlight int$/;"	m	struct:tview.Tex
 top	frame.go	/^	top, bottom, header, footer, left, right int$/;"	m	struct:tview.Frame
 trackEnd	table.go	/^	trackEnd bool$/;"	m	struct:tview.Table
 trackEnd	textview.go	/^	trackEnd bool$/;"	m	struct:tview.TextView
+tview	Config.go	/^package tview$/;"	p
 tview	_app.go	/^package tview$/;"	p
 tview	application.go	/^package tview$/;"	p
 tview	box.go	/^package tview$/;"	p

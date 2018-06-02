@@ -312,14 +312,6 @@ func (i *InputField) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Pri
 
 		// Process key event.
 		switch key := event.Key; key {
-		case pixelgl.KeyRune: // Regular character.
-			//			newText := i.text + string(event.Ch)
-			//			if i.accept != nil {
-			//				if !i.accept(newText, event.Ch) {
-			//					break
-			//				}
-			//			}
-			//			i.text = newText
 		case pixelgl.KeyBackspace:
 			if len(i.text) == 0 {
 				break
