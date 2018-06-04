@@ -62,11 +62,12 @@ Color	table.go	/^	Color color.RGBA$/;"	m	struct:tview.TableCell
 Color	textview.go	/^	Color   color.RGBA \/\/ The starting color.$/;"	m	struct:tview.textViewIndex
 Colors	demos/presentation/colors.go	/^func Colors(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
 Column	grid.go	/^	Row, Column                 int       \/\/ The top-left grid cell where the item is placed.$/;"	m	struct:tview.gridItem
-Config	Config.go	/^func Config(fsize float64, fpath string, adjustX, adjustY float64) *config {$/;"	f	package:tview
+Config	Config.go	/^func Config(fsize float64, fpath string, adjustX, adjustY, dpi float64) *config {$/;"	f	package:tview
 Cover	demos/presentation/cover.go	/^func Cover(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
+DPI	Config.go	/^func (c *config) DPI() float64 {$/;"	f	unknown:tview.config
 DefaultFormFieldWidth	form.go	/^var DefaultFormFieldWidth = 10$/;"	v	package:tview
 Draw	_app.go	/^func (a *app) Draw(t pixel.Target, m pixel.Matrix) {$/;"	f	unknown:tview.app
-Draw	application.go	/^func (a *Application) Draw(drawChan chan func()) *Application {$/;"	f	unknown:tview.Application
+Draw	application.go	/^func (a *Application) Draw() *Application {$/;"	f	unknown:tview.Application
 Draw	box.go	/^func (b *Box) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Box
 Draw	button.go	/^func (b *Button) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Button
 Draw	checkbox.go	/^func (c *Checkbox) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Checkbox
@@ -237,7 +238,7 @@ RemovePage	pages.go	/^func (p *Pages) RemovePage(name string) *Pages {$/;"	f	unk
 Resize	pages.go	/^	Resize  bool      \/\/ Whether or not to resize the page when it is drawn.$/;"	m	struct:tview.page
 ResizeToFullScreen	application.go	/^func (a *Application) ResizeToFullScreen(p Primitive) *Application {$/;"	f	unknown:tview.Application
 Row	grid.go	/^	Row, Column                 int       \/\/ The top-left grid cell where the item is placed.$/;"	m	struct:tview.gridItem
-Run	application.go	/^func (a *Application) Run(w *pixelgl.Window, drawChan chan func()) error {$/;"	f	unknown:tview.Application
+Run	application.go	/^func (a *Application) Run(w *pixelgl.Window) error {$/;"	f	unknown:tview.Application
 ScrollToBeginning	table.go	/^func (t *Table) ScrollToBeginning() *Table {$/;"	f	unknown:tview.Table
 ScrollToBeginning	textview.go	/^func (t *TextView) ScrollToBeginning() *TextView {$/;"	f	unknown:tview.TextView
 ScrollToEnd	table.go	/^func (t *Table) ScrollToEnd() *Table {$/;"	f	unknown:tview.Table
@@ -450,6 +451,7 @@ done	list.go	/^	done func()$/;"	m	struct:tview.List
 done	modal.go	/^	done func(buttonIndex int, buttonLabel string)$/;"	m	struct:tview.Modal
 done	table.go	/^	done func(key *pixelgl.KeyEv)$/;"	m	struct:tview.Table
 done	textview.go	/^	done func(*pixelgl.KeyEv)$/;"	m	struct:tview.TextView
+dpi	Config.go	/^	dpi              float64$/;"	m	struct:tview.config
 draw	box.go	/^	draw func(screen ubcell.Screen, x, y, width, height int) (int, int, int, int)$/;"	m	struct:tview.Box
 dropDownOption	dropdown.go	/^type dropDownOption struct {$/;"	s	package:tview
 dynamicColors	textview.go	/^	dynamicColors bool$/;"	m	struct:tview.TextView

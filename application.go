@@ -74,18 +74,16 @@ func (a *Application) GetInputCapture() func(event *pixelgl.KeyEv) *pixelgl.KeyE
 
 // Run starts the application and thus the event loop. This function returns
 // when Stop() was called.
-func (a *Application) Run(w *pixelgl.Window, drawChan chan func()) error {
+func (a *Application) Run(w *pixelgl.Window) error {
 	var err error
-	a.Lock()
 
-	// Make a screen.
+	// Make a screen. Has to be done by main thread.
 	a.screen, err = ubcell.NewScreen(w, a.cfg)
 	if err != nil {
-		a.Unlock()
 		return err
 	}
+
 	if err = a.screen.Init(); err != nil {
-		a.Unlock()
 		return err
 	}
 
@@ -100,18 +98,15 @@ func (a *Application) Run(w *pixelgl.Window, drawChan chan func()) error {
 	}()
 
 	// Draw the screen for the first time.
-	a.Unlock()
 
-	a.Draw(drawChan)
+	a.Draw()
 
 	// Start event loop.
 	for {
-		a.Lock()
 		screen := a.screen
 		if a.suspended {
 			a.suspended = false // Clear previous suspended flag.
 		}
-		a.Unlock()
 		if screen == nil {
 			break
 		}
@@ -119,14 +114,11 @@ func (a *Application) Run(w *pixelgl.Window, drawChan chan func()) error {
 		// Wait for next event - blocking...
 		event := a.screen.PollEvent()
 		if event == nil {
-			a.Lock()
 			if a.suspended {
 				// This screen was renewed due to suspended mode.
 				a.suspended = false
-				a.Unlock()
 				continue // Resume.
 			}
-			a.Unlock()
 
 			// The screen was finalized. Exit the loop.
 			break
@@ -140,9 +132,7 @@ func (a *Application) Run(w *pixelgl.Window, drawChan chan func()) error {
 			if event.Act == pixelgl.RELEASE {
 				break
 			}
-			a.RLock()
 			p := a.focus
-			a.RUnlock()
 
 			// Intercept keys.
 			if a.inputCapture != nil {
@@ -164,27 +154,23 @@ func (a *Application) Run(w *pixelgl.Window, drawChan chan func()) error {
 						a.SetFocus(p)
 					})
 
-					a.Draw(drawChan)
+					a.Draw()
 				}
 			}
 		case *pixelgl.ResizeEvent:
-			a.RLock()
 			screen := a.screen
-			a.RUnlock()
+			//screen.PostEvent()
 			screen.Clear()
-
-			a.Draw(drawChan)
+			a.Draw()
 		case *pixelgl.ChaEv:
-			a.RLock()
 			p := a.focus
-			a.RUnlock()
 			if p != nil {
 				if handler := p.ChaHandler(); handler != nil {
 					handler(event, func(p Primitive) {
 						a.SetFocus(p)
 					})
 
-					a.Draw(drawChan)
+					a.Draw()
 				}
 			}
 
@@ -196,8 +182,6 @@ func (a *Application) Run(w *pixelgl.Window, drawChan chan func()) error {
 
 // Stop stops the application, causing Run() to return.
 func (a *Application) Stop() {
-	a.RLock()
-	defer a.RUnlock()
 	if a.screen == nil {
 		return
 	}
@@ -214,17 +198,14 @@ func (a *Application) Stop() {
 // terminal UI mode was not exited, and "f" was not called.
 //doesn't work currently...
 //func (a *Application) Suspend(f func()) bool {
-//	a.Lock()
 //
 //	if a.suspended || a.screen == nil {
 //		// Application is already suspended.
-//		a.Unlock()
 //		return false
 //	}
 //
 //	// Enter suspended mode.
 //	a.suspended = true
-//	a.Unlock()
 //	a.Stop()
 //
 //	// Deal with panics during suspended mode. Exit the program.
@@ -239,18 +220,14 @@ func (a *Application) Stop() {
 //	f()
 //
 //	// Make a new screen and redraw.
-//	a.Lock()
 //	var err error
 //	a.screen, err = ubcell.NewScreen()
 //	if err != nil {
-//		a.Unlock()
 //		panic(err)
 //	}
 //	if err = a.screen.Init(); err != nil {
-//		a.Unlock()
 //		panic(err)
 //	}
-//	a.Unlock()
 //	a.Draw()
 //
 //	// Continue application loop.
@@ -259,14 +236,12 @@ func (a *Application) Stop() {
 
 // Draw refreshes the screen. It calls the Draw() function of the application's
 // root primitive and then syncs the screen buffer.
-func (a *Application) Draw(drawChan chan func()) *Application {
-	a.RLock()
+func (a *Application) Draw() *Application {
 	screen := a.screen
 	root := a.root
 	fullscreen := a.rootFullscreen
 	before := a.beforeDraw
 	after := a.afterDraw
-	a.RUnlock()
 
 	// Maybe we're not ready yet or not anymore.
 	if screen == nil || root == nil {
@@ -276,20 +251,16 @@ func (a *Application) Draw(drawChan chan func()) *Application {
 	// Resize if requested.
 	if fullscreen && root != nil {
 		width, height := screen.Size()
-		println(width, height, "width+height")
 		root.SetRect(0, 0, width, height)
 	}
 
 	// Call before handler if there is one.
-	wait := func() {
-		screen.PostEvent()
-		drawChan <- screen.Show
-	}
 	if before != nil {
 		if before(screen) {
-			wait()
+			screen.Show()
 			return a
 		}
+
 	}
 
 	// Draw all primitives.
@@ -301,7 +272,7 @@ func (a *Application) Draw(drawChan chan func()) *Application {
 	}
 
 	// Sync screen.
-	wait()
+	screen.Show()
 
 	return a
 }
@@ -349,13 +320,11 @@ func (a *Application) GetAfterDrawFunc() func(screen ubcell.Screen) {
 //
 // It also calls SetFocus() on the primitive.
 func (a *Application) SetRoot(root Primitive, fullscreen bool) *Application {
-	a.Lock()
 	a.root = root
 	a.rootFullscreen = fullscreen
 	if a.screen != nil {
 		a.screen.Clear()
 	}
-	a.Unlock()
 
 	a.SetFocus(root)
 
@@ -365,9 +334,7 @@ func (a *Application) SetRoot(root Primitive, fullscreen bool) *Application {
 // ResizeToFullScreen resizes the given primitive such that it fills the entire
 // screen.
 func (a *Application) ResizeToFullScreen(p Primitive) *Application {
-	a.RLock()
 	width, height := a.screen.Size()
-	a.RUnlock()
 	p.SetRect(0, 0, width, height)
 	return a
 }
@@ -379,7 +346,6 @@ func (a *Application) ResizeToFullScreen(p Primitive) *Application {
 // Blur() will be called on the previously focused primitive. Focus() will be
 // called on the new primitive.
 func (a *Application) SetFocus(p Primitive) *Application {
-	a.Lock()
 	if a.focus != nil {
 		a.focus.Blur()
 	}
@@ -387,7 +353,6 @@ func (a *Application) SetFocus(p Primitive) *Application {
 	if a.screen != nil {
 		a.screen.HideCursor()
 	}
-	a.Unlock()
 	if p != nil {
 		p.Focus(func(p Primitive) {
 			a.SetFocus(p)
@@ -400,7 +365,5 @@ func (a *Application) SetFocus(p Primitive) *Application {
 // GetFocus returns the primitive which has the current focus. If none has it,
 // nil is returned.
 func (a *Application) GetFocus() Primitive {
-	a.RLock()
-	defer a.RUnlock()
 	return a.focus
 }
