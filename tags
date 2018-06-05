@@ -238,7 +238,7 @@ RemovePage	pages.go	/^func (p *Pages) RemovePage(name string) *Pages {$/;"	f	unk
 Resize	pages.go	/^	Resize  bool      \/\/ Whether or not to resize the page when it is drawn.$/;"	m	struct:tview.page
 ResizeToFullScreen	application.go	/^func (a *Application) ResizeToFullScreen(p Primitive) *Application {$/;"	f	unknown:tview.Application
 Row	grid.go	/^	Row, Column                 int       \/\/ The top-left grid cell where the item is placed.$/;"	m	struct:tview.gridItem
-Run	application.go	/^func (a *Application) Run(w *pixelgl.Window) error {$/;"	f	unknown:tview.Application
+Run	application.go	/^func (a *Application) Run() error {$/;"	f	unknown:tview.Application
 ScrollToBeginning	table.go	/^func (t *Table) ScrollToBeginning() *Table {$/;"	f	unknown:tview.Table
 ScrollToBeginning	textview.go	/^func (t *TextView) ScrollToBeginning() *TextView {$/;"	f	unknown:tview.TextView
 ScrollToEnd	table.go	/^func (t *Table) ScrollToEnd() *Table {$/;"	f	unknown:tview.Table

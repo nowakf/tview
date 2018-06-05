@@ -301,6 +301,7 @@ func (g *Grid) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive
 // Draw draws this primitive onto the screen.
 func (g *Grid) Draw(screen ubcell.Screen) {
 	g.Box.Draw(screen)
+
 	x, y, width, height := g.GetInnerRect()
 
 	// Make a list of items which apply.

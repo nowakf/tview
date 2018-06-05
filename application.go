@@ -62,6 +62,7 @@ func NewApplication(cfg *config) (*Application, error) {
 // itself: Such a handler can intercept the Ctrl-C event which closes the
 // applicatoon.
 func (a *Application) SetInputCapture(capture func(event *pixelgl.KeyEv) *pixelgl.KeyEv) *Application {
+
 	a.inputCapture = capture
 	return a
 }
@@ -69,21 +70,27 @@ func (a *Application) SetInputCapture(capture func(event *pixelgl.KeyEv) *pixelg
 // GetInputCapture returns the function installed with SetInputCapture() or nil
 // if no such function has been installed.
 func (a *Application) GetInputCapture() func(event *pixelgl.KeyEv) *pixelgl.KeyEv {
+
 	return a.inputCapture
 }
 
 // Run starts the application and thus the event loop. This function returns
 // when Stop() was called.
-func (a *Application) Run(w *pixelgl.Window) error {
-	var err error
+func (a *Application) Run() error {
 
-	// Make a screen. Has to be done by main thread.
-	a.screen, err = ubcell.NewScreen(w, a.cfg)
+	var err error
+	a.Lock()
+
+	// Make a screen.
+	a.screen, err = ubcell.NewScreen(a.cfg)
+
 	if err != nil {
+		a.Unlock()
 		return err
 	}
 
 	if err = a.screen.Init(); err != nil {
+		a.Unlock()
 		return err
 	}
 
@@ -98,15 +105,18 @@ func (a *Application) Run(w *pixelgl.Window) error {
 	}()
 
 	// Draw the screen for the first time.
+	a.Unlock()
 
 	a.Draw()
 
 	// Start event loop.
 	for {
+		a.Lock()
 		screen := a.screen
 		if a.suspended {
 			a.suspended = false // Clear previous suspended flag.
 		}
+		a.Unlock()
 		if screen == nil {
 			break
 		}
@@ -114,17 +124,22 @@ func (a *Application) Run(w *pixelgl.Window) error {
 		// Wait for next event - blocking...
 		event := a.screen.PollEvent()
 		if event == nil {
+			a.Lock()
 			if a.suspended {
 				// This screen was renewed due to suspended mode.
 				a.suspended = false
+				a.Unlock()
 				continue // Resume.
 			}
+			a.Unlock()
 
 			// The screen was finalized. Exit the loop.
 			break
 		}
 
 		switch event := event.(type) {
+		case *pixelgl.ScrollEvent:
+
 		case *pixelgl.CursorEvent:
 			//do nothing for now
 
@@ -132,7 +147,9 @@ func (a *Application) Run(w *pixelgl.Window) error {
 			if event.Act == pixelgl.RELEASE {
 				break
 			}
+			a.RLock()
 			p := a.focus
+			a.RUnlock()
 
 			// Intercept keys.
 			if a.inputCapture != nil {
@@ -155,15 +172,21 @@ func (a *Application) Run(w *pixelgl.Window) error {
 					})
 
 					a.Draw()
+
 				}
 			}
 		case *pixelgl.ResizeEvent:
-			screen := a.screen
 			//screen.PostEvent()
+			a.Lock()
+			screen := a.screen
+			a.Unlock()
 			screen.Clear()
 			a.Draw()
 		case *pixelgl.ChaEv:
+			a.RLock()
 			p := a.focus
+			a.RUnlock()
+
 			if p != nil {
 				if handler := p.ChaHandler(); handler != nil {
 					handler(event, func(p Primitive) {
@@ -182,6 +205,7 @@ func (a *Application) Run(w *pixelgl.Window) error {
 
 // Stop stops the application, causing Run() to return.
 func (a *Application) Stop() {
+
 	if a.screen == nil {
 		return
 	}
@@ -198,6 +222,7 @@ func (a *Application) Stop() {
 // terminal UI mode was not exited, and "f" was not called.
 //doesn't work currently...
 //func (a *Application) Suspend(f func()) bool {
+
 //
 //	if a.suspended || a.screen == nil {
 //		// Application is already suspended.
@@ -237,11 +262,14 @@ func (a *Application) Stop() {
 // Draw refreshes the screen. It calls the Draw() function of the application's
 // root primitive and then syncs the screen buffer.
 func (a *Application) Draw() *Application {
+
+	a.RLock()
 	screen := a.screen
 	root := a.root
 	fullscreen := a.rootFullscreen
 	before := a.beforeDraw
 	after := a.afterDraw
+	a.RUnlock()
 
 	// Maybe we're not ready yet or not anymore.
 	if screen == nil || root == nil {
@@ -264,6 +292,7 @@ func (a *Application) Draw() *Application {
 	}
 
 	// Draw all primitives.
+
 	root.Draw(screen)
 
 	// Call after handler if there is one.
@@ -287,6 +316,7 @@ func (a *Application) Draw() *Application {
 //
 // Provide nil to uninstall the callback function.
 func (a *Application) SetBeforeDrawFunc(handler func(screen ubcell.Screen) bool) *Application {
+
 	a.beforeDraw = handler
 	return a
 }
@@ -294,6 +324,7 @@ func (a *Application) SetBeforeDrawFunc(handler func(screen ubcell.Screen) bool)
 // GetBeforeDrawFunc returns the callback function installed with
 // SetBeforeDrawFunc() or nil if none has been installed.
 func (a *Application) GetBeforeDrawFunc() func(screen ubcell.Screen) bool {
+
 	return a.beforeDraw
 }
 
@@ -302,6 +333,7 @@ func (a *Application) GetBeforeDrawFunc() func(screen ubcell.Screen) bool {
 //
 // Provide nil to uninstall the callback function.
 func (a *Application) SetAfterDrawFunc(handler func(screen ubcell.Screen)) *Application {
+
 	a.afterDraw = handler
 	return a
 }
@@ -309,6 +341,7 @@ func (a *Application) SetAfterDrawFunc(handler func(screen ubcell.Screen)) *Appl
 // GetAfterDrawFunc returns the callback function installed with
 // SetAfterDrawFunc() or nil if none has been installed.
 func (a *Application) GetAfterDrawFunc() func(screen ubcell.Screen) {
+
 	return a.afterDraw
 }
 
@@ -320,11 +353,14 @@ func (a *Application) GetAfterDrawFunc() func(screen ubcell.Screen) {
 //
 // It also calls SetFocus() on the primitive.
 func (a *Application) SetRoot(root Primitive, fullscreen bool) *Application {
+
+	a.Lock()
 	a.root = root
 	a.rootFullscreen = fullscreen
 	if a.screen != nil {
 		a.screen.Clear()
 	}
+	a.Unlock()
 
 	a.SetFocus(root)
 
@@ -334,7 +370,10 @@ func (a *Application) SetRoot(root Primitive, fullscreen bool) *Application {
 // ResizeToFullScreen resizes the given primitive such that it fills the entire
 // screen.
 func (a *Application) ResizeToFullScreen(p Primitive) *Application {
+
+	a.RLock()
 	width, height := a.screen.Size()
+	a.RUnlock()
 	p.SetRect(0, 0, width, height)
 	return a
 }
@@ -346,6 +385,8 @@ func (a *Application) ResizeToFullScreen(p Primitive) *Application {
 // Blur() will be called on the previously focused primitive. Focus() will be
 // called on the new primitive.
 func (a *Application) SetFocus(p Primitive) *Application {
+
+	a.Lock()
 	if a.focus != nil {
 		a.focus.Blur()
 	}
@@ -353,6 +394,9 @@ func (a *Application) SetFocus(p Primitive) *Application {
 	if a.screen != nil {
 		a.screen.HideCursor()
 	}
+
+	a.Unlock()
+
 	if p != nil {
 		p.Focus(func(p Primitive) {
 			a.SetFocus(p)
@@ -365,5 +409,8 @@ func (a *Application) SetFocus(p Primitive) *Application {
 // GetFocus returns the primitive which has the current focus. If none has it,
 // nil is returned.
 func (a *Application) GetFocus() Primitive {
+
+	a.RLock()
+	defer a.RUnlock()
 	return a.focus
 }
