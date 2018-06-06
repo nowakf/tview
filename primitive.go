@@ -10,6 +10,7 @@ type Primitive interface {
 	// Draw draws this primitive onto the screen. Implementers can call the
 	// screen's ShowCursor() function but should only do so when they have focus.
 	// (They will need to keep track of this themselves.)
+
 	Draw(screen ubcell.Screen)
 
 	// GetRect returns the current position of the primitive, x, y, width, and

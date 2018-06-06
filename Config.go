@@ -1,34 +1,33 @@
 package tview
 
-type config struct {
-	fontSize         float64
-	fontPath         string
-	adjustX, adjustY float64
-	dpi              float64
+import "github.com/nowakf/pixel/pixelgl"
+
+type Config struct {
+	//ubcell config
+	FontSize         float64
+	FontPath         string
+	AdjustX, AdjustY float64
+	DPI              float64
+	//pixel config
+	WindowConfig pixelgl.WindowConfig
 }
 
-func Config(fsize float64, fpath string, adjustX, adjustY, dpi float64) *config {
-	return &config{
-		fontSize: fsize,
-		fontPath: fpath,
-		adjustX:  adjustX,
-		adjustY:  adjustY,
-		dpi:      dpi,
-	}
+func (c *Config) GetFontSize() float64 {
+	return c.FontSize
 }
 
-func (c *config) FontSize() float64 {
-	return c.fontSize
+func (c *Config) GetFontPath() string {
+	return c.FontPath
 }
 
-func (c *config) FontPath() string {
-	return c.fontPath
+func (c *Config) GetAdjustXY() (float64, float64) {
+	return c.AdjustX, c.AdjustY
 }
 
-func (c *config) AdjustXY() (float64, float64) {
-	return c.adjustX, c.adjustY
+func (c *Config) GetDPI() float64 {
+	return c.DPI
 }
 
-func (c *config) DPI() float64 {
-	return c.dpi
+func (c *Config) GetWindowConfig() pixelgl.WindowConfig {
+	return c.WindowConfig
 }

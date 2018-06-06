@@ -16,7 +16,7 @@ type RadioButtons struct {
 }
 
 // NewRadioButtons returns a new radio button primitive.
-func NewRadioButtons(options []string) *RadioButtons {
+func NewRadioButtons(, options []string) *RadioButtons {
 	return &RadioButtons{
 		Box:     tview.NewBox(),
 		options: options,

@@ -16,6 +16,9 @@ import (
 //
 // See https://github.com/rivo/tview/wiki/Box for an example.
 type Box struct {
+	parent   *Box
+	children []*Box
+
 	// The position of the rect.
 	x, y, width, height int
 
@@ -60,6 +63,9 @@ type Box struct {
 	// nothing should be forwarded).
 	inputCapture func(event *pixelgl.KeyEv) *pixelgl.KeyEv
 
+	//mouse behaviour function:
+	mouseBehaviour func(event *pixelgl.CursorEvent) *pixelgl.CursorEvent
+
 	// An optional function which is called before the box is drawn.
 	draw func(screen ubcell.Screen, x, y, width, height int) (int, int, int, int)
 }
@@ -90,6 +96,10 @@ func (b *Box) SetBorderPadding(top, bottom, left, right int) *Box {
 // height.
 func (b *Box) GetRect() (int, int, int, int) {
 	return b.x, b.y, b.width, b.height
+}
+
+func (b *Box) GetBox() *Box {
+	return b
 }
 
 // GetInnerRect returns the position of the inner rectangle (x, y, width,

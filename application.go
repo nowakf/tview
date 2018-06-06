@@ -16,7 +16,7 @@ type Application struct {
 	sync.RWMutex
 
 	//The screen configuration
-	cfg *config
+	cfg *Config
 
 	// The application's screen.
 	screen ubcell.Screen
@@ -48,7 +48,7 @@ type Application struct {
 }
 
 // NewApplication creates and returns a new application.
-func NewApplication(cfg *config) (*Application, error) {
+func NewApplication(cfg *Config) (*Application, error) {
 	return &Application{cfg: cfg}, nil
 }
 
@@ -108,6 +108,7 @@ func (a *Application) Run() error {
 	a.Unlock()
 
 	a.Draw()
+	//post event
 
 	// Start event loop.
 	for {
@@ -138,10 +139,22 @@ func (a *Application) Run() error {
 		}
 
 		switch event := event.(type) {
-		case *pixelgl.ScrollEvent:
+		//case *pixelgl.ScrollEvent:
+		//Keyboard only, for now.
 
-		case *pixelgl.CursorEvent:
-			//do nothing for now
+		//case *pixelgl.CursorEvent:
+		//	x, y := ubcell.Mouse(event)
+		//	a.RLock()
+		//	p :== a.root
+		//	a.RUnlock()
+		//	if handler := p.MouseHandler(x, y); p != nil {
+		// 	handler(event, p primitive){
+		// 	setfocus(p)
+		//
+		//	}
+		//}
+
+		//do nothing for now
 
 		case *pixelgl.KeyEv:
 			if event.Act == pixelgl.RELEASE {
@@ -176,7 +189,6 @@ func (a *Application) Run() error {
 				}
 			}
 		case *pixelgl.ResizeEvent:
-			//screen.PostEvent()
 			a.Lock()
 			screen := a.screen
 			a.Unlock()
