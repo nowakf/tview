@@ -46,6 +46,7 @@ Box	modal.go	/^	*Box$/;"	M	struct:tview.Modal	typeref:typename:*Box
 Box	pages.go	/^	*Box$/;"	M	struct:tview.Pages	typeref:typename:*Box
 Box	table.go	/^	*Box$/;"	M	struct:tview.Table	typeref:typename:*Box
 Box	textview.go	/^	*Box$/;"	M	struct:tview.TextView	typeref:typename:*Box
+Box	video.go	/^	*Box$/;"	M	struct:tview.VideoPlayer	typeref:typename:*Box
 Button	button.go	/^type Button struct {$/;"	s	package:tview
 Center	demos/presentation/center.go	/^func Center(height int, p tview.Primitive) tview.Primitive {$/;"	f	package:main
 ChaHandler	box.go	/^func (b *Box) ChaHandler() func(event *pixelgl.ChaEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Box
@@ -84,6 +85,7 @@ Draw	modal.go	/^func (m *Modal) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview
 Draw	pages.go	/^func (p *Pages) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Pages
 Draw	table.go	/^func (t *Table) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Table
 Draw	textview.go	/^func (t *TextView) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.TextView
+Draw	video.go	/^func (v *VideoPlayer) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.VideoPlayer
 DropDown	dropdown.go	/^type DropDown struct {$/;"	s	package:tview
 End	demos/presentation/end.go	/^func End(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
 Expansion	table.go	/^	Expansion int$/;"	m	struct:tview.TableCell
@@ -145,6 +147,7 @@ GetRowCount	table.go	/^func (t *Table) GetRowCount() int {$/;"	f	unknown:tview.T
 GetSelectable	table.go	/^func (t *Table) GetSelectable() (rows, columns bool) {$/;"	f	unknown:tview.Table
 GetSelection	table.go	/^func (t *Table) GetSelection() (row, column int) {$/;"	f	unknown:tview.Table
 GetText	inputfield.go	/^func (i *InputField) GetText() string {$/;"	f	unknown:tview.InputField
+GetTransform	video.go	/^func (v *VideoPlayer) GetTransform(screen ubcell.Screen, x, y, w, h int) pixel.Matrix {$/;"	f	unknown:tview.VideoPlayer
 GetWindowConfig	Config.go	/^func (c *Config) GetWindowConfig() pixelgl.WindowConfig {$/;"	f	unknown:tview.Config
 GraphicsBottomLeftCorner	util.go	/^	GraphicsBottomLeftCorner    = '\\u2514'$/;"	c	package:tview
 GraphicsBottomRightCorner	util.go	/^	GraphicsBottomRightCorner   = '\\u2518'$/;"	c	package:tview
@@ -202,6 +205,7 @@ KeyHandler	table.go	/^func (t *Table) KeyHandler() func(event *pixelgl.KeyEv, se
 KeyHandler	textview.go	/^func (t *TextView) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.TextView
 Line	textview.go	/^	Line    int        \/\/ The index into the "buffer" variable.$/;"	m	struct:tview.textViewIndex
 List	list.go	/^type List struct {$/;"	s	package:tview
+Load	video.go	/^func (v *VideoPlayer) Load(path string) (*VideoPlayer, error) {$/;"	f	unknown:tview.VideoPlayer
 Loop	_app.go	/^func (a *app) Loop() {$/;"	f	unknown:tview.app
 MainText	list.go	/^	MainText      string \/\/ The main text of the list item.$/;"	m	struct:tview.listItem
 MaxWidth	table.go	/^	MaxWidth int$/;"	m	struct:tview.TableCell
@@ -227,6 +231,7 @@ NewRadioButtons	demos/primitive/main.go	/^func NewRadioButtons(, options []strin
 NewTable	table.go	/^func NewTable() *Table {$/;"	f	package:tview
 NewTableCell	table.go	/^func NewTableCell(text string) *TableCell {$/;"	f	package:tview
 NewTextView	textview.go	/^func NewTextView() *TextView {$/;"	f	package:tview
+NewVideoPlayer	video.go	/^func NewVideoPlayer() *VideoPlayer {$/;"	f	package:tview
 NextPos	textview.go	/^	NextPos int        \/\/ The (byte) index of the next character in this buffer line.$/;"	m	struct:tview.textViewIndex
 NotSelectable	table.go	/^	NotSelectable bool$/;"	m	struct:tview.TableCell
 Pages	pages.go	/^type Pages struct {$/;"	s	package:tview
@@ -246,6 +251,7 @@ Resize	pages.go	/^	Resize  bool      \/\/ Whether or not to resize the page when
 ResizeToFullScreen	application.go	/^func (a *Application) ResizeToFullScreen(p Primitive) *Application {$/;"	f	unknown:tview.Application
 Row	grid.go	/^	Row, Column                 int       \/\/ The top-left grid cell where the item is placed.$/;"	m	struct:tview.gridItem
 Run	application.go	/^func (a *Application) Run() error {$/;"	f	unknown:tview.Application
+Screen	application.go	/^func (a *Application) Screen() ubcell.Screen {$/;"	f	unknown:tview.Application
 ScrollToBeginning	table.go	/^func (t *Table) ScrollToBeginning() *Table {$/;"	f	unknown:tview.Table
 ScrollToBeginning	textview.go	/^func (t *TextView) ScrollToBeginning() *TextView {$/;"	f	unknown:tview.TextView
 ScrollToEnd	table.go	/^func (t *Table) ScrollToEnd() *Table {$/;"	f	unknown:tview.Table
@@ -288,6 +294,7 @@ SetChecked	checkbox.go	/^func (c *Checkbox) SetChecked(checked bool) *Checkbox {
 SetColumns	grid.go	/^func (g *Grid) SetColumns(columns ...int) *Grid {$/;"	f	unknown:tview.Grid
 SetCurrentItem	list.go	/^func (l *List) SetCurrentItem(index int) *List {$/;"	f	unknown:tview.List
 SetCurrentOption	dropdown.go	/^func (d *DropDown) SetCurrentOption(index int) *DropDown {$/;"	f	unknown:tview.DropDown
+SetDelay	video.go	/^func (v *VideoPlayer) SetDelay(delay int) {$/;"	f	unknown:tview.VideoPlayer
 SetDirection	flex.go	/^func (f *Flex) SetDirection(direction int) *Flex {$/;"	f	unknown:tview.Flex
 SetDoneFunc	checkbox.go	/^func (c *Checkbox) SetDoneFunc(handler func(key *pixelgl.KeyEv)) *Checkbox {$/;"	f	unknown:tview.Checkbox
 SetDoneFunc	dropdown.go	/^func (d *DropDown) SetDoneFunc(handler func(key *pixelgl.KeyEv)) *DropDown {$/;"	f	unknown:tview.DropDown
@@ -312,6 +319,7 @@ SetFieldWidth	inputfield.go	/^func (i *InputField) SetFieldWidth(width int) *Inp
 SetFinishedFunc	checkbox.go	/^func (c *Checkbox) SetFinishedFunc(handler func(key *pixelgl.KeyEv)) FormItem {$/;"	f	unknown:tview.Checkbox
 SetFinishedFunc	dropdown.go	/^func (d *DropDown) SetFinishedFunc(handler func(key *pixelgl.KeyEv)) FormItem {$/;"	f	unknown:tview.DropDown
 SetFinishedFunc	inputfield.go	/^func (i *InputField) SetFinishedFunc(handler func(key *pixelgl.KeyEv)) FormItem {$/;"	f	unknown:tview.InputField
+SetFinishedFunc	video.go	/^func (v *VideoPlayer) SetFinishedFunc(f func()) {$/;"	f	unknown:tview.VideoPlayer
 SetFixed	table.go	/^func (t *Table) SetFixed(rows, columns int) *Table {$/;"	f	unknown:tview.Table
 SetFocus	application.go	/^func (a *Application) SetFocus(p Primitive) *Application {$/;"	f	unknown:tview.Application
 SetFormAttributes	checkbox.go	/^func (c *Checkbox) SetFormAttributes(label string, labelColor, bgColor, fieldTextColor, fieldBgC/;"	f	unknown:tview.Checkbox
@@ -335,6 +343,7 @@ SetLabelColor	form.go	/^func (f *Form) SetLabelColor(color color.RGBA) *Form {$/
 SetLabelColor	inputfield.go	/^func (i *InputField) SetLabelColor(color color.RGBA) *InputField {$/;"	f	unknown:tview.InputField
 SetLabelColorActivated	button.go	/^func (b *Button) SetLabelColorActivated(color color.RGBA) *Button {$/;"	f	unknown:tview.Button
 SetMainTextColor	list.go	/^func (l *List) SetMainTextColor(color color.RGBA) *List {$/;"	f	unknown:tview.List
+SetMask	video.go	/^func (v *VideoPlayer) SetMask(m color.RGBA) {$/;"	f	unknown:tview.VideoPlayer
 SetMaskCharacter	inputfield.go	/^func (i *InputField) SetMaskCharacter(mask rune) *InputField {$/;"	f	unknown:tview.InputField
 SetMaxWidth	table.go	/^func (c *TableCell) SetMaxWidth(maxWidth int) *TableCell {$/;"	f	unknown:tview.TableCell
 SetMinSize	grid.go	/^func (g *Grid) SetMinSize(row, column int) *Grid {$/;"	f	unknown:tview.Grid
@@ -393,6 +402,7 @@ Text	table.go	/^	Text string$/;"	m	struct:tview.TableCell
 TextView	textview.go	/^type TextView struct {$/;"	s	package:tview
 TextView1	demos/presentation/textview.go	/^func TextView1(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
 TextView2	demos/presentation/textview.go	/^func TextView2(nextSlide func()) (title string, content tview.Primitive) {$/;"	f	package:main
+VideoPlayer	video.go	/^type VideoPlayer struct {$/;"	s	package:tview
 Visible	pages.go	/^	Visible bool      \/\/ Whether or not this page is visible.$/;"	m	struct:tview.page
 Width	grid.go	/^	Width, Height               int       \/\/ The number of rows and columns the item occupies.$/;"	m	struct:tview.gridItem
 Width	textview.go	/^	Width   int        \/\/ The screen width of this line.$/;"	m	struct:tview.textViewIndex
@@ -445,10 +455,14 @@ columnOffset	table.go	/^	rowOffset, columnOffset int$/;"	m	struct:tview.Table
 columnOffset	textview.go	/^	columnOffset int$/;"	m	struct:tview.TextView
 columns	grid.go	/^	rows, columns []int$/;"	m	struct:tview.Grid
 columnsSelectable	table.go	/^	rowsSelectable, columnsSelectable bool$/;"	m	struct:tview.Table
+complete	video.go	/^	complete$/;"	c	package:tview
+control	video.go	/^	control  chan controlSig$/;"	m	struct:tview.VideoPlayer
+controlSig	video.go	/^type controlSig int$/;"	t	package:tview
 corporate	demos/textview/main.go	/^const corporate = `Leverage agile frameworks to provide a robust synopsis for high level overvie/;"	c	package:main
 currentItem	list.go	/^	currentItem int$/;"	m	struct:tview.List
 currentOption	demos/primitive/main.go	/^	currentOption int$/;"	m	struct:main.RadioButtons
 currentOption	dropdown.go	/^	currentOption int$/;"	m	struct:tview.DropDown
+delay	video.go	/^	delay    int$/;"	m	struct:tview.VideoPlayer
 direction	flex.go	/^	direction int$/;"	m	struct:tview.Flex
 done	checkbox.go	/^	done func(*pixelgl.KeyEv)$/;"	m	struct:tview.Checkbox
 done	dropdown.go	/^	done func(*pixelgl.KeyEv)$/;"	m	struct:tview.DropDown
@@ -471,6 +485,7 @@ fieldTextColor	form.go	/^	fieldTextColor color.RGBA$/;"	m	struct:tview.Form
 fieldTextColor	inputfield.go	/^	fieldTextColor color.RGBA$/;"	m	struct:tview.InputField
 fieldWidth	dropdown.go	/^	fieldWidth int$/;"	m	struct:tview.DropDown
 fieldWidth	inputfield.go	/^	fieldWidth int$/;"	m	struct:tview.InputField
+finished	video.go	/^	finished func(ubcell.Screen)$/;"	m	struct:tview.VideoPlayer
 fixedColumns	table.go	/^	fixedRows, fixedColumns int$/;"	m	struct:tview.Table
 fixedRows	table.go	/^	fixedRows, fixedColumns int$/;"	m	struct:tview.Table
 flexItem	flex.go	/^type flexItem struct {$/;"	s	package:tview
@@ -579,6 +594,7 @@ main	demos/unicode/main.go	/^package main$/;"	p
 main	experiment/main.go	/^func main() {$/;"	f	package:main
 main	experiment/main.go	/^package main$/;"	p
 mainTextColor	list.go	/^	mainTextColor color.RGBA$/;"	m	struct:tview.List
+mask	video.go	/^	mask     color.Color$/;"	m	struct:tview.VideoPlayer
 maskCharacter	inputfield.go	/^	maskCharacter rune$/;"	m	struct:tview.InputField
 minHeight	grid.go	/^	minWidth, minHeight int$/;"	m	struct:tview.Grid
 minWidth	grid.go	/^	minWidth, minHeight int$/;"	m	struct:tview.Grid
@@ -598,11 +614,13 @@ pages	pages.go	/^	pages []*page$/;"	m	struct:tview.Pages
 parent	box.go	/^	parent   *Box$/;"	m	struct:tview.Box
 placeholder	inputfield.go	/^	placeholder string$/;"	m	struct:tview.InputField
 placeholderTextColor	inputfield.go	/^	placeholderTextColor color.RGBA$/;"	m	struct:tview.InputField
+play	video.go	/^func (v *VideoPlayer) play(screen ubcell.Screen, delay int) {$/;"	f	unknown:tview.VideoPlayer
 prefix	dropdown.go	/^	prefix string$/;"	m	struct:tview.DropDown
 prefixTextColor	dropdown.go	/^	prefixTextColor color.RGBA$/;"	m	struct:tview.DropDown
 primitive	frame.go	/^	primitive Primitive$/;"	m	struct:tview.Frame
 ready	_app.go	/^	ready chan bool$/;"	m	struct:tview.app
 recentBytes	textview.go	/^	recentBytes []byte$/;"	m	struct:tview.TextView
+redraw	video.go	/^	redraw controlSig = iota$/;"	c	package:tview
 regionPattern	util.go	/^	regionPattern   = regexp.MustCompile(`\\["([a-zA-Z0-9_,;: \\-\\.]*)"\\]`)$/;"	v	package:tview
 regions	textview.go	/^	regions bool$/;"	m	struct:tview.TextView
 reindexBuffer	textview.go	/^func (t *TextView) reindexBuffer(width int) {$/;"	f	unknown:tview.TextView
@@ -629,6 +647,7 @@ selectedRow	table.go	/^	selectedRow, selectedColumn int$/;"	m	struct:tview.Table
 selectedTextColor	list.go	/^	selectedTextColor color.RGBA$/;"	m	struct:tview.List
 selectionChanged	table.go	/^	selectionChanged func(row, column int)$/;"	m	struct:tview.Table
 separator	table.go	/^	separator rune$/;"	m	struct:tview.Table
+sequence	video.go	/^	sequence *gif.GIF$/;"	m	struct:tview.VideoPlayer
 setCursor	inputfield.go	/^func (i *InputField) setCursor(screen ubcell.Screen) {$/;"	f	unknown:tview.InputField
 setFocus	pages.go	/^	setFocus func(p Primitive)$/;"	m	struct:tview.Pages
 shortcutColor	list.go	/^	shortcutColor color.RGBA$/;"	m	struct:tview.List
@@ -681,6 +700,7 @@ tview	styles.go	/^package tview$/;"	p
 tview	table.go	/^package tview$/;"	p
 tview	textview.go	/^package tview$/;"	p
 tview	util.go	/^package tview$/;"	p
+tview	video.go	/^package tview$/;"	p
 tview	writer.go	/^package tview$/;"	p
 visible	grid.go	/^	visible    bool \/\/ Whether or not this item was visible the last time the grid was drawn.$/;"	m	struct:tview.gridItem
 visibleRows	table.go	/^	visibleRows int$/;"	m	struct:tview.Table

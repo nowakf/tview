@@ -52,6 +52,10 @@ func NewApplication(cfg *Config) (*Application, error) {
 	return &Application{cfg: cfg}, nil
 }
 
+func (a *Application) Screen() ubcell.Screen {
+	return a.screen
+}
+
 // SetInputCapture sets a function which captures all key events before they are
 // forwarded to the key event handler of the primitive which currently has
 // focus. This function can then choose to forward that key event (or a
@@ -189,10 +193,10 @@ func (a *Application) Run() error {
 				}
 			}
 		case *pixelgl.ResizeEvent:
-			a.Lock()
-			screen := a.screen
-			a.Unlock()
-			screen.Clear()
+			//	a.Lock()
+			//	screen := a.screen
+			//	a.Unlock()
+			a.screen.Clear()
 			a.Draw()
 		case *pixelgl.ChaEv:
 			a.RLock()
@@ -313,7 +317,7 @@ func (a *Application) Draw() *Application {
 	}
 
 	// Sync screen.
-	screen.Show()
+	a.screen.Show()
 
 	return a
 }
