@@ -33,6 +33,7 @@ Blur	box.go	/^func (b *Box) Blur() {$/;"	f	unknown:tview.Box
 Blur	grid.go	/^func (g *Grid) Blur() {$/;"	f	unknown:tview.Grid
 Box	box.go	/^type Box struct {$/;"	s	package:tview
 Box	button.go	/^	*Box$/;"	M	struct:tview.Button	typeref:typename:*Box
+Box	cellmap.go	/^	*Box$/;"	M	struct:tview.CellMap	typeref:typename:*Box
 Box	checkbox.go	/^	*Box$/;"	M	struct:tview.Checkbox	typeref:typename:*Box
 Box	demos/primitive/main.go	/^	*tview.Box$/;"	M	struct:main.RadioButtons	typeref:typename:*tview.Box
 Box	dropdown.go	/^	*Box$/;"	M	struct:tview.DropDown	typeref:typename:*Box
@@ -48,6 +49,7 @@ Box	table.go	/^	*Box$/;"	M	struct:tview.Table	typeref:typename:*Box
 Box	textview.go	/^	*Box$/;"	M	struct:tview.TextView	typeref:typename:*Box
 Box	video.go	/^	*Box$/;"	M	struct:tview.VideoPlayer	typeref:typename:*Box
 Button	button.go	/^type Button struct {$/;"	s	package:tview
+CellMap	cellmap.go	/^type CellMap struct {$/;"	s	package:tview
 Center	demos/presentation/center.go	/^func Center(height int, p tview.Primitive) tview.Primitive {$/;"	f	package:main
 ChaHandler	box.go	/^func (b *Box) ChaHandler() func(event *pixelgl.ChaEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Box
 ChaHandler	inputfield.go	/^func (i *InputField) ChaHandler() func(event *pixelgl.ChaEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.InputField
@@ -72,6 +74,7 @@ Draw	_app.go	/^func (a *app) Draw(t pixel.Target, m pixel.Matrix) {$/;"	f	unknow
 Draw	application.go	/^func (a *Application) Draw() *Application {$/;"	f	unknown:tview.Application
 Draw	box.go	/^func (b *Box) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Box
 Draw	button.go	/^func (b *Button) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Button
+Draw	cellmap.go	/^func (c *CellMap) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.CellMap
 Draw	checkbox.go	/^func (c *Checkbox) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.Checkbox
 Draw	demos/primitive/main.go	/^func (r *RadioButtons) Draw(screen tcell.Screen) {$/;"	f	unknown:main.RadioButtons
 Draw	dropdown.go	/^func (d *DropDown) Draw(screen ubcell.Screen) {$/;"	f	unknown:tview.DropDown
@@ -212,6 +215,7 @@ MaxWidth	table.go	/^	MaxWidth int$/;"	m	struct:tview.TableCell
 MinGridHeight	grid.go	/^	MinGridWidth, MinGridHeight int       \/\/ The minimum grid width\/height for which this item i/;"	m	struct:tview.gridItem
 MinGridWidth	grid.go	/^	MinGridWidth, MinGridHeight int       \/\/ The minimum grid width\/height for which this item i/;"	m	struct:tview.gridItem
 Modal	modal.go	/^type Modal struct {$/;"	s	package:tview
+MouseHandler	box.go	/^func (b *Box) MouseHandler() func(event *pixelgl.CursorEvent, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Box
 Mutex	textview.go	/^	sync.Mutex$/;"	M	struct:tview.TextView	typeref:typename:sync.Mutex
 Name	pages.go	/^	Name    string    \/\/ The page's name.$/;"	m	struct:tview.page
 NewApplication	application.go	/^func NewApplication(cfg *Config) (*Application, error) {$/;"	f	package:tview
@@ -240,10 +244,12 @@ Primitive	primitive.go	/^type Primitive interface {$/;"	i	package:tview
 Print	util.go	/^func Print(screen ubcell.Screen, text string, x, y, maxWidth, align int, col color.RGBA) (int, i/;"	f	package:tview
 PrintJoinedBorder	util.go	/^func PrintJoinedBorder(screen ubcell.Screen, x, y int, ch rune, col color.RGBA) {$/;"	f	package:tview
 PrintSimple	util.go	/^func PrintSimple(screen ubcell.Screen, text string, x, y int) {$/;"	f	package:tview
+Propogate	box.go	/^func (b *Box) Propogate(c *pixelgl.CursorEvent) {$/;"	f	unknown:tview.Box
 Proportion	flex.go	/^	Proportion int       \/\/ The item's proportion.$/;"	m	struct:tview.flexItem
 RWMutex	application.go	/^	sync.RWMutex$/;"	M	struct:tview.Application	typeref:typename:sync.RWMutex
 RadioButtons	demos/primitive/main.go	/^type RadioButtons struct {$/;"	s	package:main
 Region	textview.go	/^	Region  string     \/\/ The starting region ID.$/;"	m	struct:tview.textViewIndex
+Register	box.go	/^func (b *Box) Register(a *Box) {}$/;"	f	unknown:tview.Box
 RemoveItem	flex.go	/^func (f *Flex) RemoveItem(p Primitive) *Flex {$/;"	f	unknown:tview.Flex
 RemoveItem	grid.go	/^func (g *Grid) RemoveItem(p Primitive) *Grid {$/;"	f	unknown:tview.Grid
 RemovePage	pages.go	/^func (p *Pages) RemovePage(name string) *Pages {$/;"	f	unknown:tview.Pages
@@ -462,6 +468,7 @@ corporate	demos/textview/main.go	/^const corporate = `Leverage agile frameworks 
 currentItem	list.go	/^	currentItem int$/;"	m	struct:tview.List
 currentOption	demos/primitive/main.go	/^	currentOption int$/;"	m	struct:main.RadioButtons
 currentOption	dropdown.go	/^	currentOption int$/;"	m	struct:tview.DropDown
+delay	cellmap.go	/^	delay int$/;"	m	struct:tview.CellMap
 delay	video.go	/^	delay    int$/;"	m	struct:tview.VideoPlayer
 direction	flex.go	/^	direction int$/;"	m	struct:tview.Flex
 done	checkbox.go	/^	done func(*pixelgl.KeyEv)$/;"	m	struct:tview.Checkbox
@@ -485,6 +492,7 @@ fieldTextColor	form.go	/^	fieldTextColor color.RGBA$/;"	m	struct:tview.Form
 fieldTextColor	inputfield.go	/^	fieldTextColor color.RGBA$/;"	m	struct:tview.InputField
 fieldWidth	dropdown.go	/^	fieldWidth int$/;"	m	struct:tview.DropDown
 fieldWidth	inputfield.go	/^	fieldWidth int$/;"	m	struct:tview.InputField
+finished	cellmap.go	/^	finished func(ubcell.Screen)$/;"	m	struct:tview.CellMap
 finished	video.go	/^	finished func(ubcell.Screen)$/;"	m	struct:tview.VideoPlayer
 fixedColumns	table.go	/^	fixedRows, fixedColumns int$/;"	m	struct:tview.Table
 fixedRows	table.go	/^	fixedRows, fixedColumns int$/;"	m	struct:tview.Table
@@ -598,7 +606,7 @@ mask	video.go	/^	mask     color.Color$/;"	m	struct:tview.VideoPlayer
 maskCharacter	inputfield.go	/^	maskCharacter rune$/;"	m	struct:tview.InputField
 minHeight	grid.go	/^	minWidth, minHeight int$/;"	m	struct:tview.Grid
 minWidth	grid.go	/^	minWidth, minHeight int$/;"	m	struct:tview.Grid
-mouseBehaviour	box.go	/^	mouseBehaviour func(event *pixelgl.CursorEvent) *pixelgl.CursorEvent$/;"	m	struct:tview.Box
+mouseCapture	box.go	/^	mouseCapture func(event *pixelgl.CursorEvent) *pixelgl.CursorEvent$/;"	m	struct:tview.Box
 navigation	demos/presentation/cover.go	/^	navigation = `Ctrl-N: Next slide    Ctrl-P: Previous slide`$/;"	c	package:main
 open	dropdown.go	/^	open bool$/;"	m	struct:tview.DropDown
 options	demos/primitive/main.go	/^	options       []string$/;"	m	struct:main.RadioButtons
@@ -683,6 +691,7 @@ tview	_app.go	/^package tview$/;"	p
 tview	application.go	/^package tview$/;"	p
 tview	box.go	/^package tview$/;"	p
 tview	button.go	/^package tview$/;"	p
+tview	cellmap.go	/^package tview$/;"	p
 tview	checkbox.go	/^package tview$/;"	p
 tview	doc.go	/^package tview$/;"	p
 tview	dropdown.go	/^package tview$/;"	p

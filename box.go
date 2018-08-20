@@ -64,7 +64,7 @@ type Box struct {
 	inputCapture func(event *pixelgl.KeyEv) *pixelgl.KeyEv
 
 	//mouse behaviour function:
-	mouseBehaviour func(event *pixelgl.CursorEvent) *pixelgl.CursorEvent
+	mouseCapture func(event *pixelgl.CursorEvent) *pixelgl.CursorEvent
 
 	// An optional function which is called before the box is drawn.
 	draw func(screen ubcell.Screen, x, y, width, height int) (int, int, int, int)
@@ -170,6 +170,9 @@ func (b *Box) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)
 }
 
 func (b *Box) ChaHandler() func(event *pixelgl.ChaEv, setFocus func(p Primitive)) {
+	return nil
+}
+func (b *Box) MouseHandler() func(event *pixelgl.CursorEvent, setFocus func(p Primitive)) {
 	return nil
 }
 
@@ -327,6 +330,9 @@ func (b *Box) Focus(delegate func(p Primitive)) {
 // Blur is called when this primitive loses focus.
 func (b *Box) Blur() {
 	b.hasFocus = false
+}
+func (b *Box) Register(a *Box) {}
+func (b *Box) Propogate(c *pixelgl.CursorEvent) {
 }
 
 // HasFocus returns whether or not this primitive has focus.

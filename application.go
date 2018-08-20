@@ -149,7 +149,7 @@ func (a *Application) Run() error {
 		//case *pixelgl.CursorEvent:
 		//	x, y := ubcell.Mouse(event)
 		//	a.RLock()
-		//	p :== a.root
+		//	p := a.root
 		//	a.RUnlock()
 		//	if handler := p.MouseHandler(x, y); p != nil {
 		// 	handler(event, p primitive){
@@ -193,10 +193,10 @@ func (a *Application) Run() error {
 				}
 			}
 		case *pixelgl.ResizeEvent:
-			//	a.Lock()
-			//	screen := a.screen
-			//	a.Unlock()
-			a.screen.Clear()
+			a.Lock()
+			screen := a.screen
+			a.Unlock()
+			screen.Clear()
 			a.Draw()
 		case *pixelgl.ChaEv:
 			a.RLock()

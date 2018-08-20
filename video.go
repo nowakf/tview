@@ -30,7 +30,7 @@ const (
 func NewVideoPlayer() *VideoPlayer {
 	return &VideoPlayer{
 		Box:   NewBox(),
-		delay: 1,
+		delay: 60,
 	}
 }
 func (v *VideoPlayer) play(screen ubcell.Screen, delay int) {
@@ -99,7 +99,7 @@ func (v *VideoPlayer) Draw(screen ubcell.Screen) {
 	v.Box.Draw(screen)
 
 	if v.control == nil {
-		println("play!")
+		println("play!", v.delay)
 		go v.play(screen, v.delay)
 	}
 
@@ -112,6 +112,8 @@ func (v *VideoPlayer) SetMask(m color.RGBA) {
 	v.mask = m
 }
 
+//this is kind of kludgy, but since there's no way to control
+//application focus from this level, it will have to do.
 func (v *VideoPlayer) SetFinishedFunc(f func()) {
 	v.finished = func(screen ubcell.Screen) {
 		close(v.control)

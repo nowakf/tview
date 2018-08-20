@@ -231,6 +231,8 @@ func (l *List) Draw(screen ubcell.Screen) {
 		// Main text.
 		Print(screen, item.MainText, x, y, width, AlignLeft, l.mainTextColor)
 
+		//Register
+
 		// Background color of selected text.
 		if index == l.currentItem {
 			textWidth := StringWidth(item.MainText)
