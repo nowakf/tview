@@ -300,8 +300,8 @@ func (d *DropDown) Draw(screen ubcell.Screen) {
 }
 
 // KeyHandler returns the handler for this primitive.
-func (d *DropDown) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
-	return d.WrapKeyHandler(func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
+func (d *DropDown) KeyHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {
+	return d.WrapHandler(func(event pixelgl.Event, setFocus func(p Primitive)) {
 		// A helper function which selects an item in the drop-down list based on
 		// the current prefix.
 		evalPrefix := func() {
@@ -319,12 +319,16 @@ func (d *DropDown) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primi
 		}
 
 		// Process key event.
-		switch key := event.Key; key {
+		ev, ok := event.(*pixelgl.KeyEv)
+		if !ok {
+			return
+		}
+		switch key := ev.Key; key {
 		case pixelgl.KeyEnter, pixelgl.KeyRune, pixelgl.KeyDown:
 			d.prefix = ""
 
 			// If the first key was a letter already, it becomes part of the prefix.
-			if r := event.Ch; key == pixelgl.KeyRune && r != ' ' {
+			if r := ev.Ch; key == pixelgl.KeyRune && r != ' ' {
 				d.prefix += string(r)
 				evalPrefix()
 			}
@@ -341,11 +345,16 @@ func (d *DropDown) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primi
 				if d.options[d.currentOption].Selected != nil {
 					d.options[d.currentOption].Selected()
 				}
-			}).SetInputCapture(func(event *pixelgl.KeyEv) *pixelgl.KeyEv {
-				if event.Key == pixelgl.KeyRune {
-					d.prefix += string(event.Ch)
+			}).SetInputCapture(func(event pixelgl.Event) pixelgl.Event {
+				ev, ok := event.(*pixelgl.KeyEv)
+				if !ok {
+					return event
+				}
+
+				if ev.Key == pixelgl.KeyRune {
+					d.prefix += string(ev.Ch)
 					evalPrefix()
-				} else if event.Key == pixelgl.KeyBackspace {
+				} else if ev.Key == pixelgl.KeyBackspace {
 					if len(d.prefix) > 0 {
 						r := []rune(d.prefix)
 						d.prefix = string(r[:len(r)-1])
@@ -359,7 +368,7 @@ func (d *DropDown) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primi
 			setFocus(d.list)
 		case pixelgl.KeyEscape, pixelgl.KeyTab:
 			if d.done != nil {
-				d.done(event)
+				d.done(ev)
 			}
 		}
 	})

@@ -123,17 +123,21 @@ func (b *Button) Draw(screen ubcell.Screen) {
 }
 
 // KeyHandler returns the handler for this primitive.
-func (b *Button) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
-	return b.WrapKeyHandler(func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
+func (b *Button) KeyHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {
+	return b.WrapHandler(func(event pixelgl.Event, setFocus func(p Primitive)) {
 		// Process key event.
-		switch event.Key {
+		ev, ok := event.(*pixelgl.KeyEv)
+		if !ok {
+			return
+		}
+		switch ev.Key {
 		case pixelgl.KeyEnter: // Selected.
 			if b.selected != nil {
 				b.selected()
 			}
 		case pixelgl.KeyTab, pixelgl.KeyEscape: // Leave. No action.
 			if b.blur != nil {
-				b.blur(event)
+				b.blur(ev)
 			}
 		}
 	})

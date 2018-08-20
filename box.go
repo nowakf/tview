@@ -61,7 +61,7 @@ type Box struct {
 	// An optional capture function which receives a key event and returns the
 	// event to be forwarded to the primitive's default input handler (nil if
 	// nothing should be forwarded).
-	inputCapture func(event *pixelgl.KeyEv) *pixelgl.KeyEv
+	inputCapture func(event pixelgl.Event) pixelgl.Event
 
 	//mouse behaviour function:
 	mouseCapture func(event *pixelgl.CursorEvent) *pixelgl.CursorEvent
@@ -148,32 +148,38 @@ func (b *Box) GetDrawFunc() func(screen ubcell.Screen, x, y, width, height int) 
 	return b.draw
 }
 
-// WrapKeyHandler wraps an input handler (see KeyHandler()) with the
+// WrapHandler wraps an input handler (see KeyHandler()) with the
 // functionality to capture input (see SetInputCapture()) before passing it
 // on to the provided (default) input handler.
 //
 // This is only meant to be used by subclassing primitives.
-func (b *Box) WrapKeyHandler(inputHandler func(*pixelgl.KeyEv, func(p Primitive))) func(*pixelgl.KeyEv, func(p Primitive)) {
-	return func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
-		if b.inputCapture != nil {
-			event = b.inputCapture(event)
-		}
-		if event != nil && inputHandler != nil {
-			inputHandler(event, setFocus)
+func (b *Box) WrapHandler(inputHandler func(pixelgl.Event, func(p Primitive))) func(pixelgl.Event, func(p Primitive)) {
+	return func(event pixelgl.Event, setFocus func(p Primitive)) {
+		switch event.(type) {
+		case *pixelgl.KeyEv, *pixelgl.ChaEv:
+			if b.inputCapture != nil {
+				event = b.inputCapture(event)
+			}
+			if event != nil && inputHandler != nil {
+				inputHandler(event, setFocus)
+			}
+		case *pixelgl.CursorEvent, *pixelgl.ScrollEvent:
+			if b.mouseCapture != nil {
+			}
+			if event != nil && inputHandler != nil {
+				inputHandler(event, setFocus)
+			}
 		}
 	}
 }
 
 // KeyHandler returns nil.
-func (b *Box) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
-	return b.WrapKeyHandler(nil)
+func (b *Box) KeyHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {
+	return b.WrapHandler(nil)
 }
 
-func (b *Box) ChaHandler() func(event *pixelgl.ChaEv, setFocus func(p Primitive)) {
-	return nil
-}
-func (b *Box) MouseHandler() func(event *pixelgl.CursorEvent, setFocus func(p Primitive)) {
-	return nil
+func (b *Box) MouseHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {
+	return b.WrapHandler(nil)
 }
 
 // SetInputCapture installs a function which captures key events before they are
@@ -183,14 +189,14 @@ func (b *Box) MouseHandler() func(event *pixelgl.CursorEvent, setFocus func(p Pr
 // be called.
 //
 // Providing a nil handler will remove a previously existing handler.
-func (b *Box) SetInputCapture(capture func(event *pixelgl.KeyEv) *pixelgl.KeyEv) *Box {
+func (b *Box) SetInputCapture(capture func(event pixelgl.Event) pixelgl.Event) *Box {
 	b.inputCapture = capture
 	return b
 }
 
 // GetInputCapture returns the function installed with SetInputCapture() or nil
 // if no such function has been installed.
-func (b *Box) GetKeyInputCapture() func(event *pixelgl.KeyEv) *pixelgl.KeyEv {
+func (b *Box) GetKeyInputCapture() func(event pixelgl.Event) pixelgl.Event {
 	return b.inputCapture
 }
 

@@ -264,11 +264,15 @@ func (g *Grid) HasFocus() bool {
 }
 
 // KeyHandler returns the handler for this primitive.
-func (g *Grid) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
-	return g.WrapKeyHandler(func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
-		switch event.Key {
+func (g *Grid) KeyHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {
+	return g.WrapHandler(func(event pixelgl.Event, setFocus func(p Primitive)) {
+		ev, ok := event.(*pixelgl.KeyEv)
+		if !ok {
+			return
+		}
+		switch ev.Key {
 		case pixelgl.KeyRune:
-			switch event.Ch {
+			switch ev.Ch {
 			case 'g':
 				g.rowOffset, g.columnOffset = 0, 0
 			case 'G':

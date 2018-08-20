@@ -157,12 +157,16 @@ func (c *Checkbox) Draw(screen ubcell.Screen) {
 }
 
 // KeyHandler returns the handler for this primitive.
-func (c *Checkbox) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
-	return c.WrapKeyHandler(func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
+func (c *Checkbox) KeyHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {
+	return c.WrapHandler(func(event pixelgl.Event, setFocus func(p Primitive)) {
 		// Process key event.
-		switch key := event.Key; key {
+		ev, ok := event.(*pixelgl.KeyEv)
+		if !ok {
+			return
+		}
+		switch key := ev.Key; key {
 		case pixelgl.KeyRune, pixelgl.KeyEnter: // Check.
-			if key == pixelgl.KeyRune && event.Ch != ' ' {
+			if key == pixelgl.KeyRune && ev.Ch != ' ' {
 				break
 			}
 			c.checked = !c.checked
@@ -171,7 +175,7 @@ func (c *Checkbox) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primi
 			}
 		case pixelgl.KeyTab, pixelgl.KeyEscape: // We're done.
 			if c.done != nil {
-				c.done(event)
+				c.done(ev)
 			}
 		}
 	})

@@ -262,11 +262,15 @@ func (l *List) Draw(screen ubcell.Screen) {
 }
 
 // KeyHandler returns the handler for this primitive.
-func (l *List) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
-	return l.WrapKeyHandler(func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
+func (l *List) KeyHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {
+	return l.WrapHandler(func(event pixelgl.Event, setFocus func(p Primitive)) {
 		previousItem := l.currentItem
+		ev, ok := event.(*pixelgl.KeyEv)
+		if !ok {
+			return
+		}
 
-		switch event.Key {
+		switch ev.Key {
 		case pixelgl.KeyTab, pixelgl.KeyDown, pixelgl.KeyRight:
 			l.currentItem++
 		case pixelgl.KeyUp, pixelgl.KeyLeft:
@@ -292,7 +296,7 @@ func (l *List) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive
 				l.done()
 			}
 		case pixelgl.KeyRune:
-			ch := event.Ch
+			ch := ev.Ch
 			if ch != ' ' {
 				// It's not a space bar. Is it a shortcut?
 				var found bool

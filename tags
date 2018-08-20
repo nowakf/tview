@@ -51,7 +51,6 @@ Box	video.go	/^	*Box$/;"	M	struct:tview.VideoPlayer	typeref:typename:*Box
 Button	button.go	/^type Button struct {$/;"	s	package:tview
 CellMap	cellmap.go	/^type CellMap struct {$/;"	s	package:tview
 Center	demos/presentation/center.go	/^func Center(height int, p tview.Primitive) tview.Primitive {$/;"	f	package:main
-ChaHandler	box.go	/^func (b *Box) ChaHandler() func(event *pixelgl.ChaEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Box
 ChaHandler	inputfield.go	/^func (i *InputField) ChaHandler() func(event *pixelgl.ChaEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.InputField
 Checkbox	checkbox.go	/^type Checkbox struct {$/;"	s	package:tview
 Clear	form.go	/^func (f *Form) Clear(includeButtons bool) *Form {$/;"	f	unknown:tview.Form
@@ -135,8 +134,8 @@ GetFormItem	form.go	/^func (f *Form) GetFormItem(index int) FormItem {$/;"	f	unk
 GetHighlights	textview.go	/^func (t *TextView) GetHighlights() (regionIDs []string) {$/;"	f	unknown:tview.TextView
 GetInnerRect	box.go	/^func (b *Box) GetInnerRect() (int, int, int, int) {$/;"	f	unknown:tview.Box
 GetInputCapture	_app.go	/^func (a *app) GetInputCapture() func(event *pixelgl.KeyEv) *pixelgl.KeyEv {$/;"	f	unknown:tview.app
-GetInputCapture	application.go	/^func (a *Application) GetInputCapture() func(event *pixelgl.KeyEv) *pixelgl.KeyEv {$/;"	f	unknown:tview.Application
-GetKeyInputCapture	box.go	/^func (b *Box) GetKeyInputCapture() func(event *pixelgl.KeyEv) *pixelgl.KeyEv {$/;"	f	unknown:tview.Box
+GetKeyCapture	application.go	/^func (a *Application) GetKeyCapture() func(event pixelgl.Event) pixelgl.Event {$/;"	f	unknown:tview.Application
+GetKeyInputCapture	box.go	/^func (b *Box) GetKeyInputCapture() func(event pixelgl.Event) pixelgl.Event {$/;"	f	unknown:tview.Box
 GetLabel	button.go	/^func (b *Button) GetLabel() string {$/;"	f	unknown:tview.Button
 GetLabel	checkbox.go	/^func (c *Checkbox) GetLabel() string {$/;"	f	unknown:tview.Checkbox
 GetLabel	dropdown.go	/^func (d *DropDown) GetLabel() string {$/;"	f	unknown:tview.DropDown
@@ -197,15 +196,15 @@ IsChecked	checkbox.go	/^func (c *Checkbox) IsChecked() bool {$/;"	f	unknown:tvie
 Item	flex.go	/^	Item       Primitive \/\/ The item to be positioned. May be nil for an empty item.$/;"	m	struct:tview.flexItem
 Item	grid.go	/^	Item                        Primitive \/\/ The item to be positioned. May be nil for an empty i/;"	m	struct:tview.gridItem
 Item	pages.go	/^	Item    Primitive \/\/ The page's primitive.$/;"	m	struct:tview.page
-KeyHandler	box.go	/^func (b *Box) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Box
-KeyHandler	button.go	/^func (b *Button) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Button
-KeyHandler	checkbox.go	/^func (c *Checkbox) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Checkbox
-KeyHandler	dropdown.go	/^func (d *DropDown) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.DropDown
-KeyHandler	grid.go	/^func (g *Grid) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Grid
-KeyHandler	inputfield.go	/^func (i *InputField) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.InputField
-KeyHandler	list.go	/^func (l *List) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.List
-KeyHandler	table.go	/^func (t *Table) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Table
-KeyHandler	textview.go	/^func (t *TextView) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {$/;"	f	unknown:tview.TextView
+KeyHandler	box.go	/^func (b *Box) KeyHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Box
+KeyHandler	button.go	/^func (b *Button) KeyHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Button
+KeyHandler	checkbox.go	/^func (c *Checkbox) KeyHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Checkbox
+KeyHandler	dropdown.go	/^func (d *DropDown) KeyHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {$/;"	f	unknown:tview.DropDown
+KeyHandler	grid.go	/^func (g *Grid) KeyHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Grid
+KeyHandler	inputfield.go	/^func (i *InputField) KeyHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {$/;"	f	unknown:tview.InputField
+KeyHandler	list.go	/^func (l *List) KeyHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {$/;"	f	unknown:tview.List
+KeyHandler	table.go	/^func (t *Table) KeyHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Table
+KeyHandler	textview.go	/^func (t *TextView) KeyHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {$/;"	f	unknown:tview.TextView
 Line	textview.go	/^	Line    int        \/\/ The index into the "buffer" variable.$/;"	m	struct:tview.textViewIndex
 List	list.go	/^type List struct {$/;"	s	package:tview
 Load	video.go	/^func (v *VideoPlayer) Load(path string) (*VideoPlayer, error) {$/;"	f	unknown:tview.VideoPlayer
@@ -215,7 +214,7 @@ MaxWidth	table.go	/^	MaxWidth int$/;"	m	struct:tview.TableCell
 MinGridHeight	grid.go	/^	MinGridWidth, MinGridHeight int       \/\/ The minimum grid width\/height for which this item i/;"	m	struct:tview.gridItem
 MinGridWidth	grid.go	/^	MinGridWidth, MinGridHeight int       \/\/ The minimum grid width\/height for which this item i/;"	m	struct:tview.gridItem
 Modal	modal.go	/^type Modal struct {$/;"	s	package:tview
-MouseHandler	box.go	/^func (b *Box) MouseHandler() func(event *pixelgl.CursorEvent, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Box
+MouseHandler	box.go	/^func (b *Box) MouseHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {$/;"	f	unknown:tview.Box
 Mutex	textview.go	/^	sync.Mutex$/;"	M	struct:tview.TextView	typeref:typename:sync.Mutex
 Name	pages.go	/^	Name    string    \/\/ The page's name.$/;"	m	struct:tview.page
 NewApplication	application.go	/^func NewApplication(cfg *Config) (*Application, error) {$/;"	f	package:tview
@@ -335,9 +334,9 @@ SetFullScreen	flex.go	/^func (f *Flex) SetFullScreen(fullScreen bool) *Flex {$/;
 SetGap	grid.go	/^func (g *Grid) SetGap(row, column int) *Grid {$/;"	f	unknown:tview.Grid
 SetHorizontal	form.go	/^func (f *Form) SetHorizontal(horizontal bool) *Form {$/;"	f	unknown:tview.Form
 SetInputCapture	_app.go	/^func (a *app) SetInputCapture(capture func(event *pixelgl.KeyEv) *pixelgl.KeyEv) *app {$/;"	f	unknown:tview.app
-SetInputCapture	application.go	/^func (a *Application) SetInputCapture(capture func(event *pixelgl.KeyEv) *pixelgl.KeyEv) *Applic/;"	f	unknown:tview.Application
-SetInputCapture	box.go	/^func (b *Box) SetInputCapture(capture func(event *pixelgl.KeyEv) *pixelgl.KeyEv) *Box {$/;"	f	unknown:tview.Box
+SetInputCapture	box.go	/^func (b *Box) SetInputCapture(capture func(event pixelgl.Event) pixelgl.Event) *Box {$/;"	f	unknown:tview.Box
 SetItemPadding	form.go	/^func (f *Form) SetItemPadding(padding int) *Form {$/;"	f	unknown:tview.Form
+SetKeyCapture	application.go	/^func (a *Application) SetKeyCapture(capture func(event pixelgl.Event) pixelgl.Event) *Applicatio/;"	f	unknown:tview.Application
 SetLabel	button.go	/^func (b *Button) SetLabel(label string) *Button {$/;"	f	unknown:tview.Button
 SetLabel	checkbox.go	/^func (c *Checkbox) SetLabel(label string) *Checkbox {$/;"	f	unknown:tview.Checkbox
 SetLabel	dropdown.go	/^func (d *DropDown) SetLabel(label string) *DropDown {$/;"	f	unknown:tview.DropDown
@@ -414,7 +413,7 @@ Width	grid.go	/^	Width, Height               int       \/\/ The number of rows a
 Width	textview.go	/^	Width   int        \/\/ The screen width of this line.$/;"	m	struct:tview.textViewIndex
 WindowConfig	Config.go	/^	WindowConfig pixelgl.WindowConfig$/;"	m	struct:tview.Config
 WordWrap	util.go	/^func WordWrap(text string, width int) (lines []string) {$/;"	f	package:tview
-WrapKeyHandler	box.go	/^func (b *Box) WrapKeyHandler(inputHandler func(*pixelgl.KeyEv, func(p Primitive))) func(*pixelgl/;"	f	unknown:tview.Box
+WrapHandler	box.go	/^func (b *Box) WrapHandler(inputHandler func(pixelgl.Event, func(p Primitive))) func(pixelgl.Even/;"	f	unknown:tview.Box
 Write	textview.go	/^func (t *TextView) Write(p []byte) (n int, err error) {$/;"	f	unknown:tview.TextView
 accept	inputfield.go	/^	accept func(text string, ch rune) bool$/;"	m	struct:tview.InputField
 afterDraw	_app.go	/^	afterDraw func(screen *ubcell.CellBuffer)$/;"	m	struct:tview.app
@@ -525,8 +524,7 @@ innerWidth	box.go	/^	innerX, innerY, innerWidth, innerHeight int$/;"	m	struct:tv
 innerX	box.go	/^	innerX, innerY, innerWidth, innerHeight int$/;"	m	struct:tview.Box
 innerY	box.go	/^	innerX, innerY, innerWidth, innerHeight int$/;"	m	struct:tview.Box
 inputCapture	_app.go	/^	inputCapture func(event *pixelgl.KeyEv) *pixelgl.KeyEv$/;"	m	struct:tview.app
-inputCapture	application.go	/^	inputCapture func(event *pixelgl.KeyEv) *pixelgl.KeyEv$/;"	m	struct:tview.Application
-inputCapture	box.go	/^	inputCapture func(event *pixelgl.KeyEv) *pixelgl.KeyEv$/;"	m	struct:tview.Box
+inputCapture	box.go	/^	inputCapture func(event pixelgl.Event) pixelgl.Event$/;"	m	struct:tview.Box
 inputField	demos/presentation/inputfield.go	/^const inputField = `[green]package[white] main$/;"	c	package:main
 itemPadding	form.go	/^	itemPadding int$/;"	m	struct:tview.Form
 items	flex.go	/^	items []flexItem$/;"	m	struct:tview.Flex
@@ -534,6 +532,7 @@ items	form.go	/^	items []FormItem$/;"	m	struct:tview.Form
 items	grid.go	/^	items []*gridItem$/;"	m	struct:tview.Grid
 items	list.go	/^	items []*listItem$/;"	m	struct:tview.List
 joints	util.go	/^var joints = map[string]rune{$/;"	v	package:tview
+keyCapture	application.go	/^	keyCapture func(event pixelgl.Event) pixelgl.Event$/;"	m	struct:tview.Application
 label	button.go	/^	label string$/;"	m	struct:tview.Button
 label	checkbox.go	/^	label string$/;"	m	struct:tview.Checkbox
 label	dropdown.go	/^	label string$/;"	m	struct:tview.DropDown

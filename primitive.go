@@ -35,10 +35,10 @@ type Primitive interface {
 	//
 	// The Box class provides functionality to intercept keyboard input. If you
 	// subclass from Box, it is recommended that you wrap your handler using
-	// Box.WrapKeyHandler() so you inherit that functionality.
-	KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive))
+	// Box.WrapHandler() so you inherit that functionality.
+	KeyHandler() func(event pixelgl.Event, setFocus func(p Primitive))
 
-	ChaHandler() func(event *pixelgl.ChaEv, setFocus func(p Primitive))
+	MouseHandler() func(event pixelgl.Event, setFocus func(p Primitive))
 
 	// Focus is called by the application when the primitive receives focus.
 	// Implementers may call delegate() to pass the focus on to another primitive.

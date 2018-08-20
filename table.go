@@ -819,15 +819,19 @@ ColumnLoop:
 }
 
 // KeyHandler returns the handler for this primitive.
-func (t *Table) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
-	return t.WrapKeyHandler(func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
-		key := event.Key
+func (t *Table) KeyHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {
+	return t.WrapHandler(func(event pixelgl.Event, setFocus func(p Primitive)) {
+		ev, ok := event.(*pixelgl.KeyEv)
+		if !ok {
+			return
+		}
+		key := ev.Key
 
 		if (!t.rowsSelectable && !t.columnsSelectable && key == pixelgl.KeyEnter) ||
 			key == pixelgl.KeyEscape ||
 			key == pixelgl.KeyTab {
 			if t.done != nil {
-				t.done(event)
+				t.done(ev)
 			}
 			return
 		}
@@ -980,7 +984,7 @@ func (t *Table) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitiv
 
 		switch key {
 		case pixelgl.KeyRune:
-			switch event.Ch {
+			switch ev.Ch {
 			case 'g':
 				home()
 			case 'G':

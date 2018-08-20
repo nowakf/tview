@@ -840,13 +840,17 @@ func (t *TextView) Draw(screen ubcell.Screen) {
 }
 
 // KeyHandler returns the handler for this primitive.
-func (t *TextView) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
-	return t.WrapKeyHandler(func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
-		key := event.Key
+func (t *TextView) KeyHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {
+	return t.WrapHandler(func(event pixelgl.Event, setFocus func(p Primitive)) {
+		ev, ok := event.(*pixelgl.KeyEv)
+		if !ok {
+			return
+		}
+		key := ev.Key
 
 		if key == pixelgl.KeyEscape || key == pixelgl.KeyEnter || key == pixelgl.KeyTab {
 			if t.done != nil {
-				t.done(event)
+				t.done(ev)
 			}
 			return
 		}
@@ -862,7 +866,7 @@ func (t *TextView) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primi
 		// etc
 		switch key {
 		case pixelgl.KeyRune:
-			switch event.Ch {
+			switch ev.Ch {
 			case 'g': // Home.
 				t.trackEnd = false
 				t.lineOffset = 0

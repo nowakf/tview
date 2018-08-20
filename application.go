@@ -33,7 +33,7 @@ type Application struct {
 	// An optional capture function which receives a key event and returns the
 	// event to be forwarded to the default input handler (nil if nothing should
 	// be forwarded).
-	inputCapture func(event *pixelgl.KeyEv) *pixelgl.KeyEv
+	keyCapture func(event pixelgl.Event) pixelgl.Event
 
 	// An optional callback function which is invoked just before the root
 	// primitive is drawn.
@@ -56,7 +56,7 @@ func (a *Application) Screen() ubcell.Screen {
 	return a.screen
 }
 
-// SetInputCapture sets a function which captures all key events before they are
+// SetKeyCapture sets a function which captures all key events before they are
 // forwarded to the key event handler of the primitive which currently has
 // focus. This function can then choose to forward that key event (or a
 // different one) by returning it or stop the key event processing by returning
@@ -65,17 +65,17 @@ func (a *Application) Screen() ubcell.Screen {
 // Note that this also affects the default event handling of the application
 // itself: Such a handler can intercept the Ctrl-C event which closes the
 // applicatoon.
-func (a *Application) SetInputCapture(capture func(event *pixelgl.KeyEv) *pixelgl.KeyEv) *Application {
+func (a *Application) SetKeyCapture(capture func(event pixelgl.Event) pixelgl.Event) *Application {
 
-	a.inputCapture = capture
+	a.keyCapture = capture
 	return a
 }
 
-// GetInputCapture returns the function installed with SetInputCapture() or nil
+// GetKeyCapture returns the function installed with SetKeyCapture() or nil
 // if no such function has been installed.
-func (a *Application) GetInputCapture() func(event *pixelgl.KeyEv) *pixelgl.KeyEv {
+func (a *Application) GetKeyCapture() func(event pixelgl.Event) pixelgl.Event {
 
-	return a.inputCapture
+	return a.keyCapture
 }
 
 // Run starts the application and thus the event loop. This function returns
@@ -143,42 +143,41 @@ func (a *Application) Run() error {
 		}
 
 		switch event := event.(type) {
-		//case *pixelgl.ScrollEvent:
-		//Keyboard only, for now.
 
-		//case *pixelgl.CursorEvent:
-		//	x, y := ubcell.Mouse(event)
-		//	a.RLock()
-		//	p := a.root
-		//	a.RUnlock()
-		//	if handler := p.MouseHandler(x, y); p != nil {
-		// 	handler(event, p primitive){
-		// 	setfocus(p)
-		//
-		//	}
-		//}
+		case *pixelgl.CursorEvent, *pixelgl.ScrollEvent:
+			a.RLock()
+			p := a.root
+			a.RUnlock()
+			if handler := p.MouseHandler(); p != nil {
+				handler(event, func(p Primitive) {
+					a.SetFocus(p)
+				})
+			}
 
 		//do nothing for now
 
-		case *pixelgl.KeyEv:
-			if event.Act == pixelgl.RELEASE {
-				break
-			}
+		case *pixelgl.KeyEv, *pixelgl.ChaEv:
+
 			a.RLock()
 			p := a.focus
 			a.RUnlock()
 
+			//do key-specific stuff here
+			if ev, ok := event.(*pixelgl.KeyEv); ok && ev.Act == pixelgl.RELEASE {
+				// Ctrl-C closes the application.
+				if *ev == pixelgl.KeyCtrlC {
+					a.Stop()
+				}
+				break
+			}
+
 			// Intercept keys.
-			if a.inputCapture != nil {
-				event = a.inputCapture(event)
+			//rename!
+			if a.keyCapture != nil {
+				event = a.keyCapture(event)
 				if event == nil {
 					break
 				}
-			}
-
-			// Ctrl-C closes the application.
-			if *event == pixelgl.KeyCtrlC {
-				a.Stop()
 			}
 
 			// Pass other key events to the currently focused primitive.
@@ -198,20 +197,6 @@ func (a *Application) Run() error {
 			a.Unlock()
 			screen.Clear()
 			a.Draw()
-		case *pixelgl.ChaEv:
-			a.RLock()
-			p := a.focus
-			a.RUnlock()
-
-			if p != nil {
-				if handler := p.ChaHandler(); handler != nil {
-					handler(event, func(p Primitive) {
-						a.SetFocus(p)
-					})
-
-					a.Draw()
-				}
-			}
 
 		}
 	}

@@ -300,8 +300,9 @@ func (i *InputField) ChaHandler() func(event *pixelgl.ChaEv, setFocus func(p Pri
 }
 
 // KeyHandler returns the handler for this primitive.
-func (i *InputField) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
-	return i.WrapKeyHandler(func(event *pixelgl.KeyEv, setFocus func(p Primitive)) {
+func (i *InputField) KeyHandler() func(event pixelgl.Event, setFocus func(p Primitive)) {
+	return i.WrapHandler(func(event pixelgl.Event, setFocus func(p Primitive)) {
+
 		// Trigger changed events.
 		currentText := i.text
 		defer func() {
@@ -310,8 +311,13 @@ func (i *InputField) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Pri
 			}
 		}()
 
+		ev, ok := event.(*pixelgl.KeyEv)
+		if !ok {
+			return
+		}
+
 		// Process key event.
-		switch key := event.Key; key {
+		switch ev.Key {
 		case pixelgl.KeyBackspace:
 			if len(i.text) == 0 {
 				break
@@ -320,7 +326,7 @@ func (i *InputField) KeyHandler() func(event *pixelgl.KeyEv, setFocus func(p Pri
 			i.text = string(runes[:len(runes)-1])
 		case pixelgl.KeyEnter, pixelgl.KeyTab, pixelgl.KeyEscape: // We're done.
 			if i.done != nil {
-				i.done(event)
+				i.done(ev)
 			}
 		}
 	})
